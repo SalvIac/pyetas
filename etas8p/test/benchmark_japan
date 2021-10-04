@@ -1,0 +1,799 @@
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library("ETAS")
+Loading required package: maps
+> jpoly <- list(long = c(134.0, 137.9, 143.1, 144.9, 147.8, 137.8, 137.4, 135.1, 130.6), lat = c(31.9, 33.0, 33.2, 35.2, 41.3, 44.2, 40.2, 38.0, 35.4))
+> japan.cat <- catalog(japan.quakes, study.start = "1953-05-26", study.end = "1990-01-08", region.poly = jpoly, mag.threshold = 4.5)
+> japan.cat
+earthquake catalog:
+  time begin 1926-01-08 
+  study period: 1953-05-26  to  1990-01-08 (T = 13376 days)
+geographical region:
+    polygonal with vertices:
+       lat  long
+ [1,] 31.9 134.0
+ [2,] 33.0 137.9
+ [3,] 33.2 143.1
+ [4,] 35.2 144.9
+ [5,] 41.3 147.8
+ [6,] 44.2 137.8
+ [7,] 40.2 137.4
+ [8,] 38.0 135.1
+ [9,] 35.4 130.6
+threshold magnitude: 4.5
+number of events:
+  total events 10072 : 4656 target events,  5416 complementary events
+  ( 1022 events outside geographical region, 4394 events outside study period)
+> param0 <- c(0.592844590, 0.204288231, 0.022692883, 1.495169224, 1.109752319, 0.001175925, 1.860044210, 1.041549634)
+> japan.fit <- etas(japan.cat, param0, cxxcode=FALSE)
+declustering:
+
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======                                                                |   9%
+  |                                                                            
+  |=============                                                         |  18%
+  |                                                                            
+  |===================                                                   |  27%
+  |                                                                            
+  |=========================                                             |  36%
+  |                                                                            
+  |================================                                      |  45%
+  |                                                                            
+  |======================================                                |  55%
+  |                                                                            
+  |=============================================                         |  64%
+  |                                                                            
+  |===================================================                   |  73%
+  |                                                                            
+  |=========================================================             |  82%
+  |                                                                            
+  |================================================================      |  91%
+  |                                                                            
+  |======================================================================| 100%
+iteration:  1 
+======================================================
+background seismicity rate:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+2.460e-06 3.833e-03 9.901e-03 2.391e-02 2.732e-02 2.499e-01 
+probability of being a background event:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+0.0000005 0.0174579 0.7680931 0.5525604 0.9329956 1.0000000 
+integral of background seismicity rate:  4326.505 
+======================================================
+estimating:
+        start Davidon-Fletcher-Powell procedure ... 
+Function Value = 15380.75       10707.38        4673.37
+Gradiant [1] =   517.24 theta[1] = 0.76996402
+Gradiant [2] =  -804.26 theta[2] = 0.45198256
+Gradiant [3] =   414.27 theta[3] = 0.15064157
+Gradiant [4] =  -757.96 theta[4] = 1.22277112
+Gradiant [5] = -3236.38 theta[5] = 1.05344782
+Gradiant [6] = -7282.21 theta[6] = 0.03429176
+Gradiant [7] =   527.57 theta[7] = 1.36383438
+Gradiant [8] =  -304.86 theta[8] = 1.02056339
+
+start line search along the specified direction ...
+Function Value = 15691.70475    10707.88        4983.82
+Function Value = 15355.00456    10643.85        4711.15
+Function Value = 15359.11487    10593.11        4766.01
+Function Value = 15351.40075    10616.61        4734.79
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.000001
+Function Value = 15351.40       10616.61        4734.79
+Gradiant [1] =   562.92 theta[1] = 0.76943701
+Gradiant [2] =  -608.53 theta[2] = 0.45280201
+Gradiant [3] =   276.19 theta[3] = 0.15021947
+Gradiant [4] =  -589.97 theta[4] = 1.22354340
+Gradiant [5] = -2409.01 theta[5] = 1.05674534
+Gradiant [6] =  1464.92 theta[6] = 0.04171154
+Gradiant [7] =  -229.02 theta[7] = 1.36329684
+Gradiant [8] =    98.46 theta[8] = 1.02087401
+
+start line search along the specified direction ...
+Function Value = 15351.39793    10616.59        4734.81
+Function Value = 15351.39512    10616.57        4734.83
+Function Value = 15351.38949    10616.53        4734.86
+Function Value = 15351.37825    10616.45        4734.93
+Function Value = 15351.35576    10616.29        4735.07
+Function Value = 15351.31086    10615.97        4735.34
+Function Value = 15351.22131    10615.34        4735.88
+Function Value = 15351.04317    10614.08        4736.97
+Function Value = 15350.69079    10611.56        4739.13
+Function Value = 15350.00150    10606.55        4743.45
+Function Value = 15348.68409    10596.66        4752.02
+Function Value = 15346.28849    10577.38        4768.91
+Function Value = 15342.41239    10540.73        4801.68
+Function Value = 15338.02153    10474.56        4863.46
+Function Value = 15340.74332    10367.18        4973.56
+Function Value = 15337.34112    10436.52        4900.83
+Function Value = 15337.33814    10438.03        4899.31
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.000004
+Function Value = 15337.34       10438.03        4899.31
+Gradiant [1] =   508.50 theta[1] = 0.76723473
+Gradiant [2] =   211.91 theta[2] = 0.45531701
+Gradiant [3] =  -203.65 theta[3] = 0.14905101
+Gradiant [4] =   -90.73 theta[4] = 1.22596977
+Gradiant [5] =    94.57 theta[5] = 1.06673037
+Gradiant [6] =   168.42 theta[6] = 0.04070756
+Gradiant [7] =   -76.51 theta[7] = 1.36378848
+Gradiant [8] =    34.08 theta[8] = 1.02070540
+
+start line search along the specified direction ...
+Function Value = 15337.33583    10438.05        4899.29
+Function Value = 15337.33352    10438.07        4899.26
+Function Value = 15337.32891    10438.12        4899.21
+Function Value = 15337.31968    10438.22        4899.10
+Function Value = 15337.30123    10438.40        4898.90
+Function Value = 15337.26437    10438.78        4898.48
+Function Value = 15337.19081    10439.54        4897.65
+Function Value = 15337.04433    10441.06        4895.98
+Function Value = 15336.75391    10444.10        4892.66
+Function Value = 15336.18329    10450.18        4886.00
+Function Value = 15335.08288    10462.37        4872.71
+Function Value = 15333.04580    10486.88        4846.16
+Function Value = 15329.62918    10536.38        4793.24
+Function Value = 15325.44849    10637.34        4688.11
+Function Value = 15327.89077    10847.15        4480.74
+Function Value = 15324.64786    10705.50        4619.14
+Function Value = 15324.64782    10705.81        4618.83
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.000074
+Function Value = 15324.65       10705.81        4618.83
+Gradiant [1] =   -64.13 theta[1] = 0.72950300
+Gradiant [2] =   -62.18 theta[2] = 0.44305834
+Gradiant [3] =   -79.25 theta[3] = 0.16207068
+Gradiant [4] =  -226.70 theta[4] = 1.23486415
+Gradiant [5] =    13.87 theta[5] = 1.07064076
+Gradiant [6] =    78.39 theta[6] = 0.04133755
+Gradiant [7] =   -46.69 theta[7] = 1.36846594
+Gradiant [8] =    22.02 theta[8] = 1.01877047
+
+start line search along the specified direction ...
+Function Value = 15324.63037    10705.51        4619.12
+Function Value = 15324.61300    10705.20        4619.41
+Function Value = 15324.57852    10704.60        4619.98
+Function Value = 15324.51055    10703.38        4621.13
+Function Value = 15324.37855    10700.94        4623.44
+Function Value = 15324.13041    10696.07        4628.07
+Function Value = 15323.69769    10686.31        4637.38
+Function Value = 15323.08791    10666.80        4656.29
+Function Value = 15322.90333    10627.71        4695.19
+Function Value = 15326.78948    10549.22        4777.57
+Function Value = 15322.80947    10642.18        4680.63
+Function Value = 15322.80946    10642.08        4680.73
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.000065
+Function Value = 15322.81       10642.08        4680.73
+Gradiant [1] =   -32.54 theta[1] = 0.72762645
+Gradiant [2] =   164.69 theta[2] = 0.44412124
+Gradiant [3] =    58.88 theta[3] = 0.16861282
+Gradiant [4] =   -34.83 theta[4] = 1.24822964
+Gradiant [5] =    33.15 theta[5] = 1.06879635
+Gradiant [6] =    64.28 theta[6] = 0.04164633
+Gradiant [7] =   -37.69 theta[7] = 1.37127535
+Gradiant [8] =     8.34 theta[8] = 1.01749712
+
+start line search along the specified direction ...
+Function Value = 15322.80021    10642.10        4680.70
+Function Value = 15322.79098    10642.12        4680.67
+Function Value = 15322.77254    10642.16        4680.61
+Function Value = 15322.73580    10642.24        4680.49
+Function Value = 15322.66287    10642.41        4680.25
+Function Value = 15322.51924    10642.75        4679.77
+Function Value = 15322.24090    10643.43        4678.81
+Function Value = 15321.72015    10644.84        4676.88
+Function Value = 15320.82471    10647.81        4673.01
+Function Value = 15319.63691    10654.40        4665.23
+Function Value = 15319.83089    10670.48        4649.36
+Function Value = 15319.28581    10661.03        4658.26
+Function Value = 15319.28577    10661.06        4658.23
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.000342
+Function Value = 15319.29       10661.06        4658.23
+Gradiant [1] =   -21.02 theta[1] = 0.73291443
+Gradiant [2] =    47.92 theta[2] = 0.41459504
+Gradiant [3] =   -41.36 theta[3] = 0.16524107
+Gradiant [4] =    42.99 theta[4] = 1.28376248
+Gradiant [5] =     0.03 theta[5] = 1.07051192
+Gradiant [6] =   -46.58 theta[6] = 0.04261597
+Gradiant [7] =   -16.68 theta[7] = 1.38365994
+Gradiant [8] =   -24.97 theta[8] = 1.01395625
+
+start line search along the specified direction ...
+Function Value = 15319.26382    10661.23        4658.03
+Function Value = 15319.24246    10661.41        4657.83
+Function Value = 15319.20153    10661.79        4657.41
+Function Value = 15319.12687    10662.57        4656.56
+Function Value = 15319.00648    10664.28        4654.72
+Function Value = 15318.88311    10668.30        4650.58
+Function Value = 15319.12026    10678.56        4640.56
+Function Value = 15318.87704    10669.49        4649.38
+Function Value = 15318.87703    10669.53        4649.35
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.000191
+Function Value = 15318.88       10669.53        4649.35
+Gradiant [1] =     4.24 theta[1] = 0.73700166
+Gradiant [2] =   -40.25 theta[2] = 0.40826822
+Gradiant [3] =    30.37 theta[3] = 0.17270380
+Gradiant [4] =   -19.75 theta[4] = 1.28486422
+Gradiant [5] =  -110.62 theta[5] = 1.07376621
+Gradiant [6] =   -86.82 theta[6] = 0.04280509
+Gradiant [7] =    -7.01 theta[7] = 1.38841174
+Gradiant [8] =   -23.93 theta[8] = 1.01679633
+
+start line search along the specified direction ...
+Function Value = 15318.87245    10669.49        4649.38
+Function Value = 15318.86792    10669.45        4649.41
+Function Value = 15318.85900    10669.38        4649.48
+Function Value = 15318.84176    10669.23        4649.62
+Function Value = 15318.80967    10668.92        4649.89
+Function Value = 15318.75505    10668.34        4650.42
+Function Value = 15318.68413    10667.21        4651.48
+Function Value = 15318.69687    10665.16        4653.54
+Function Value = 15318.66421    10666.28        4652.39
+Function Value = 15318.66421    10666.28        4652.39
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.000732
+Function Value = 15318.66       10666.28        4652.39
+Gradiant [1] =     2.73 theta[1] = 0.73674694
+Gradiant [2] =   -22.62 theta[2] = 0.40817927
+Gradiant [3] =    19.67 theta[3] = 0.17154873
+Gradiant [4] =   -12.25 theta[4] = 1.28639798
+Gradiant [5] =   -90.58 theta[5] = 1.07312126
+Gradiant [6] =    18.31 theta[6] = 0.04313123
+Gradiant [7] =     0.70 theta[7] = 1.39929490
+Gradiant [8] =    -2.34 theta[8] = 1.03050124
+
+start line search along the specified direction ...
+Function Value = 15318.66138    10666.29        4652.37
+Function Value = 15318.65942    10666.31        4652.34
+Function Value = 15318.65808    10666.36        4652.30
+Function Value = 15318.66581    10666.46        4652.21
+Function Value = 15318.65806    10666.35        4652.31
+Function Value = 15318.65806    10666.35        4652.31
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.000622
+Function Value = 15318.66       10666.35        4652.31
+Gradiant [1] =     2.89 theta[1] = 0.73674911
+Gradiant [2] =   -23.35 theta[2] = 0.40774550
+Gradiant [3] =    19.90 theta[3] = 0.17172562
+Gradiant [4] =   -10.85 theta[4] = 1.28697946
+Gradiant [5] =   -88.99 theta[5] = 1.07320974
+Gradiant [6] =    49.15 theta[6] = 0.04288181
+Gradiant [7] =    -5.25 theta[7] = 1.39755558
+Gradiant [8] =     1.83 theta[8] = 1.03249530
+
+start line search along the specified direction ...
+Function Value = 15318.65803    10666.35        4652.31
+Function Value = 15318.65800    10666.35        4652.31
+Function Value = 15318.65795    10666.35        4652.31
+Function Value = 15318.65784    10666.35        4652.31
+Function Value = 15318.65762    10666.34        4652.31
+Function Value = 15318.65719    10666.33        4652.32
+Function Value = 15318.65634    10666.31        4652.34
+Function Value = 15318.65468    10666.27        4652.38
+Function Value = 15318.65149    10666.19        4652.46
+Function Value = 15318.64569    10666.03        4652.61
+Function Value = 15318.63636    10665.73        4652.91
+Function Value = 15318.62678    10665.17        4653.46
+Function Value = 15318.64343    10664.21        4654.43
+Function Value = 15318.62625    10665.01        4653.62
+Function Value = 15318.62625    10665.01        4653.62
+back to Davidon-Fletcher-Powell Procedure: zeta = 1.463561
+Function Value = 15318.63       10665.01        4653.62
+Gradiant [1] =    -1.68 theta[1] = 0.73701303
+Gradiant [2] =    -8.65 theta[2] = 0.40753722
+Gradiant [3] =    -0.51 theta[3] = 0.17204935
+Gradiant [4] =    -7.31 theta[4] = 1.28602899
+Gradiant [5] =   -10.26 theta[5] = 1.07414540
+Gradiant [6] =   -19.61 theta[6] = 0.04277919
+Gradiant [7] =     1.33 theta[7] = 1.39724599
+Gradiant [8] =    -0.55 theta[8] = 1.03271018
+
+start line search along the specified direction ...
+Function Value = 15318.62489    10661.45        4657.17
+Function Value = 15318.62963    10657.90        4660.73
+Function Value = 15318.62465    10662.44        4656.19
+Function Value = 15318.62465    10662.44        4656.19
+back to Davidon-Fletcher-Powell Procedure: zeta = 1.058115
+Function Value = 15318.62       10662.44        4656.19
+Gradiant [1] =     0.09 theta[1] = 0.73710910
+Gradiant [2] =     0.74 theta[2] = 0.40741482
+Gradiant [3] =     0.29 theta[3] = 0.17226361
+Gradiant [4] =     0.47 theta[4] = 1.28641201
+Gradiant [5] =    -0.43 theta[5] = 1.07422263
+Gradiant [6] =   -10.87 theta[6] = 0.04281850
+Gradiant [7] =     0.95 theta[7] = 1.39746955
+Gradiant [8] =    -0.53 theta[8] = 1.03255050
+
+start line search along the specified direction ...
+Function Value = 15318.62457    10662.62        4656.01
+Function Value = 15318.62460    10662.80        4655.83
+Function Value = 15318.62456    10662.66        4655.97
+Function Value = 15318.62456    10662.66        4655.97
+back to Davidon-Fletcher-Powell Procedure: zeta = 1.292973
+Function Value = 15318.62       10662.66        4655.97
+Gradiant [1] =    -0.00 theta[1] = 0.73712459
+Gradiant [2] =    -0.16 theta[2] = 0.40736479
+Gradiant [3] =    -0.01 theta[3] = 0.17228036
+Gradiant [4] =    -0.03 theta[4] = 1.28640989
+Gradiant [5] =    -0.06 theta[5] = 1.07425158
+Gradiant [6] =    -0.62 theta[6] = 0.04283925
+Gradiant [7] =     0.08 theta[7] = 1.39751762
+Gradiant [8] =    -0.03 theta[8] = 1.03245870
+
+start line search along the specified direction ...
+Function Value = 15318.62456    10662.61        4656.01
+Function Value = 15318.62457    10662.57        4656.06
+Function Value = 15318.62456    10662.62        4656.00
+Function Value = 15318.62456    10662.62        4656.00
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.959985
+Function Value = 15318.62       10662.62        4656.00
+Gradiant [1] =     0.00 theta[1] = 0.73711972
+Gradiant [2] =     0.00 theta[2] = 0.40738701
+Gradiant [3] =     0.00 theta[3] = 0.17227668
+Gradiant [4] =    -0.00 theta[4] = 1.28638849
+Gradiant [5] =     0.01 theta[5] = 1.07424789
+Gradiant [6] =    -0.01 theta[6] = 0.04283934
+Gradiant [7] =     0.00 theta[7] = 1.39750066
+Gradiant [8] =     0.00 theta[8] = 1.03244555
+
+start line search along the specified direction ...
+Function Value = 15318.62456    10662.62        4656.00
+Function Value = 15318.62456    10662.63        4656.00
+Function Value = 15318.62456    10662.62        4656.00
+Function Value = 15318.62456    10662.62        4656.00
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.993339
+Function Value = 15318.62       10662.62        4656.00
+Gradiant [1] =    -0.00 theta[1] = 0.73711948
+Gradiant [2] =     0.00 theta[2] = 0.40738701
+Gradiant [3] =    -0.00 theta[3] = 0.17227628
+Gradiant [4] =     0.00 theta[4] = 1.28638881
+Gradiant [5] =     0.00 theta[5] = 1.07424768
+Gradiant [6] =    -0.00 theta[6] = 0.04283936
+Gradiant [7] =     0.00 theta[7] = 1.39750034
+Gradiant [8] =    -0.00 theta[8] = 1.03244467
+
+start line search along the specified direction ...
+Function Value = 15318.62456    10662.62        4656.00
+Function Value = 15318.62456    10662.62        4656.00
+Function Value = 15318.62456    10662.62        4656.00
+Function Value = 15318.62456    10662.62        4656.00
+Function Value = 15318.62456    10662.62        4656.00
+Function Value = 15318.62456    10662.62        4656.00
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.000993
+Function Value = 15318.62       10662.62        4656.00
+Gradiant [1] =    -0.00 theta[1] = 0.73711948
+Gradiant [2] =     0.00 theta[2] = 0.40738701
+Gradiant [3] =    -0.00 theta[3] = 0.17227628
+Gradiant [4] =     0.00 theta[4] = 1.28638881
+Gradiant [5] =     0.00 theta[5] = 1.07424768
+Gradiant [6] =    -0.00 theta[6] = 0.04283936
+Gradiant [7] =     0.00 theta[7] = 1.39750034
+Gradiant [8] =    -0.00 theta[8] = 1.03244467
+loglikelihood = -15318.62456    AIC = 30653.24912
+theta[1] = 0.54334513    gradient[1] =  -0.0001
+theta[2] = 0.16596418    gradient[2] =   0.0001
+theta[3] = 0.02967912    gradient[3] =  -0.0001
+theta[4] = 1.65479618    gradient[4] =   0.0001
+theta[5] = 1.15400807    gradient[5] =   0.0003
+theta[6] = 0.00183521    gradient[6] =  -0.0004
+theta[7] = 1.95300720    gradient[7] =   0.0000
+theta[8] = 1.06594199    gradient[8] =  -0.0000
+======================================================
+MLE:
+         mu           A           c       alpha           p           D 
+0.543345130 0.165964178 0.029679116 1.654796178 1.154008070 0.001835211 
+          q       gamma 
+1.953007202 1.065941988 
+======================================================
+declustering:
+
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |=======                                                               |  10%
+  |                                                                            
+  |==============                                                        |  20%
+  |                                                                            
+  |=====================                                                 |  30%
+  |                                                                            
+  |============================                                          |  40%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |==========================================                            |  60%
+  |                                                                            
+  |=================================================                     |  70%
+  |                                                                            
+  |========================================================              |  80%
+  |                                                                            
+  |===============================================================       |  90%
+  |                                                                            
+  |======================================================================| 100%
+iteration:  2 
+======================================================
+background seismicity rate:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+2.410e-06 3.733e-03 9.626e-03 2.377e-02 2.701e-02 2.533e-01 
+probability of being a background event:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+0.0000005 0.0123651 0.7544643 0.5444033 0.9324543 1.0000000 
+integral of background seismicity rate:  4257.9 
+======================================================
+estimating:
+        start Davidon-Fletcher-Powell procedure ... 
+Function Value = 15311.29       10692.57        4618.72
+Gradiant [1] =   -81.68 theta[1] = 0.73711948
+Gradiant [2] =   -35.22 theta[2] = 0.40738701
+Gradiant [3] =   -12.05 theta[3] = 0.17227628
+Gradiant [4] =   -27.06 theta[4] = 1.28638881
+Gradiant [5] =    38.93 theta[5] = 1.07424768
+Gradiant [6] =  -129.07 theta[6] = 0.04283936
+Gradiant [7] =    15.41 theta[7] = 1.39750034
+Gradiant [8] =    -7.31 theta[8] = 1.03244467
+
+start line search along the specified direction ...
+Function Value = 15311.27106    10690.70        4620.57
+Function Value = 15311.24864    10688.82        4622.43
+Function Value = 15311.20745    10685.08        4626.13
+Function Value = 15311.13959    10677.59        4633.54
+Function Value = 15311.06188    10662.66        4648.40
+Function Value = 15311.13795    10632.92        4678.22
+Function Value = 15311.05199    10655.10        4655.95
+Function Value = 15311.05199    10655.11        4655.94
+back to Davidon-Fletcher-Powell Procedure: zeta = 1.002616
+Function Value = 15311.05       10655.11        4655.94
+Gradiant [1] =    -0.06 theta[1] = 0.74238046
+Gradiant [2] =    -0.19 theta[2] = 0.40734895
+Gradiant [3] =     0.25 theta[3] = 0.17200622
+Gradiant [4] =    -0.09 theta[4] = 1.28751492
+Gradiant [5] =    -1.14 theta[5] = 1.07386427
+Gradiant [6] =     0.22 theta[6] = 0.04282738
+Gradiant [7] =    -0.15 theta[7] = 1.39661692
+Gradiant [8] =    -0.09 theta[8] = 1.03289598
+
+start line search along the specified direction ...
+Function Value = 15311.05197    10655.05        4656.00
+Function Value = 15311.05199    10654.99        4656.07
+Function Value = 15311.05197    10655.05        4656.00
+Function Value = 15311.05197    10655.05        4656.00
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.989128
+Function Value = 15311.05       10655.05        4656.00
+Gradiant [1] =     0.00 theta[1] = 0.74239930
+Gradiant [2] =     0.01 theta[2] = 0.40731832
+Gradiant [3] =    -0.00 theta[3] = 0.17202151
+Gradiant [4] =     0.01 theta[4] = 1.28753111
+Gradiant [5] =     0.01 theta[5] = 1.07388330
+Gradiant [6] =     0.01 theta[6] = 0.04283015
+Gradiant [7] =    -0.00 theta[7] = 1.39670052
+Gradiant [8] =     0.00 theta[8] = 1.03297435
+
+start line search along the specified direction ...
+Function Value = 15311.05197    10655.05        4656.00
+Function Value = 15311.05197    10655.05        4656.00
+Function Value = 15311.05197    10655.05        4656.00
+Function Value = 15311.05197    10655.05        4656.00
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.989128
+Function Value = 15311.05       10655.05        4656.00
+Gradiant [1] =     0.00 theta[1] = 0.74239945
+Gradiant [2] =     0.00 theta[2] = 0.40731800
+Gradiant [3] =     0.00 theta[3] = 0.17202167
+Gradiant [4] =     0.00 theta[4] = 1.28753093
+Gradiant [5] =     0.00 theta[5] = 1.07388346
+Gradiant [6] =     0.00 theta[6] = 0.04283010
+Gradiant [7] =     0.00 theta[7] = 1.39670007
+Gradiant [8] =     0.00 theta[8] = 1.03297417
+
+start line search along the specified direction ...
+Function Value = 15311.05197    10655.05        4656.00
+Function Value = 15311.05197    10655.05        4656.00
+Function Value = 15311.05197    10655.05        4656.00
+Function Value = 15311.05197    10655.05        4656.00
+Function Value = 15311.05197    10655.05        4656.00
+back to Davidon-Fletcher-Powell Procedure: zeta = 1.978256
+Function Value = 15311.05       10655.05        4656.00
+Gradiant [1] =    -0.00 theta[1] = 0.74239945
+Gradiant [2] =    -0.00 theta[2] = 0.40731799
+Gradiant [3] =    -0.00 theta[3] = 0.17202167
+Gradiant [4] =    -0.00 theta[4] = 1.28753094
+Gradiant [5] =    -0.00 theta[5] = 1.07388346
+Gradiant [6] =    -0.00 theta[6] = 0.04283010
+Gradiant [7] =    -0.00 theta[7] = 1.39670007
+Gradiant [8] =    -0.00 theta[8] = 1.03297417
+
+start line search along the specified direction ...
+Function Value = 15311.05197    10655.05        4656.00
+Function Value = 15311.05197    10655.05        4656.00
+Function Value = 15311.05197    10655.05        4656.00
+Function Value = 15311.05197    10655.05        4656.00
+Function Value = 15311.05197    10655.05        4656.00
+Function Value = 15311.05197    10655.05        4656.00
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.001978
+Function Value = 15311.05       10655.05        4656.00
+Gradiant [1] =    -0.00 theta[1] = 0.74239945
+Gradiant [2] =    -0.00 theta[2] = 0.40731799
+Gradiant [3] =    -0.00 theta[3] = 0.17202167
+Gradiant [4] =    -0.00 theta[4] = 1.28753094
+Gradiant [5] =    -0.00 theta[5] = 1.07388346
+Gradiant [6] =    -0.00 theta[6] = 0.04283010
+Gradiant [7] =    -0.00 theta[7] = 1.39670007
+Gradiant [8] =    -0.00 theta[8] = 1.03297417
+loglikelihood = -15311.05197    AIC = 30638.10394
+theta[1] = 0.55115695    gradient[1] =  -0.0000
+theta[2] = 0.16590795    gradient[2] =  -0.0001
+theta[3] = 0.02959145    gradient[3] =  -0.0000
+theta[4] = 1.65773591    gradient[4] =  -0.0001
+theta[5] = 1.15322569    gradient[5] =  -0.0001
+theta[6] = 0.00183442    gradient[6] =  -0.0000
+theta[7] = 1.95077108    gradient[7] =  -0.0000
+theta[8] = 1.06703564    gradient[8] =  -0.0000
+======================================================
+MLE:
+         mu           A           c       alpha           p           D 
+0.551156947 0.165907948 0.029591454 1.657735914 1.153225689 0.001834417 
+          q       gamma 
+1.950771081 1.067035645 
+======================================================
+              iteration 2              
+0.0143772668 0.0004943388 0.3464584140 
+declustering:
+
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |========                                                              |  11%
+  |                                                                            
+  |================                                                      |  22%
+  |                                                                            
+  |=======================                                               |  33%
+  |                                                                            
+  |===============================                                       |  44%
+  |                                                                            
+  |=======================================                               |  56%
+  |                                                                            
+  |===============================================                       |  67%
+  |                                                                            
+  |======================================================                |  78%
+  |                                                                            
+  |==============================================================        |  89%
+  |                                                                            
+  |======================================================================| 100%
+iteration:  3 
+======================================================
+background seismicity rate:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+2.410e-06 3.740e-03 9.651e-03 2.382e-02 2.704e-02 2.537e-01 
+probability of being a background event:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+0.0000005 0.0125657 0.7565493 0.5451878 0.9330490 1.0000000 
+integral of background seismicity rate:  4264.721 
+======================================================
+estimating:
+        start Davidon-Fletcher-Powell procedure ... 
+Function Value = 15310.97       10651.21        4659.76
+Gradiant [1] =     7.86 theta[1] = 0.74239945
+Gradiant [2] =     4.14 theta[2] = 0.40731799
+Gradiant [3] =     1.44 theta[3] = 0.17202167
+Gradiant [4] =     2.26 theta[4] = 1.28753094
+Gradiant [5] =    -4.53 theta[5] = 1.07388346
+Gradiant [6] =     3.39 theta[6] = 0.04283010
+Gradiant [7] =    -0.44 theta[7] = 1.39670007
+Gradiant [8] =     0.20 theta[8] = 1.03297417
+
+start line search along the specified direction ...
+Function Value = 15310.96517    10651.39        4659.57
+Function Value = 15310.96496    10651.58        4659.38
+Function Value = 15310.96457    10651.96        4659.01
+Function Value = 15310.96393    10652.71        4658.26
+Function Value = 15310.96320    10654.21        4656.75
+Function Value = 15310.96393    10657.22        4653.74
+Function Value = 15310.96311    10654.97        4656.00
+Function Value = 15310.96311    10654.97        4656.00
+back to Davidon-Fletcher-Powell Procedure: zeta = 1.000654
+Function Value = 15310.96       10654.97        4656.00
+Gradiant [1] =     0.00 theta[1] = 0.74192361
+Gradiant [2] =    -0.01 theta[2] = 0.40714294
+Gradiant [3] =     0.01 theta[3] = 0.17209781
+Gradiant [4] =    -0.01 theta[4] = 1.28759923
+Gradiant [5] =    -0.02 theta[5] = 1.07396667
+Gradiant [6] =     0.02 theta[6] = 0.04282785
+Gradiant [7] =    -0.00 theta[7] = 1.39668509
+Gradiant [8] =     0.00 theta[8] = 1.03297277
+
+start line search along the specified direction ...
+Function Value = 15310.96311    10654.96        4656.00
+Function Value = 15310.96311    10654.96        4656.00
+Function Value = 15310.96311    10654.96        4656.00
+Function Value = 15310.96311    10654.96        4656.00
+back to Davidon-Fletcher-Powell Procedure: zeta = 1.001149
+Function Value = 15310.96       10654.96        4656.00
+Gradiant [1] =    -0.00 theta[1] = 0.74192364
+Gradiant [2] =    -0.00 theta[2] = 0.40714298
+Gradiant [3] =     0.00 theta[3] = 0.17209763
+Gradiant [4] =    -0.00 theta[4] = 1.28759935
+Gradiant [5] =    -0.00 theta[5] = 1.07396674
+Gradiant [6] =    -0.00 theta[6] = 0.04282800
+Gradiant [7] =     0.00 theta[7] = 1.39668657
+Gradiant [8] =    -0.00 theta[8] = 1.03297227
+
+start line search along the specified direction ...
+Function Value = 15310.96311    10654.96        4656.00
+Function Value = 15310.96311    10654.96        4656.00
+Function Value = 15310.96311    10654.96        4656.00
+Function Value = 15310.96311    10654.96        4656.00
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.100115
+Function Value = 15310.96       10654.96        4656.00
+Gradiant [1] =    -0.00 theta[1] = 0.74192364
+Gradiant [2] =    -0.00 theta[2] = 0.40714298
+Gradiant [3] =     0.00 theta[3] = 0.17209763
+Gradiant [4] =    -0.00 theta[4] = 1.28759935
+Gradiant [5] =    -0.00 theta[5] = 1.07396674
+Gradiant [6] =    -0.00 theta[6] = 0.04282800
+Gradiant [7] =     0.00 theta[7] = 1.39668657
+Gradiant [8] =    -0.00 theta[8] = 1.03297227
+
+start line search along the specified direction ...
+Function Value = 15310.96311    10654.96        4656.00
+Function Value = 15310.96311    10654.96        4656.00
+Function Value = 15310.96311    10654.96        4656.00
+Function Value = 15310.96311    10654.96        4656.00
+Function Value = 15310.96311    10654.96        4656.00
+Function Value = 15310.96311    10654.96        4656.00
+Function Value = 15310.96311    10654.96        4656.00
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.000000
+Function Value = 15310.96       10654.96        4656.00
+Gradiant [1] =    -0.00 theta[1] = 0.74192364
+Gradiant [2] =    -0.00 theta[2] = 0.40714298
+Gradiant [3] =     0.00 theta[3] = 0.17209763
+Gradiant [4] =    -0.00 theta[4] = 1.28759935
+Gradiant [5] =    -0.00 theta[5] = 1.07396674
+Gradiant [6] =    -0.00 theta[6] = 0.04282800
+Gradiant [7] =     0.00 theta[7] = 1.39668657
+Gradiant [8] =    -0.00 theta[8] = 1.03297227
+loglikelihood = -15310.96311    AIC = 30637.92621
+theta[1] = 0.55045069    gradient[1] =  -0.0000
+theta[2] = 0.16576541    gradient[2] =  -0.0000
+theta[3] = 0.02961759    gradient[3] =   0.0000
+theta[4] = 1.65791208    gradient[4] =  -0.0000
+theta[5] = 1.15340455    gradient[5] =  -0.0001
+theta[6] = 0.00183424    gradient[6] =  -0.0002
+theta[7] = 1.95073338    gradient[7] =   0.0000
+theta[8] = 1.06703170    gradient[8] =  -0.0000
+======================================================
+MLE:
+         mu           A           c       alpha           p           D 
+0.550450690 0.165765405 0.029617593 1.657912084 1.153404555 0.001834238 
+          q       gamma 
+1.950733378 1.067031704 
+======================================================
+              iteration 3              
+8.833237e-04 5.804023e-06 1.323576e-02 
+declustering:
+
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |=========                                                             |  12%
+  |                                                                            
+  |==================                                                    |  25%
+  |                                                                            
+  |==========================                                            |  38%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |============================================                          |  62%
+  |                                                                            
+  |====================================================                  |  75%
+  |                                                                            
+  |=============================================================         |  88%
+  |                                                                            
+  |======================================================================| 100%
+iteration:  4 
+======================================================
+background seismicity rate:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+2.410e-06 3.740e-03 9.650e-03 2.382e-02 2.704e-02 2.536e-01 
+probability of being a background event:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+0.0000005 0.0125456 0.7565114 0.5451561 0.9330500 1.0000000 
+integral of background seismicity rate:  4264.448 
+======================================================
+estimating:
+        start Davidon-Fletcher-Powell procedure ... 
+Function Value = 15310.96       10655.11        4655.85
+Gradiant [1] =    -0.32 theta[1] = 0.74192364
+Gradiant [2] =    -0.16 theta[2] = 0.40714298
+Gradiant [3] =    -0.05 theta[3] = 0.17209763
+Gradiant [4] =    -0.09 theta[4] = 1.28759935
+Gradiant [5] =     0.16 theta[5] = 1.07396674
+Gradiant [6] =    -0.24 theta[6] = 0.04282800
+Gradiant [7] =     0.03 theta[7] = 1.39668657
+Gradiant [8] =    -0.01 theta[8] = 1.03297227
+
+start line search along the specified direction ...
+Function Value = 15310.95622    10655.10        4655.86
+Function Value = 15310.95622    10655.09        4655.86
+Function Value = 15310.95622    10655.08        4655.88
+Function Value = 15310.95622    10655.05        4655.91
+Function Value = 15310.95622    10654.99        4655.97
+Function Value = 15310.95622    10654.87        4656.09
+Function Value = 15310.95622    10654.96        4656.00
+Function Value = 15310.95622    10654.96        4656.00
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.999566
+Function Value = 15310.96       10654.96        4656.00
+Gradiant [1] =    -0.00 theta[1] = 0.74194371
+Gradiant [2] =     0.00 theta[2] = 0.40714742
+Gradiant [3] =     0.00 theta[3] = 0.17209586
+Gradiant [4] =     0.00 theta[4] = 1.28759840
+Gradiant [5] =     0.00 theta[5] = 1.07396452
+Gradiant [6] =    -0.00 theta[6] = 0.04282788
+Gradiant [7] =     0.00 theta[7] = 1.39668387
+Gradiant [8] =    -0.00 theta[8] = 1.03297247
+
+start line search along the specified direction ...
+Function Value = 15310.95622    10654.96        4656.00
+Function Value = 15310.95622    10654.96        4656.00
+Function Value = 15310.95622    10654.96        4656.00
+Function Value = 15310.95622    10654.96        4656.00
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.999566
+Function Value = 15310.96       10654.96        4656.00
+Gradiant [1] =     0.00 theta[1] = 0.74194372
+Gradiant [2] =    -0.00 theta[2] = 0.40714741
+Gradiant [3] =    -0.00 theta[3] = 0.17209586
+Gradiant [4] =    -0.00 theta[4] = 1.28759840
+Gradiant [5] =    -0.00 theta[5] = 1.07396453
+Gradiant [6] =    -0.00 theta[6] = 0.04282788
+Gradiant [7] =     0.00 theta[7] = 1.39668389
+Gradiant [8] =    -0.00 theta[8] = 1.03297248
+
+start line search along the specified direction ...
+Function Value = 15310.95622    10654.96        4656.00
+Function Value = 15310.95622    10654.96        4656.00
+Function Value = 15310.95622    10654.96        4656.00
+Function Value = 15310.95622    10654.96        4656.00
+Function Value = 15310.95622    10654.96        4656.00
+Function Value = 15310.95622    10654.96        4656.00
+back to Davidon-Fletcher-Powell Procedure: zeta = 0.000000
+Function Value = 15310.96       10654.96        4656.00
+Gradiant [1] =     0.00 theta[1] = 0.74194372
+Gradiant [2] =    -0.00 theta[2] = 0.40714741
+Gradiant [3] =    -0.00 theta[3] = 0.17209586
+Gradiant [4] =    -0.00 theta[4] = 1.28759840
+Gradiant [5] =    -0.00 theta[5] = 1.07396453
+Gradiant [6] =    -0.00 theta[6] = 0.04282788
+Gradiant [7] =     0.00 theta[7] = 1.39668389
+Gradiant [8] =    -0.00 theta[8] = 1.03297248
+loglikelihood = -15310.95622    AIC = 30637.91244
+theta[1] = 0.55048048    gradient[1] =   0.0000
+theta[2] = 0.16576901    gradient[2] =  -0.0000
+theta[3] = 0.02961699    gradient[3] =  -0.0000
+theta[4] = 1.65790964    gradient[4] =  -0.0000
+theta[5] = 1.15339981    gradient[5] =  -0.0000
+theta[6] = 0.00183423    gradient[6] =  -0.0000
+theta[7] = 1.95072589    gradient[7] =   0.0000
+theta[8] = 1.06703214    gradient[8] =  -0.0000
+======================================================
+MLE:
+         mu           A           c       alpha           p           D 
+0.550480484 0.165769013 0.029616986 1.657909640 1.153399811 0.001834227 
+          q       gamma 
+1.950725892 1.067032144 
+======================================================
+              iteration 4              
+5.412792e-05 4.497371e-07 6.053721e-04 
+Execution time:
+    user   system  elapsed 
+11875.68     0.63 11982.14 
+> japan.fit
+ETAS model: fitted using iterative stochastic declustering method
+converged after 4 iterations: elapsed execution time 199.7 minutes
+
+ML estimates of model parameters:
+           beta     mu      A      c  alpha      p      D      q  gamma
+Estimate 2.2069 0.5505 0.1658 0.0296 1.6579 1.1534 0.0018 1.9507 1.0670
+StdErr   0.0010 0.0062 0.0161 0.0317 0.0059 0.0027 0.0345 0.0089 0.0139
+
+Declustering probabilities:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0125  0.7565  0.5452  0.9330  1.0000 
+
+log-likelihood:  -15310.96      AIC:  30637.91 
+> 

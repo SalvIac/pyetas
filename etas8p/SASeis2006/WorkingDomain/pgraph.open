@@ -1,0 +1,32 @@
+         0 0.0    ires, am1
+        10        in
+         0 6.     icnt, h
+         0        isi
+       100 10.    ipoint, days
+0.0        0.     delta, dmax
+0.0       50.     delta, dmax
+0.06       6.     delta, dmax
+****************************************************************
+The above variables are read by * format.
+Explanation of variables.
+
+ires:    =0 reading [work.etas]; =1 reading [work.res]
+am1: threshold magnitude
+in:  always =10
+icnt: alwas =0
+h:  time length of the moving interval in which points are
+    counted to show the graph count1.
+isi:  option of displaying the error bands in the log survivor
+      function;  =0  displayed, otherwise not.
+ipoint:  number of subintervals in (0,days) to estimate a non
+         parametric intensity under the palm probability measure
+days:  length  of interval to display the intensity estimate
+       under the palm probability.
+delta:  length of a subinterval unit in (0,dmax) to compute the
+        variance time curve. Usually, we take dmax/100.
+dmax:  time length of a interval to display the variance time
+     curve; this is less than (length of whole interval)/4.
+     As the default setting of either delta=0.0 or dmax=0.0 
+     in the above, the program sets 
+     dmax = (length of whole interval)/4 and delta = dmax/100.
+****************************************************************

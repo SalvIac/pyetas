@@ -1,0 +1,44 @@
+plot.timsac1<-function(file="out.epcycle1", ...)
+{
+  data1 <-matrix(scan(file, skip=1), ncol=2, byrow=T)  
+  plot(data1, type="h", ...)
+  
+}
+
+plot.timsac2<-function(file="out.epcycle2", main, ...)
+{
+  data1 <-matrix(scan(file, skip=1), ncol=2, byrow=T)
+  #print(main)
+  if(missing(main))main=scan(file, what="", nlines=1)  
+  plot(data1, type="l",  main=main, ...)
+
+}
+
+
+plot.timsac.eptren<-function(file1="out.epcycle1", file2="out.epcycle1",
+                             main.title, xlab1="Superposed Occurrence Times", 
+                             ylab1="Magnitude",xlab2="Superposed Occurrence Times",
+                             ylab2="Intensity Rate", ps.file, ...)
+{
+  if(!missing( ps.file) ) {
+     postscript(ps.file, horizontal=F)
+  }
+     par(mfrow=c(2,1))
+  
+  plot.timsac2(file2, xlab=xlab2, ylab=ylab2, main=main.title, ...)
+  plot.timsac1(file1, xlab=xlab1, ylab=ylab1, ...)
+   
+  if(!missing( ps.file))   dev.off()
+  
+}
+
+plot.timsac.eptren("./out.epcycle1", "./out.epcycle2", 
+           main.title="EPTREN > EXP(CYCLE)", ps.file="epcycle.ps")
+
+plot.timsac.eptren("./out.epcycle1", "./out.epcycle2", 
+           main.title="EPTREN > EXP(CYCLE)")
+
+
+#plot.timsac.eptren("../out.epcycle1", "../out.epcycle2", 
+#           main.title="EPTREN-CYCLE", ps.file="epcycle.ps", xlim=c(0,1))
+

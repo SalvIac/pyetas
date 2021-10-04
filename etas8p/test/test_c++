@@ -1,0 +1,569 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#define _USE_MATH_DEFINES
+#include <math.h>
+#include <cmath>
+using namespace std;
+
+
+// *******************************************************************************
+
+// value of the gaussian kernel function at r with bandwidth sig
+double dGauss(double r, double sig)
+{
+  double PI = 3.141592653589793;
+  return exp(-(r * r) /(2 * sig * sig)) / (2 * PI * sig * sig);
+}
+
+// integral of the gaussian kernel with bandwidth w[0] from 0 to r
+double pGauss(double r, double w[])
+{
+  double PI = 3.141592653589793;
+  return (1 - exp(-(r * r) / (2 * w[0] * w[0]))) / (2 * PI);
+}
+
+// *******************************************************************************
+
+
+
+double dist(double x1, double y1, double x2, double y2)
+{
+  return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+}
+
+double dist2(double x1, double y1, double x2, double y2)
+{
+  return ((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+}
+
+
+// *******************************************************************************
+
+
+double frint(double (*func)(double, double []), 
+	     double funcpara[], 
+             double x1, 
+	     double y1, 
+	     double x2, 
+	     double y2, 
+	     double cx, 
+	     double cy)
+{
+  int id = 1;
+  double det, r0, r1, r2, r12, theta, f1, f2, f3, x0, y0;
+  
+  det = (x1 * y2 + y1 * cx + x2 * cy) - (x2 * y1 + y2 * cx + x1 * cy);
+  
+  if (det < 0)
+    id = -1;
+  if (fabs(det) < 1.0e-10)
+    return 0;
+  
+  r1 = dist(x1, y1, cx, cy);
+  r2 = dist(x2, y2, cx, cy);
+  r12 = dist(x1, y1, x2, y2);
+  theta = (r1 * r1 + r2 * r2 - r12 * r12)/(2 * r1 * r2);
+  if (fabs(theta) > 1)
+    theta = 1 - 1.0e-10;
+
+  theta = acos(theta);
+
+  if (r1 + r2 > 1.0e-20)
+    {
+      x0 = x1 + r1/(r1 + r2) * (x2 - x1);
+      y0 = y1 + r1/(r1 + r2) * (y2 - y1);
+    }
+  else
+    return 0;
+  
+  r0 = dist(x0, y0, cx, cy);
+  
+  f1 = func(r1, funcpara);
+  f2 = func(r0, funcpara);
+  f3 = func(r2, funcpara);
+  
+  return id * (f1/6 + (f2 * 2)/3 + f3/6) * theta;
+}
+
+
+
+
+double polyinteg(double (*func)(double, double []), 
+		 double funcpara[], 
+         int *np, 
+		 double *px, 
+		 double *py, 
+		 double cx, 
+		 double cy)
+{
+  int ndiv = 1000; 
+  double sum = 0, dxx, dyy, x1, x2, y1, y2;
+  
+  for (int j = 0; j < (*np - 1); j++)
+    {
+      dxx = (px[j + 1] - px[j]) / ndiv;
+      dyy = (py[j + 1] - py[j]) / ndiv;
+      for( int i = 0; i < ndiv; i++)
+	{
+	  x1 = px[j] + dxx * i;
+	  y1 = py[j] + dyy * i;
+	  x2 = px[j] + dxx * (i + 1);
+	  y2 = py[j] + dyy * (i + 1);
+	  
+	  sum += frint(func, funcpara, x1, y1, x2, y2, cx, cy);
+	}
+    }
+
+  return sum;
+}
+
+
+
+
+
+// *******************************************************************************
+
+double fr(double r, double w[])
+{
+  double gamma = w[0], D = w[1], q = w[2], mag = w[3], sig = D * exp(gamma * mag);
+  double PI = 3.141592653589793;
+  return (1 - pow(1 + r * r / sig, 1 - q)) / (2 * PI);
+}
+
+double dgamma_fr(double r, double w[])
+{
+  double gamma = w[0], D = w[1], q = w[2], mag = w[3], sig = D * exp(gamma * mag);
+  double PI = 3.141592653589793;
+  return (1 -q) * pow(1 + r * r / sig, -q) * mag * r * r / sig / (2 * PI);
+}
+
+double dD_fr(double r, double w[])
+{
+  double gamma = w[0], D = w[1], q = w[2], mag = w[3], sig = D * exp(gamma * mag);
+  double PI = 3.141592653589793;
+  return (1 - q) * pow(1 + r * r / sig, -q) / D * r * r / sig / (2 * PI);
+}
+
+double dq_fr(double r, double w[])
+{
+  double gamma = w[0], D = w[1], q = w[2], mag = w[3], sig = D*exp( gamma*mag );
+  double PI = 3.141592653589793;
+  return pow(1 + r * r / sig, 1 - q) * log(1 + r * r / sig) / (2 * PI);
+}
+
+// *******************************************************************************
+
+double clambdaj(double *theta,
+               int j,
+               double *t,
+               double *x,
+               double *y,
+               double *m,
+               double *bk)
+{
+  // extract model parameters
+  double mu = theta[0] * theta[0],
+    A     = theta[1] * theta[1],
+    c     = theta[2] * theta[2],
+    alpha = theta[3] * theta[3],
+    p     = theta[4] * theta[4],
+    D     = theta[5] * theta[5],
+    q     = theta[6] * theta[6],
+    gamma = theta[7] * theta[7];
+
+  double part1, part2, part3, delta, sig, r2;
+  double s = mu * bk[j];
+
+  for (register int i = 0; i < j; i++)
+    {
+      part1 = exp(alpha * m[i]);
+
+      delta = t[j] - t[i];
+      part2 = (p - 1)/c * pow(1 + delta/c, - p);
+
+      sig = D * exp(gamma * m[i]);
+      r2 = dist2(x[j], y[j], x[i], y[i]);
+      double PI = 3.141592653589793;
+      part3 = (q - 1) / (sig * PI) * pow(1 + r2 / sig, - q);
+
+      s += A * part1 * part2 * part3;
+    }
+  return s;
+}
+
+// *******************************************************************************
+
+void clambdajGr(double *theta,
+               int j,
+               double *t,
+               double *x,
+               double *y,
+               double *m,
+               double *bk,
+	       double *fv,
+	       double *dfv)
+{
+  // extract model parameters
+  double mu = theta[0] * theta[0],
+    A     = theta[1] * theta[1],
+    c     = theta[2] * theta[2],
+    alpha = theta[3] * theta[3],
+    p     = theta[4] * theta[4],
+    D     = theta[5] * theta[5],
+    q     = theta[6] * theta[6],
+    gamma = theta[7] * theta[7];
+
+  double part1, part2, part3, part1_alpha, part2_c, part2_p, part3_d, part3_q,
+    part3_gamma, delta, sig, r2, sg1, sg2 = 0, sg3 = 0,
+    sg4 = 0, sg5 = 0, sg6 = 0, sg7 = 0, sg8 = 0;
+
+  double s = mu * bk[j];
+  sg1 = bk[j];
+
+  for (register int i = 0; i < j; i++)
+    {
+      part1 = exp(alpha * m[i]);
+
+      delta = t[j] - t[i];
+      part2 = (p - 1)/c * pow(1 + delta / c, - p);
+
+      sig   = D * exp(gamma * m[i]);
+      r2 = dist2(x[j], y[j], x[i], y[i]);
+      double PI = 3.141592653589793;
+      part3 = (q - 1)/(sig * PI) * pow(1 + r2/sig, - q);
+
+      s    += A * part1 * part2 * part3;
+      sg2  += part1 * part2 * part3;
+
+      part2_c = part2 * (-1/c - p/(c + delta) + p/c);
+      sg3    += A * part1 * part2_c * part3;
+
+      part1_alpha = part1 * m[i];
+      sg4        += A * part1_alpha * part2 * part3;
+
+      part2_p = part2 * (1/(p - 1) - log(1 + delta/c));
+      sg5    += A * part1 * part2_p * part3;
+
+      part3_d = part3 / D * (-1 + q * (1 - 1/(1 + r2/sig)));
+      sg6    += A * part1 * part2 * part3_d;
+
+      part3_q = part3 * (1/(q - 1) - log(1 + r2/sig));
+      sg7    += A * part1 * part2 * part3_q;
+
+      part3_gamma = part3 * (-m[i] + q * m[i] * (1 - 1/(1 + r2/sig)));
+      sg8        += A * part1 * part2 * part3_gamma;
+    }
+
+  *fv      = s;
+  dfv[ 0 ] = sg1 * 2 * theta[0];
+  dfv[ 1 ] = sg2 * 2 * theta[1];
+  dfv[ 2 ] = sg3 * 2 * theta[2];
+  dfv[ 3 ] = sg4 * 2 * theta[3];
+  dfv[ 4 ] = sg5 * 2 * theta[4];
+  dfv[ 5 ] = sg6 * 2 * theta[5];
+  dfv[ 6 ] = sg7 * 2 * theta[6];
+  dfv[ 7 ] = sg8 * 2 * theta[7];
+}
+
+// *******************************************************************************
+
+double cintegj(double *theta,
+              int j,
+              double *t,
+              double *x,
+              double *y,
+              double *m,
+              int *np,
+              double *px,
+              double *py,
+              double *tstart2,
+              double *tlength)
+{
+
+  // extract model parameters
+  double //mu = theta[0] * theta[0],
+    A     = theta[1] * theta[1],
+    c     = theta[2] * theta[2],
+    alpha = theta[3] * theta[3],
+    p     = theta[4] * theta[4],
+    D     = theta[5] * theta[5],
+    q     = theta[6] * theta[6],
+    gamma = theta[7] * theta[7];
+
+  double ttemp, ttemp1, ttemp2, gi, gi1, gi2, w[4], si, sk;
+
+  if (t[j] > *tstart2)
+    {
+      ttemp = *tlength - t[j];
+      gi  = 1 - pow(1 + ttemp/c, 1 - p);
+    }
+  else
+    {
+      ttemp1 = *tstart2 - t[j];
+      ttemp2 = *tlength - t[j];
+
+      gi1  = 1 - pow(1 + ttemp1/c, 1 - p);
+      gi2  = 1 - pow(1 + ttemp2/c, 1 - p);
+      gi   = gi2 - gi1;
+    }
+
+  w[ 0 ] = gamma;
+  w[ 1 ] = D;
+  w[ 2 ] = q;
+  w[ 3 ] = m[j];
+
+  si = polyinteg(fr, w, np, px, py, x[j], y[j]);
+  sk = A * exp(alpha * m[j]);
+  return sk * gi * si;
+}
+
+// *******************************************************************************
+
+void cintegjGr(double *theta,
+              int j,
+              double *t,
+              double *x,
+              double *y,
+              double *m,
+              int *np,
+              double *px,
+              double *py,
+              double *tstart2,
+              double *tlength,
+              double *fv,
+	      double *dfv)
+{
+  // extract model parameters
+  double //mu = theta[0] * theta[0],
+    A     = theta[1] * theta[1],
+    c     = theta[2] * theta[2],
+    alpha = theta[3] * theta[3],
+    p     = theta[4] * theta[4],
+    D     = theta[5] * theta[5],
+    q     = theta[6] * theta[6],
+    gamma = theta[7] * theta[7];
+
+  double ttemp, ttemp1, ttemp2, gi, gi1, gi2, gic, gic1, gic2, gip, gip1,
+    gip2, w[4], si, sid, siq, sigamma, sk;
+
+  if (t[j] > *tstart2)
+    {
+      ttemp = *tlength - t[j];
+
+      gi  = 1 - pow(1 + ttemp/c, 1 - p);
+      gic = - (1 - gi) * (1 - p) * ( 1/(c + ttemp) - 1/c);
+      gip = - (1 - gi) * (log(c) - log(c + ttemp));
+    }
+  else
+    {
+      ttemp1 = *tstart2 - t[j];
+      ttemp2 = *tlength - t[j];
+
+      gi1  = 1 - pow(1 + ttemp1/c, 1 - p);
+      gi2  = 1 - pow(1 + ttemp2/c, 1 - p);
+      gic1 = - (1 - gi1) * (1 - p) * (1/(c + ttemp1) - 1/c);
+      gic2 = - (1 - gi2) * (1 - p) * (1/(c + ttemp2) - 1/c);
+      gip1 = - (1 - gi1) * (log(c) - log(c + ttemp1));
+      gip2 = - (1 - gi2) * (log(c) - log(c + ttemp2));
+
+      gi  = gi2 - gi1;
+      gic = gic2 - gic1;
+      gip = gip2 - gip1;
+    }
+
+  w[0] = gamma;
+  w[1] = D;
+  w[2] = q;
+  w[3] = m[j];
+
+  si      = polyinteg(fr, w, np, px, py, x[j], y[j]);
+  sid     = polyinteg(dD_fr, w, np, px, py, x[j], y[j]);
+  siq     = polyinteg(dq_fr, w, np, px, py, x[j], y[j]);
+  sigamma = polyinteg(dgamma_fr, w, np, px, py, x[j], y[j]);
+
+  sk = A * exp(alpha * m[j]);
+  *fv      = sk * gi * si;
+  dfv[ 0 ] = 0;
+  dfv[ 1 ] = sk * gi  * si / A        * 2 * theta[1];
+  dfv[ 2 ] = sk * gic * si            * 2 * theta[2];
+  dfv[ 3 ] = sk * gi  * si * m[j]     * 2 * theta[3];
+  dfv[ 4 ] = sk * gip * si            * 2 * theta[4];
+  dfv[ 5 ] = sk * gi  * sid           * 2 * theta[5];
+  dfv[ 6 ] = sk * gi  * siq           * 2 * theta[6];
+  dfv[ 7 ] = sk * gi  * sigamma       * 2 * theta[7];
+  return;
+}
+
+
+
+
+
+
+
+
+// *******************************************************************************
+
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+    double r1, x1, y1, x2, y2;
+    x1 = 1.0;
+    y1 = 1.0;
+    x2 = 3.0;
+    y2 = 2.0;
+    r1 = dist(x1, y1, x2, y2);
+    cout<<r1;
+    cout<<'\n';
+
+
+
+    double f1, w[1];
+    w[0] = 0.05;
+    f1 = pGauss(r1, w);
+    cout<<f1;
+    cout<<'\n';
+
+    
+    double fr, cx, cy;
+    x1 = -6.959129639291507;
+    y1 = -9.141648000000004;
+    x2 = -6.945099135986483;
+    y2 = -9.141648000000004;
+    cx = 4.883913500346288;
+    cy = 3.3641999999999967;    
+    fr = frint(pGauss, w, x1, y1, x2, y2, cx, cy);
+    cout<<fr;
+    cout<<'\n';
+
+
+
+    int npoly = 5;
+    double px[5], py[5], pi;
+    px[0] = -7.0152516525115995;
+    px[1] = 7.0152516525115765;
+    px[2] = 7.0152516525115765;
+    px[3] = -7.0152516525115995;
+    px[4] = -7.0152516525115995;
+    py[0] = -9.141648000000004;
+    py[1] = -9.141648000000004;
+    py[2] = 9.141647999999996;
+    py[3] = 9.141647999999996;
+    py[4] = -9.141648000000004;
+    pi = polyinteg(pGauss, w, &npoly, px, py, cx, cy);
+    cout<<pi;
+    cout<<'\n';
+
+    ///////////////////////////////////////////////////////////////////////////
+    
+    
+    int j = 5;
+    double tstart2, tlength, tht[8], t[10], x[10], y[10], m[10], bk[10];
+    t[0] = 0.0;
+    t[1] = 2.748414351851852;
+    t[2] = 2.771030092592593;
+    t[3] = 6.741145833333333;
+    t[4] = 14.265266203703703;
+    t[5] = 17.982349537037038;
+    t[6] = 22.867060185185185;
+    t[7] = 26.31388888888889;
+    t[8] = 27.278854166666665;
+    t[9] = 27.652256944444446;
+    x[0] = 4.883913500346288;
+    x[1] = 4.0649713749413;
+    x[2] = 4.292608153475305;
+    x[3] = -2.1840749499622643;
+    x[4] = -3.508624822356413;
+    x[5] = -3.9438294419639286;
+    x[6] = -3.822768432121458;
+    x[7] = -5.685457151743186;
+    x[8] = 3.7841680967638913;
+    x[9] = 5.042522844792312;
+    y[0] = 3.3641999999999967;
+    y[1] = -0.13560000000000372;
+    y[2] = 0.3831999999999951;
+    y[3] = -2.4313000000000002;
+    y[4] = -2.642400000000002;
+    y[5] = -4.836400000000001;
+    y[6] = -2.4711;
+    y[7] = -7.162600000000001;
+    y[8] = -2.0771000000000015;
+    y[9] = 5.8470999999999975;
+    m[0] = 0.09999999999999964;
+    m[1] = 1.0999999999999996;
+    m[2] = 0.7000000000000002;
+    m[3] = 0.0;
+    m[4] = 0.9000000000000004;
+    m[5] = 1.0;
+    m[6] = 0.20000000000000018;
+    m[7] = 0.20000000000000018;
+    m[8] = 0.7999999999999998;
+    m[9] = 1.9000000000000004;
+    bk[0] = 0.05191824;
+    bk[1] = 0.05189822;
+    bk[2] = 0.05186122;
+    bk[3] = 0.05190771;
+    bk[4] = 0.05189338;
+    bk[5] = 0.05188762;
+    bk[6] = 0.05190069;
+    bk[7] = 0.05190376; 
+    bk[8] = 0.05190912;
+    bk[9] = 0.05189609;
+    
+    tstart2 = 0.0;
+    tlength = 27.652256944444446;
+    
+    tht[0] = sqrt(0.11459513439367879);
+    tht[1] = sqrt(0.01);
+    tht[2] = sqrt(0.01);
+    tht[3] = sqrt(1);
+    tht[4] = sqrt(1.3);
+    tht[5] = sqrt(0.01);
+    tht[6] = sqrt(2);
+    tht[7] = sqrt(1);
+
+
+    
+    pi = clambdaj(tht,j, t, x, y, m, bk);
+    cout<<pi;
+    cout<<'\n';
+    
+    double fv1temp, g1temp[8], fv2temp, g2temp[8], fv1 = 0, fv2 = 0, df1[8] = {0}, df2[8] = {0};
+
+    clambdajGr(tht,j, t, x, y, m, bk, &fv1temp, &g1temp[0]);
+    cout << fv1temp;
+    cout<<'\n';
+    for (int i = 0; i < 8; i++)
+        cout << g1temp[i] << " ";
+    cout<<'\n';
+    
+    
+    pi = cintegj(tht, j, t, x, y, m, &npoly, px, py, &tstart2, &tlength);
+    cout<<pi;
+    cout<<'\n';
+    
+    cintegjGr(tht, j, t, x, y, m, &npoly, px, py, &tstart2, &tlength, &fv1temp, &g1temp[0]);
+    cout << fv1temp;
+    cout<<'\n';
+    for (int i = 0; i < 8; i++)
+        cout << g1temp[i] << " ";
+    cout<<'\n';
+
+
+    return 0;
+}

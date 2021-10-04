@@ -1,0 +1,60 @@
+        para <- scan("etas.open")
+        mag0 <- para[6]; tsta <- para[3]; tend <- para[4]
+        data <- scan("work.etas",skip=1)
+	hypo <- matrix(data, ncol = 9, byrow = T)
+        hypo <- hypo[hypo[, 4] >= mag0,  ]
+	mag1 <- min(hypo[, 4])
+	mag <- hypo[, 4]
+	ti <- hypo[, 5]
+	zero <- hypo[, 1] * 0
+	cn <- 1:length(hypo[, 1])
+	cna <- append(cn, 0, after = 0)
+	cn1 <- cna[1:length(cn)]
+	tia <- append(ti, 0, after = 0)
+	ti1 <- tia[1:length(ti)]
+#       par(xaxs='i',yaxs='i')
+        par(pty="s",xaxs='r',yaxs='r')
+#       par(pty="s",xaxs='i',yaxs='i')
+#       par(pty="s",yaxs='i')
+#	xrange <- c(min(ti), max(ti))
+	xrange <- c(min(ti), tend)
+	mgrange <- max(cn)/4
+	bottom <- min(cn) - mgrange
+#
+        inc <- matrix(scan("work.res"),ncol=7,byrow=T)
+#	yrange <- c(bottom, max(inc[,5]-inc[1,1]))
+ 	yrange <- c(bottom, max( max(cn),max(inc[,7]-inc[1,1]) ))
+#
+ 	plot(xrange,yrange, type = "n", 
+ main = "ETAS Fit and Prediction (r.seisetas)",
+xlab = "ORDINARY TIME (DAYS)", ylab = "CUMULATIVE NUMBER OF EVENTS", lwd = 1, xlim=c(xrange))
+#ETAS increasing function:
+        inc <- matrix(scan("work.res"),ncol=7,byrow=T)
+        lines(inc[,5],inc[,7]-inc[1,1],type='l',col='red')
+	segments(ti1, cn1, ti, cn1)
+	segments(ti, cn1, ti, cn)
+	mgmax <- max(mag - mag1 + 1)
+	mag <- mag - mag1 + 0.5
+	segments(ti, bottom, ti, mag/mgmax * mgrange + bottom)	
+	#	text(ti, mag/mgmax * mgrange + bottom, "-")
+	abline(h = 0)
+	abline(h = bottom)
+mark0 <- para[ 5]; abline(v = mark0,lty=2)
+mark1 <- para[18]; abline(v = mark1,lty=2)
+mark2 <- para[ 4]; abline(v = mark2,lty=2)
+#
+s <- para[3]
+t <- para[14]
+t0 <- para[5]
+      abline(v=t0,lty=2)
+      abline(v=t,lty=2)
+te <- para[4]
+   text(max(ti)*0.3,max(cn)*0.95,paste('M>=',mag1,' S=',s,' T=',t,' Tend=',te))
+mu <- para[8]
+k0 <- para[9]
+c  <- para[10]
+a  <- para[11]
+p  <- para[12]
+        text(max(ti)*.5,max(cn)*.6,paste('mu=',mu,'K0=',k0,'c=',c))
+        text(max(ti)*.5,max(cn)*.5,paste('alpha=',a,'p=',p))
+######### END ##########

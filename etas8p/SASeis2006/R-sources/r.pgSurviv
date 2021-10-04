@@ -1,0 +1,69 @@
+
+plot.timsac.pgraph3<-function(file="out.pgSurviv", ps.file, xlab="Interval Length", ylab="Cumulative Number",...)
+{
+
+  if(!missing(ps.file)){
+     postscript(ps.file,horizontal=F)
+     par(mfrow=c(2,1))
+  }
+
+  data<- matrix(scan(file, skip=1), ncol=8, byrow=T)
+
+  plot(data[,1], log10(data[,8]),type="p", pch="+", cex=0.5, xlab=xlab,
+        ylab=ylab, axes=F, main="PGRAPH: Survivor Function",
+      ...)
+  
+  points(data[,2], log10(data[,8]),type="l",col=2)
+  points(data[,3], log10(data[,8]),type="l",col=2)
+  points(data[,4], log10(data[,8]),type="l",col=2)
+  points(data[,5], log10(data[,8]),type="l",col=2)
+  points(data[,6], log10(data[,8]),type="l",col=2)
+  points(data[,7], log10(data[,8]),type="l",col=2)
+
+  box()
+  axis(1)
+  axis(2, at=log10(c(1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900,1000,2000,3000,4000,5000,6000,7000,8000,9000,10000,20000,30000,40000,50000,60000,70000,8000,90000,100000)), labels=rep("", 46))
+
+ axis(2, at=log10(c(1,10, 100, 1000,10000, 10000)), labels=c(expression(10^0),
+  expression(10^1), expression(10^2), expression(10^3), 
+  expression(10^4), expression(10^5)))
+  if(!missing(ps.file))dev.off()
+}
+
+# plot.timsac.pgraph3("out.pgSurviv", ps.file="pgSurviv.ps")
+# plot.timsac.pgraph3("out.pgSurviv")
+
+
+
+plot.timsac.pgraph4<-function(file="out.pgSurDev", ps.file, xlab="Interval Length", ylab="Deviations",...)
+{
+
+  if(!missing(ps.file)){
+     postscript(ps.file,horizontal=F)
+     par(mfrow=c(2,1))
+  }
+
+  data<- matrix(scan(file, skip=1), ncol=2, byrow=T)
+ # print(data)
+  plot(data,type="n", xlab=xlab, ylab=ylab, main="PGRAPH: Deviation of Survivor Function from the Poisson", ...)
+  points(data,type="p",pch="+",cex=0.5)
+  abline(h=seq(-3,3,1),lty=2, col=2)
+  abline(h=0, lty=1)
+
+
+  if(!missing(ps.file))dev.off()
+}
+
+# plot.timsac.pgraph4("out.pgSurDev", ps.file="pgSurDev.ps")
+
+
+################################
+par(mfrow=c(2,1))
+plot.timsac.pgraph3("out.pgSurviv")
+plot.timsac.pgraph4("out.pgSurDev")
+
+postscript("pgSurviv.ps", horizontal=F)
+par(mfrow=c(2,1))
+plot.timsac.pgraph3("out.pgSurviv")
+plot.timsac.pgraph4("out.pgSurDev")
+dev.off()

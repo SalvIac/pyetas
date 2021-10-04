@@ -1,0 +1,39 @@
+        para <- scan("etas.open")
+        mag1 <- para[6]
+	fmt <- scan("work.res")
+	hypo <- matrix(fmt, ncol = 7, byrow = T)
+        hypo <- hypo[hypo[,4]>0,]
+	level <- min(0, fmt[1])
+	cn <- 1:length(hypo[, 1])+hypo[1,1]
+	ti <- hypo[, 7]
+	xrange <- c(min(ti), max(ti))
+	mgrange <- max(cn)/4
+	bottom <- min(cn) - mgrange
+        yrange <- c(bottom, max(max(cn),max(ti)))
+        par(pty="s",xaxs='r')
+	plot(xrange, yrange, type = "n", main = "ETAS Residual (r.retas)", xlab
+		 = "TRANSFORMED TIME", ylab = "CUMULATIVE NUMBER OF EVENTS",
+		lwd = 1)
+        points(ti, 1:length(ti)+hypo[1,1]+1, type='s')
+	mag <- hypo[, 4]
+	mgmax <- max(mag - mag1 + 1)
+	mag <- mag - mag1 + 0.5
+	segments(ti, bottom, ti, mag/mgmax * mgrange + bottom)	
+        abline(h=bottom)
+        abline(h=0)
+        abline(v=0,lty=2)
+        abline(0,1,lty=1,col='red')
+        s <- para[5]
+        t <- para[14]
+        timax <- max(hypo[hypo[,5]<=t, 7])
+        abline(v=timax,lty=2)
+        te <- para[4]
+        text(max(ti)*0.4,max(cn)*0.9,paste('M>=',mag1,' S=',s,' T=',t,
+             ' Tend=',te))
+        mu <- para[8]
+        k0 <- para[9]
+        c <- para[10]
+        a <- para[11]
+        p <- para[12]
+        text(max(ti)*.35,max(cn)*.8,paste('mu=',mu,'K0=',k0, 'c=',c))
+        text(max(ti)*.3,max(cn)*.7,paste('alpha=',a,'p=',p))

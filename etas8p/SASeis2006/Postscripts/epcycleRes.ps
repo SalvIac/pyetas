@@ -1,0 +1,2552 @@
+%!PS-Adobe-3.0
+%%DocumentNeededResources: font Helvetica
+%%+ font Helvetica-Bold
+%%+ font Helvetica-Oblique
+%%+ font Helvetica-BoldOblique
+%%+ font Symbol
+%%DocumentMedia: letter 612 792 0 () ()
+%%Title: R Graphics Output
+%%Creator: R Software
+%%Pages: (atend)
+%%Orientation: Portrait
+%%BoundingBox: 18 18 594 774
+%%EndComments
+%%BeginProlog
+/bp  { gs gs } def
+% begin .ps.prolog
+/gs  { gsave } def
+/gr  { grestore } def
+/ep  { showpage gr gr } def
+/m   { moveto } def
+/l  { rlineto } def
+/np  { newpath } def
+/cp  { closepath } def
+/f   { fill } def
+/o   { stroke } def
+/c   { newpath 0 360 arc } def
+/r   { 4 2 roll moveto 1 copy 3 -1 roll exch 0 exch rlineto 0 rlineto -1 mul 0 exch rlineto closepath } def
+/p1  { stroke } def
+/p2  { gsave bg setrgbcolor fill grestore newpath } def
+/p3  { gsave bg setrgbcolor fill grestore stroke } def
+/t   { 6 -2 roll moveto gsave rotate
+       ps mul neg 0 2 1 roll rmoveto
+       1 index stringwidth pop
+       mul neg 0 rmoveto show grestore } def
+/cl  { grestore gsave newpath 3 index 3 index moveto 1 index
+       4 -1 roll lineto  exch 1 index lineto lineto
+       closepath clip newpath } def
+/rgb { setrgbcolor } def
+/s   { scalefont setfont } def
+/R   { /Font1 findfont } def
+/B   { /Font2 findfont } def
+/I   { /Font3 findfont } def
+/BI  { /Font4 findfont } def
+/S   { /Font5 findfont } def
+1 setlinecap 1 setlinejoin
+% end   .ps.prolog
+% begin encoding
+/WinAnsiEncoding [
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+ /space /exclam /quotedbl /numbersign /dollar /percent /ampersand /quoteright
+ /parenleft /parenright /asterisk /plus /comma /minus /period /slash
+ /zero /one /two /three /four /five /six /seven
+ /eight /nine /colon /semicolon /less /equal /greater /question
+ /at /A /B /C /D /E /F /G
+ /H /I /J /K /L /M /N /O
+ /P /Q /R /S /T /U /V /W
+ /X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore
+ /grave /a /b /c /d /e /f /g
+ /h /i /j /k /l /m /n /o
+ /p /q /r /s /t /u /v /w
+ /x /y /z /braceleft /bar /braceright /asciitilde /.notdef
+ /Euro /.notdef /quotesinglbase /florin /quotedblbase /ellipsis /dagger /daggerdbl
+ /circumflex /perthousand /Scaron /guilsinglleft /OE /.notdef /Zcaron /.notdef
+ /.notdef /quoteleft /quoteright /quotedblleft /quotedblright /bullet /endash /emdash
+ /tilde /trademark /scaron /guilsinglright /oe /.notdef /zcaron /Ydieresis
+ /space /exclamdown /cent /sterling /currency /yen /brokenbar /section
+ /dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron
+ /degree /plusminus /twosuperior /threesuperior /acute /mu /paragraph /periodcentered
+ /cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf /threequarters /questiondown
+ /Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla
+ /Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis
+ /Eth /Ntilde /Ograve /Oacute /Ocircumflex /Otilde /Odieresis /multiply
+ /Oslash /Ugrave /Uacute /Ucircumflex /Udieresis /Yacute /Thorn /germandbls
+ /agrave /aacute /acircumflex /atilde /adieresis /aring /ae /ccedilla
+ /egrave /eacute /ecircumflex /edieresis /igrave /iacute /icircumflex /idieresis
+ /eth /ntilde /ograve /oacute /ocircumflex /otilde /odieresis /divide
+ /oslash /ugrave /uacute /ucircumflex /udieresis /yacute /thorn /ydieresis
+]
+ def
+% end encoding
+%%IncludeResource: font Helvetica
+/Helvetica findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+  end
+/Font1 exch definefont pop
+%%IncludeResource: font Helvetica-Bold
+/Helvetica-Bold findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+  end
+/Font2 exch definefont pop
+%%IncludeResource: font Helvetica-Oblique
+/Helvetica-Oblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+  end
+/Font3 exch definefont pop
+%%IncludeResource: font Helvetica-BoldOblique
+/Helvetica-BoldOblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+  end
+/Font4 exch definefont pop
+%%IncludeResource: font Symbol
+/Symbol findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  currentdict
+  end
+/Font5 exch definefont pop
+%%EndProlog
+%%Page: 1 1
+bp
+77.04 469.44 563.76 714.96 cl
+0 0 0 rgb
+0.75 setlinewidth
+[] 0 setdash
+np
+95.07 592.20 m
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+4.51 0 l
+o
+18.00 18.00 594.00 774.00 cl
+0 0 0 rgb
+0.75 setlinewidth
+[] 0 setdash
+np
+95.07 469.44 m
+450.67 0 l
+o
+np
+95.07 469.44 m
+0 -7.20 l
+o
+np
+185.20 469.44 m
+0 -7.20 l
+o
+np
+275.33 469.44 m
+0 -7.20 l
+o
+np
+365.47 469.44 m
+0 -7.20 l
+o
+np
+455.60 469.44 m
+0 -7.20 l
+o
+np
+545.73 469.44 m
+0 -7.20 l
+o
+/ps 12 def R 12 s
+95.07 443.52 (0.0) .5 0 0 t
+185.20 443.52 (0.2) .5 0 0 t
+275.33 443.52 (0.4) .5 0 0 t
+365.47 443.52 (0.6) .5 0 0 t
+455.60 443.52 (0.8) .5 0 0 t
+545.73 443.52 (1.0) .5 0 0 t
+np
+77.04 479.97 m
+0 229.25 l
+o
+np
+77.04 479.97 m
+-7.20 0 l
+o
+np
+77.04 537.29 m
+-7.20 0 l
+o
+np
+77.04 594.60 m
+-7.20 0 l
+o
+np
+77.04 651.91 m
+-7.20 0 l
+o
+np
+77.04 709.23 m
+-7.20 0 l
+o
+59.76 479.97 (0.6) .5 0 90 t
+59.76 537.29 (0.8) .5 0 90 t
+59.76 594.60 (1.0) .5 0 90 t
+59.76 651.91 (1.2) .5 0 90 t
+59.76 709.23 (1.4) .5 0 90 t
+np
+77.04 469.44 m
+486.72 0 l
+0 245.52 l
+-486.72 0 l
+0 -245.52 l
+o
+18.00 396.00 594.00 774.00 cl
+/ps 14 def B 14 s
+0 0 0 rgb
+320.40 739.45 (EPTREN > EXP\(CYCLE\)) .5 0 0 t
+/ps 12 def R 12 s
+320.40 414.72 (Superposed Occurrence Times) .5 0 0 t
+30.96 592.20 (Intensity Rate) .5 0 90 t
+77.04 91.44 563.76 336.96 cl
+77.04 91.44 563.76 336.96 cl
+0 0 0 rgb
+0.75 setlinewidth
+[] 0 setdash
+np
+210.01 18.00 m
+0 115.01 l
+o
+np
+257.42 18.00 m
+0 147.49 l
+o
+np
+531.80 18.00 m
+0 98.77 l
+o
+np
+164.53 18.00 m
+0 115.01 l
+o
+np
+303.54 18.00 m
+0 90.65 l
+o
+np
+162.31 18.00 m
+0 147.49 l
+o
+np
+376.60 18.00 m
+0 131.25 l
+o
+np
+218.80 18.00 m
+0 139.37 l
+o
+np
+385.30 18.00 m
+0 131.25 l
+o
+np
+323.82 18.00 m
+0 106.89 l
+o
+np
+491.08 18.00 m
+0 90.65 l
+o
+np
+518.46 18.00 m
+0 123.13 l
+o
+np
+215.61 18.00 m
+0 188.08 l
+o
+np
+210.75 18.00 m
+0 163.72 l
+o
+np
+285.46 18.00 m
+0 204.32 l
+o
+np
+388.09 18.00 m
+0 147.49 l
+o
+np
+140.37 18.00 m
+0 123.13 l
+o
+np
+488.71 18.00 m
+0 212.44 l
+o
+np
+196.87 18.00 m
+0 228.68 l
+o
+np
+209.38 18.00 m
+0 171.84 l
+o
+np
+411.58 18.00 m
+0 155.60 l
+o
+np
+292.82 18.00 m
+0 82.53 l
+o
+np
+216.37 18.00 m
+0 90.65 l
+o
+np
+453.48 18.00 m
+0 98.77 l
+o
+np
+539.37 18.00 m
+0 115.01 l
+o
+np
+238.35 18.00 m
+0 147.49 l
+o
+np
+396.20 18.00 m
+0 139.37 l
+o
+np
+339.42 18.00 m
+0 106.89 l
+o
+np
+520.55 18.00 m
+0 131.25 l
+o
+np
+544.61 18.00 m
+0 204.32 l
+o
+np
+383.45 18.00 m
+0 98.77 l
+o
+np
+372.27 18.00 m
+0 123.13 l
+o
+np
+217.11 18.00 m
+0 123.13 l
+o
+np
+140.64 18.00 m
+0 163.72 l
+o
+np
+247.02 18.00 m
+0 106.89 l
+o
+np
+485.20 18.00 m
+0 155.60 l
+o
+np
+282.37 18.00 m
+0 82.53 l
+o
+np
+372.20 18.00 m
+0 82.53 l
+o
+np
+112.31 18.00 m
+0 98.77 l
+o
+np
+122.77 18.00 m
+0 115.01 l
+o
+np
+292.18 18.00 m
+0 123.13 l
+o
+np
+120.69 18.00 m
+0 98.77 l
+o
+np
+275.51 18.00 m
+0 106.89 l
+o
+np
+419.25 18.00 m
+0 123.13 l
+o
+np
+184.78 18.00 m
+0 90.65 l
+o
+np
+334.22 18.00 m
+0 115.01 l
+o
+np
+180.62 18.00 m
+0 98.77 l
+o
+np
+482.64 18.00 m
+0 115.01 l
+o
+np
+134.20 18.00 m
+0 147.49 l
+o
+np
+185.15 18.00 m
+0 163.72 l
+o
+np
+120.06 18.00 m
+0 115.01 l
+o
+np
+532.12 18.00 m
+0 106.89 l
+o
+np
+249.52 18.00 m
+0 147.49 l
+o
+np
+440.10 18.00 m
+0 131.25 l
+o
+np
+169.50 18.00 m
+0 163.72 l
+o
+np
+276.73 18.00 m
+0 106.89 l
+o
+np
+489.66 18.00 m
+0 115.01 l
+o
+np
+159.05 18.00 m
+0 204.32 l
+o
+np
+332.51 18.00 m
+0 98.77 l
+o
+np
+213.50 18.00 m
+0 115.01 l
+o
+np
+324.19 18.00 m
+0 123.13 l
+o
+np
+156.66 18.00 m
+0 163.72 l
+o
+np
+486.21 18.00 m
+0 106.89 l
+o
+np
+544.97 18.00 m
+0 98.77 l
+o
+np
+278.63 18.00 m
+0 98.77 l
+o
+np
+210.31 18.00 m
+0 188.08 l
+o
+np
+263.56 18.00 m
+0 123.13 l
+o
+np
+430.28 18.00 m
+0 82.53 l
+o
+np
+127.66 18.00 m
+0 106.89 l
+o
+np
+216.53 18.00 m
+0 123.13 l
+o
+np
+360.54 18.00 m
+0 139.37 l
+o
+np
+420.74 18.00 m
+0 106.89 l
+o
+np
+388.36 18.00 m
+0 82.53 l
+o
+np
+501.78 18.00 m
+0 123.13 l
+o
+np
+107.48 18.00 m
+0 147.49 l
+o
+np
+249.98 18.00 m
+0 163.72 l
+o
+np
+489.42 18.00 m
+0 139.37 l
+o
+np
+368.97 18.00 m
+0 123.13 l
+o
+np
+176.82 18.00 m
+0 163.72 l
+o
+np
+440.74 18.00 m
+0 98.77 l
+o
+np
+458.43 18.00 m
+0 131.25 l
+o
+np
+310.44 18.00 m
+0 139.37 l
+o
+np
+169.95 18.00 m
+0 98.77 l
+o
+np
+485.29 18.00 m
+0 204.32 l
+o
+np
+206.71 18.00 m
+0 131.25 l
+o
+np
+333.10 18.00 m
+0 131.25 l
+o
+np
+359.29 18.00 m
+0 163.72 l
+o
+np
+270.94 18.00 m
+0 131.25 l
+o
+np
+412.27 18.00 m
+0 131.25 l
+o
+np
+282.31 18.00 m
+0 123.13 l
+o
+np
+186.98 18.00 m
+0 139.37 l
+o
+np
+417.77 18.00 m
+0 82.53 l
+o
+np
+146.49 18.00 m
+0 98.77 l
+o
+np
+468.52 18.00 m
+0 98.77 l
+o
+np
+382.61 18.00 m
+0 115.01 l
+o
+np
+242.87 18.00 m
+0 171.84 l
+o
+np
+459.12 18.00 m
+0 269.27 l
+o
+np
+475.84 18.00 m
+0 220.56 l
+o
+np
+453.68 18.00 m
+0 155.60 l
+o
+np
+218.17 18.00 m
+0 82.53 l
+o
+np
+373.71 18.00 m
+0 106.89 l
+o
+np
+402.68 18.00 m
+0 115.01 l
+o
+np
+499.54 18.00 m
+0 115.01 l
+o
+np
+109.17 18.00 m
+0 171.84 l
+o
+np
+181.86 18.00 m
+0 98.77 l
+o
+np
+298.28 18.00 m
+0 171.84 l
+o
+np
+447.35 18.00 m
+0 98.77 l
+o
+np
+169.00 18.00 m
+0 212.44 l
+o
+np
+454.42 18.00 m
+0 115.01 l
+o
+np
+487.87 18.00 m
+0 204.32 l
+o
+np
+246.38 18.00 m
+0 106.89 l
+o
+np
+443.20 18.00 m
+0 115.01 l
+o
+np
+513.40 18.00 m
+0 106.89 l
+o
+np
+478.67 18.00 m
+0 82.53 l
+o
+np
+410.57 18.00 m
+0 139.37 l
+o
+np
+545.73 18.00 m
+0 106.89 l
+o
+np
+285.03 18.00 m
+0 131.25 l
+o
+np
+336.66 18.00 m
+0 212.44 l
+o
+np
+490.74 18.00 m
+0 123.13 l
+o
+np
+481.12 18.00 m
+0 115.01 l
+o
+np
+97.48 18.00 m
+0 90.65 l
+o
+np
+290.66 18.00 m
+0 90.65 l
+o
+np
+441.73 18.00 m
+0 90.65 l
+o
+np
+95.07 18.00 m
+0 90.65 l
+o
+np
+218.49 18.00 m
+0 147.49 l
+o
+np
+386.68 18.00 m
+0 196.20 l
+o
+np
+424.68 18.00 m
+0 82.53 l
+o
+np
+97.68 18.00 m
+0 106.89 l
+o
+np
+194.66 18.00 m
+0 171.84 l
+o
+np
+114.95 18.00 m
+0 90.65 l
+o
+np
+403.54 18.00 m
+0 163.72 l
+o
+np
+364.47 18.00 m
+0 123.13 l
+o
+np
+95.75 18.00 m
+0 131.25 l
+o
+np
+326.57 18.00 m
+0 115.01 l
+o
+np
+111.04 18.00 m
+0 90.65 l
+o
+np
+374.77 18.00 m
+0 139.37 l
+o
+np
+293.87 18.00 m
+0 98.77 l
+o
+np
+125.32 18.00 m
+0 90.65 l
+o
+np
+219.44 18.00 m
+0 90.65 l
+o
+np
+459.99 18.00 m
+0 82.53 l
+o
+np
+322.47 18.00 m
+0 131.25 l
+o
+np
+357.09 18.00 m
+0 139.37 l
+o
+np
+409.25 18.00 m
+0 106.89 l
+o
+np
+297.02 18.00 m
+0 123.13 l
+o
+np
+329.92 18.00 m
+0 98.77 l
+o
+np
+410.89 18.00 m
+0 82.53 l
+o
+np
+468.14 18.00 m
+0 196.20 l
+o
+np
+357.71 18.00 m
+0 106.89 l
+o
+np
+356.34 18.00 m
+0 155.60 l
+o
+np
+403.12 18.00 m
+0 131.25 l
+o
+np
+540.92 18.00 m
+0 188.08 l
+o
+np
+136.60 18.00 m
+0 196.20 l
+o
+np
+454.71 18.00 m
+0 139.37 l
+o
+np
+464.50 18.00 m
+0 220.56 l
+o
+np
+166.83 18.00 m
+0 139.37 l
+o
+np
+180.94 18.00 m
+0 123.13 l
+o
+np
+435.68 18.00 m
+0 98.77 l
+o
+np
+129.61 18.00 m
+0 171.84 l
+o
+np
+106.45 18.00 m
+0 196.20 l
+o
+np
+193.12 18.00 m
+0 131.25 l
+o
+np
+441.52 18.00 m
+0 90.65 l
+o
+np
+339.08 18.00 m
+0 98.77 l
+o
+np
+214.13 18.00 m
+0 98.77 l
+o
+np
+311.74 18.00 m
+0 147.49 l
+o
+np
+466.22 18.00 m
+0 139.37 l
+o
+np
+276.67 18.00 m
+0 115.01 l
+o
+np
+264.38 18.00 m
+0 106.89 l
+o
+np
+204.59 18.00 m
+0 90.65 l
+o
+np
+153.16 18.00 m
+0 309.87 l
+o
+np
+320.26 18.00 m
+0 204.32 l
+o
+np
+126.05 18.00 m
+0 123.13 l
+o
+np
+492.18 18.00 m
+0 115.01 l
+o
+np
+444.23 18.00 m
+0 139.37 l
+o
+np
+216.77 18.00 m
+0 147.49 l
+o
+np
+371.25 18.00 m
+0 82.53 l
+o
+np
+396.46 18.00 m
+0 115.01 l
+o
+np
+429.11 18.00 m
+0 106.89 l
+o
+np
+478.56 18.00 m
+0 90.65 l
+o
+np
+510.61 18.00 m
+0 98.77 l
+o
+np
+121.81 18.00 m
+0 98.77 l
+o
+np
+238.20 18.00 m
+0 115.01 l
+o
+np
+288.35 18.00 m
+0 106.89 l
+o
+np
+458.42 18.00 m
+0 82.53 l
+o
+np
+400.15 18.00 m
+0 115.01 l
+o
+np
+461.96 18.00 m
+0 90.65 l
+o
+np
+103.19 18.00 m
+0 90.65 l
+o
+np
+273.78 18.00 m
+0 82.53 l
+o
+np
+232.78 18.00 m
+0 82.53 l
+o
+np
+280.91 18.00 m
+0 123.13 l
+o
+np
+401.81 18.00 m
+0 106.89 l
+o
+np
+466.78 18.00 m
+0 82.53 l
+o
+np
+492.58 18.00 m
+0 90.65 l
+o
+np
+366.40 18.00 m
+0 98.77 l
+o
+np
+408.51 18.00 m
+0 106.89 l
+o
+np
+410.03 18.00 m
+0 163.72 l
+o
+np
+444.24 18.00 m
+0 98.77 l
+o
+np
+418.72 18.00 m
+0 98.77 l
+o
+np
+480.19 18.00 m
+0 90.65 l
+o
+np
+155.30 18.00 m
+0 98.77 l
+o
+np
+515.10 18.00 m
+0 90.65 l
+o
+np
+357.44 18.00 m
+0 98.77 l
+o
+np
+370.43 18.00 m
+0 131.25 l
+o
+np
+511.66 18.00 m
+0 115.01 l
+o
+np
+495.42 18.00 m
+0 106.89 l
+o
+np
+240.01 18.00 m
+0 115.01 l
+o
+np
+227.19 18.00 m
+0 188.08 l
+o
+np
+150.83 18.00 m
+0 90.65 l
+o
+np
+218.81 18.00 m
+0 90.65 l
+o
+np
+207.89 18.00 m
+0 82.53 l
+o
+np
+314.94 18.00 m
+0 115.01 l
+o
+np
+405.07 18.00 m
+0 139.37 l
+o
+np
+535.93 18.00 m
+0 139.37 l
+o
+np
+173.92 18.00 m
+0 98.77 l
+o
+np
+332.15 18.00 m
+0 131.25 l
+o
+np
+239.36 18.00 m
+0 98.77 l
+o
+np
+426.75 18.00 m
+0 123.13 l
+o
+np
+104.57 18.00 m
+0 131.25 l
+o
+np
+308.18 18.00 m
+0 90.65 l
+o
+np
+414.06 18.00 m
+0 106.89 l
+o
+np
+216.88 18.00 m
+0 106.89 l
+o
+np
+104.75 18.00 m
+0 98.77 l
+o
+np
+227.39 18.00 m
+0 82.53 l
+o
+np
+337.44 18.00 m
+0 98.77 l
+o
+np
+240.90 18.00 m
+0 115.01 l
+o
+np
+321.83 18.00 m
+0 171.84 l
+o
+np
+533.96 18.00 m
+0 82.53 l
+o
+np
+121.07 18.00 m
+0 171.84 l
+o
+np
+195.00 18.00 m
+0 115.01 l
+o
+np
+462.60 18.00 m
+0 123.13 l
+o
+np
+390.94 18.00 m
+0 106.89 l
+o
+np
+225.51 18.00 m
+0 82.53 l
+o
+np
+381.02 18.00 m
+0 90.65 l
+o
+np
+344.56 18.00 m
+0 123.13 l
+o
+np
+411.08 18.00 m
+0 98.77 l
+o
+np
+278.24 18.00 m
+0 82.53 l
+o
+np
+376.22 18.00 m
+0 171.84 l
+o
+np
+440.29 18.00 m
+0 115.01 l
+o
+np
+273.40 18.00 m
+0 123.13 l
+o
+np
+219.84 18.00 m
+0 106.89 l
+o
+np
+202.18 18.00 m
+0 82.53 l
+o
+np
+452.84 18.00 m
+0 115.01 l
+o
+np
+533.52 18.00 m
+0 123.13 l
+o
+np
+172.07 18.00 m
+0 98.77 l
+o
+np
+338.66 18.00 m
+0 90.65 l
+o
+np
+155.61 18.00 m
+0 90.65 l
+o
+np
+280.98 18.00 m
+0 90.65 l
+o
+np
+144.44 18.00 m
+0 98.77 l
+o
+np
+510.09 18.00 m
+0 196.20 l
+o
+np
+212.50 18.00 m
+0 90.65 l
+o
+np
+225.52 18.00 m
+0 106.89 l
+o
+np
+326.76 18.00 m
+0 163.72 l
+o
+np
+429.34 18.00 m
+0 90.65 l
+o
+np
+479.18 18.00 m
+0 123.13 l
+o
+np
+138.56 18.00 m
+0 123.13 l
+o
+np
+303.77 18.00 m
+0 82.53 l
+o
+np
+108.57 18.00 m
+0 155.60 l
+o
+np
+362.53 18.00 m
+0 139.37 l
+o
+np
+403.57 18.00 m
+0 123.13 l
+o
+np
+488.82 18.00 m
+0 115.01 l
+o
+np
+449.44 18.00 m
+0 155.60 l
+o
+np
+466.24 18.00 m
+0 98.77 l
+o
+np
+242.40 18.00 m
+0 115.01 l
+o
+np
+350.70 18.00 m
+0 139.37 l
+o
+np
+193.13 18.00 m
+0 123.13 l
+o
+np
+233.05 18.00 m
+0 90.65 l
+o
+np
+320.40 18.00 m
+0 82.53 l
+o
+np
+149.56 18.00 m
+0 82.53 l
+o
+np
+227.75 18.00 m
+0 196.20 l
+o
+np
+382.44 18.00 m
+0 82.53 l
+o
+np
+424.12 18.00 m
+0 171.84 l
+o
+np
+179.66 18.00 m
+0 147.49 l
+o
+np
+298.33 18.00 m
+0 82.53 l
+o
+np
+485.45 18.00 m
+0 106.89 l
+o
+np
+213.38 18.00 m
+0 82.53 l
+o
+np
+371.25 18.00 m
+0 90.65 l
+o
+np
+182.50 18.00 m
+0 188.08 l
+o
+np
+255.57 18.00 m
+0 90.65 l
+o
+np
+523.17 18.00 m
+0 139.37 l
+o
+np
+108.63 18.00 m
+0 188.08 l
+o
+np
+338.15 18.00 m
+0 82.53 l
+o
+np
+369.05 18.00 m
+0 98.77 l
+o
+np
+408.38 18.00 m
+0 106.89 l
+o
+np
+423.81 18.00 m
+0 90.65 l
+o
+np
+396.80 18.00 m
+0 82.53 l
+o
+np
+437.54 18.00 m
+0 82.53 l
+o
+np
+464.06 18.00 m
+0 82.53 l
+o
+np
+273.30 18.00 m
+0 131.25 l
+o
+np
+395.04 18.00 m
+0 179.96 l
+o
+np
+458.38 18.00 m
+0 82.53 l
+o
+np
+522.00 18.00 m
+0 90.65 l
+o
+np
+123.26 18.00 m
+0 90.65 l
+o
+np
+267.65 18.00 m
+0 82.53 l
+o
+np
+138.54 18.00 m
+0 98.77 l
+o
+np
+408.73 18.00 m
+0 106.89 l
+o
+np
+248.56 18.00 m
+0 90.65 l
+o
+np
+432.63 18.00 m
+0 139.37 l
+o
+np
+456.79 18.00 m
+0 98.77 l
+o
+np
+340.47 18.00 m
+0 106.89 l
+o
+np
+523.40 18.00 m
+0 90.65 l
+o
+np
+163.20 18.00 m
+0 139.37 l
+o
+np
+450.79 18.00 m
+0 82.53 l
+o
+np
+145.18 18.00 m
+0 90.65 l
+o
+np
+467.20 18.00 m
+0 82.53 l
+o
+np
+534.56 18.00 m
+0 163.72 l
+o
+np
+217.87 18.00 m
+0 106.89 l
+o
+np
+148.67 18.00 m
+0 82.53 l
+o
+np
+238.17 18.00 m
+0 98.77 l
+o
+np
+468.85 18.00 m
+0 285.51 l
+o
+np
+331.62 18.00 m
+0 90.65 l
+o
+np
+466.08 18.00 m
+0 115.01 l
+o
+np
+478.58 18.00 m
+0 90.65 l
+o
+np
+501.05 18.00 m
+0 98.77 l
+o
+np
+107.32 18.00 m
+0 98.77 l
+o
+np
+326.04 18.00 m
+0 163.72 l
+o
+np
+494.29 18.00 m
+0 123.13 l
+o
+np
+257.58 18.00 m
+0 163.72 l
+o
+np
+418.86 18.00 m
+0 82.53 l
+o
+np
+421.76 18.00 m
+0 123.13 l
+o
+np
+512.42 18.00 m
+0 123.13 l
+o
+np
+183.53 18.00 m
+0 123.13 l
+o
+np
+200.74 18.00 m
+0 171.84 l
+o
+np
+198.87 18.00 m
+0 123.13 l
+o
+np
+95.17 18.00 m
+0 123.13 l
+o
+np
+338.50 18.00 m
+0 131.25 l
+o
+np
+145.67 18.00 m
+0 155.60 l
+o
+np
+226.75 18.00 m
+0 163.72 l
+o
+np
+311.73 18.00 m
+0 98.77 l
+o
+np
+449.42 18.00 m
+0 98.77 l
+o
+np
+297.11 18.00 m
+0 106.89 l
+o
+np
+344.09 18.00 m
+0 82.53 l
+o
+np
+201.01 18.00 m
+0 106.89 l
+o
+np
+497.19 18.00 m
+0 106.89 l
+o
+np
+481.18 18.00 m
+0 147.49 l
+o
+np
+134.65 18.00 m
+0 98.77 l
+o
+np
+515.24 18.00 m
+0 123.13 l
+o
+np
+153.28 18.00 m
+0 115.01 l
+o
+np
+234.41 18.00 m
+0 98.77 l
+o
+np
+268.47 18.00 m
+0 98.77 l
+o
+np
+215.72 18.00 m
+0 90.65 l
+o
+np
+396.37 18.00 m
+0 163.72 l
+o
+np
+410.21 18.00 m
+0 82.53 l
+o
+np
+392.88 18.00 m
+0 98.77 l
+o
+np
+429.36 18.00 m
+0 115.01 l
+o
+np
+237.75 18.00 m
+0 82.53 l
+o
+np
+358.60 18.00 m
+0 98.77 l
+o
+np
+253.45 18.00 m
+0 147.49 l
+o
+np
+362.10 18.00 m
+0 123.13 l
+o
+np
+400.04 18.00 m
+0 82.53 l
+o
+np
+231.17 18.00 m
+0 123.13 l
+o
+np
+99.25 18.00 m
+0 82.53 l
+o
+np
+387.50 18.00 m
+0 82.53 l
+o
+np
+494.57 18.00 m
+0 123.13 l
+o
+np
+371.63 18.00 m
+0 163.72 l
+o
+np
+452.41 18.00 m
+0 147.49 l
+o
+np
+381.62 18.00 m
+0 106.89 l
+o
+np
+152.47 18.00 m
+0 106.89 l
+o
+np
+366.96 18.00 m
+0 98.77 l
+o
+np
+235.90 18.00 m
+0 82.53 l
+o
+np
+266.78 18.00 m
+0 82.53 l
+o
+np
+515.44 18.00 m
+0 82.53 l
+o
+np
+178.66 18.00 m
+0 147.49 l
+o
+np
+205.34 18.00 m
+0 123.13 l
+o
+np
+312.96 18.00 m
+0 82.53 l
+o
+np
+257.15 18.00 m
+0 90.65 l
+o
+np
+207.35 18.00 m
+0 123.13 l
+o
+np
+503.25 18.00 m
+0 115.01 l
+o
+np
+109.33 18.00 m
+0 82.53 l
+o
+np
+347.90 18.00 m
+0 90.65 l
+o
+np
+443.34 18.00 m
+0 98.77 l
+o
+np
+511.76 18.00 m
+0 171.84 l
+o
+np
+373.64 18.00 m
+0 179.96 l
+o
+np
+271.23 18.00 m
+0 147.49 l
+o
+np
+212.17 18.00 m
+0 98.77 l
+o
+np
+342.90 18.00 m
+0 123.13 l
+o
+np
+378.30 18.00 m
+0 82.53 l
+o
+np
+146.59 18.00 m
+0 123.13 l
+o
+np
+258.00 18.00 m
+0 82.53 l
+o
+np
+336.78 18.00 m
+0 90.65 l
+o
+np
+496.53 18.00 m
+0 90.65 l
+o
+np
+377.76 18.00 m
+0 139.37 l
+o
+np
+209.90 18.00 m
+0 82.53 l
+o
+np
+396.16 18.00 m
+0 131.25 l
+o
+np
+525.28 18.00 m
+0 98.77 l
+o
+np
+313.91 18.00 m
+0 90.65 l
+o
+np
+347.27 18.00 m
+0 155.60 l
+o
+np
+136.97 18.00 m
+0 82.53 l
+o
+np
+261.20 18.00 m
+0 163.72 l
+o
+np
+290.79 18.00 m
+0 131.25 l
+o
+np
+386.31 18.00 m
+0 106.89 l
+o
+np
+347.30 18.00 m
+0 82.53 l
+o
+np
+126.06 18.00 m
+0 90.65 l
+o
+np
+112.69 18.00 m
+0 115.01 l
+o
+np
+173.97 18.00 m
+0 131.25 l
+o
+np
+253.07 18.00 m
+0 90.65 l
+o
+np
+295.49 18.00 m
+0 196.20 l
+o
+np
+302.89 18.00 m
+0 131.25 l
+o
+np
+423.30 18.00 m
+0 131.25 l
+o
+np
+438.90 18.00 m
+0 123.13 l
+o
+np
+204.35 18.00 m
+0 82.53 l
+o
+np
+293.61 18.00 m
+0 98.77 l
+o
+np
+276.01 18.00 m
+0 188.08 l
+o
+np
+305.57 18.00 m
+0 131.25 l
+o
+np
+309.47 18.00 m
+0 82.53 l
+o
+np
+452.55 18.00 m
+0 139.37 l
+o
+np
+114.09 18.00 m
+0 98.77 l
+o
+np
+194.27 18.00 m
+0 98.77 l
+o
+np
+260.54 18.00 m
+0 115.01 l
+o
+np
+163.40 18.00 m
+0 98.77 l
+o
+np
+178.10 18.00 m
+0 82.53 l
+o
+np
+442.01 18.00 m
+0 115.01 l
+o
+np
+172.21 18.00 m
+0 163.72 l
+o
+np
+383.63 18.00 m
+0 115.01 l
+o
+np
+223.50 18.00 m
+0 139.37 l
+o
+np
+458.37 18.00 m
+0 106.89 l
+o
+np
+249.16 18.00 m
+0 179.96 l
+o
+np
+436.05 18.00 m
+0 82.53 l
+o
+np
+343.73 18.00 m
+0 90.65 l
+o
+np
+273.37 18.00 m
+0 131.25 l
+o
+np
+462.55 18.00 m
+0 115.01 l
+o
+np
+137.06 18.00 m
+0 106.89 l
+o
+np
+335.62 18.00 m
+0 82.53 l
+o
+np
+352.07 18.00 m
+0 82.53 l
+o
+np
+521.25 18.00 m
+0 106.89 l
+o
+np
+408.44 18.00 m
+0 123.13 l
+o
+np
+474.84 18.00 m
+0 115.01 l
+o
+np
+515.50 18.00 m
+0 196.20 l
+o
+np
+224.72 18.00 m
+0 123.13 l
+o
+np
+120.23 18.00 m
+0 90.65 l
+o
+np
+534.59 18.00 m
+0 98.77 l
+o
+np
+150.78 18.00 m
+0 171.84 l
+o
+np
+216.57 18.00 m
+0 106.89 l
+o
+np
+505.18 18.00 m
+0 90.65 l
+o
+np
+539.85 18.00 m
+0 115.01 l
+o
+np
+166.95 18.00 m
+0 82.53 l
+o
+np
+353.28 18.00 m
+0 82.53 l
+o
+np
+527.88 18.00 m
+0 90.65 l
+o
+np
+354.75 18.00 m
+0 82.53 l
+o
+np
+479.46 18.00 m
+0 90.65 l
+o
+np
+119.38 18.00 m
+0 82.53 l
+o
+np
+301.33 18.00 m
+0 139.37 l
+o
+np
+447.12 18.00 m
+0 98.77 l
+o
+np
+254.81 18.00 m
+0 147.49 l
+o
+np
+516.79 18.00 m
+0 147.49 l
+o
+np
+459.55 18.00 m
+0 115.01 l
+o
+np
+170.02 18.00 m
+0 98.77 l
+o
+np
+175.58 18.00 m
+0 115.01 l
+o
+np
+164.60 18.00 m
+0 98.77 l
+o
+np
+184.45 18.00 m
+0 115.01 l
+o
+np
+504.57 18.00 m
+0 115.01 l
+o
+np
+172.86 18.00 m
+0 179.96 l
+o
+np
+274.48 18.00 m
+0 106.89 l
+o
+np
+302.86 18.00 m
+0 98.77 l
+o
+np
+214.66 18.00 m
+0 90.65 l
+o
+np
+197.72 18.00 m
+0 98.77 l
+o
+np
+351.32 18.00 m
+0 82.53 l
+o
+np
+272.51 18.00 m
+0 155.60 l
+o
+np
+441.92 18.00 m
+0 123.13 l
+o
+np
+514.95 18.00 m
+0 98.77 l
+o
+np
+367.79 18.00 m
+0 98.77 l
+o
+np
+141.97 18.00 m
+0 123.13 l
+o
+np
+409.91 18.00 m
+0 90.65 l
+o
+np
+212.36 18.00 m
+0 82.53 l
+o
+np
+104.73 18.00 m
+0 90.65 l
+o
+np
+168.00 18.00 m
+0 115.01 l
+o
+np
+355.30 18.00 m
+0 98.77 l
+o
+np
+192.36 18.00 m
+0 82.53 l
+o
+np
+334.96 18.00 m
+0 179.96 l
+o
+np
+254.06 18.00 m
+0 171.84 l
+o
+np
+387.90 18.00 m
+0 155.60 l
+o
+np
+463.63 18.00 m
+0 106.89 l
+o
+np
+493.62 18.00 m
+0 98.77 l
+o
+np
+132.80 18.00 m
+0 82.53 l
+o
+np
+100.96 18.00 m
+0 123.13 l
+o
+np
+240.79 18.00 m
+0 98.77 l
+o
+np
+365.71 18.00 m
+0 90.65 l
+o
+np
+434.68 18.00 m
+0 82.53 l
+o
+np
+381.20 18.00 m
+0 98.77 l
+o
+np
+98.39 18.00 m
+0 171.84 l
+o
+np
+521.09 18.00 m
+0 147.49 l
+o
+np
+316.36 18.00 m
+0 106.89 l
+o
+np
+276.18 18.00 m
+0 171.84 l
+o
+np
+121.15 18.00 m
+0 98.77 l
+o
+np
+179.73 18.00 m
+0 82.53 l
+o
+np
+235.54 18.00 m
+0 139.37 l
+o
+np
+245.70 18.00 m
+0 171.84 l
+o
+np
+514.82 18.00 m
+0 82.53 l
+o
+np
+467.63 18.00 m
+0 139.37 l
+o
+np
+117.25 18.00 m
+0 90.65 l
+o
+np
+183.37 18.00 m
+0 98.77 l
+o
+np
+424.14 18.00 m
+0 155.60 l
+o
+np
+167.12 18.00 m
+0 106.89 l
+o
+np
+146.98 18.00 m
+0 98.77 l
+o
+np
+215.83 18.00 m
+0 82.53 l
+o
+np
+344.35 18.00 m
+0 106.89 l
+o
+np
+545.43 18.00 m
+0 82.53 l
+o
+np
+271.09 18.00 m
+0 82.53 l
+o
+np
+389.75 18.00 m
+0 236.80 l
+o
+np
+448.99 18.00 m
+0 90.65 l
+o
+np
+326.64 18.00 m
+0 90.65 l
+o
+np
+362.83 18.00 m
+0 106.89 l
+o
+np
+446.83 18.00 m
+0 147.49 l
+o
+np
+426.50 18.00 m
+0 155.60 l
+o
+np
+265.91 18.00 m
+0 106.89 l
+o
+np
+169.98 18.00 m
+0 204.32 l
+o
+np
+204.53 18.00 m
+0 163.72 l
+o
+np
+456.73 18.00 m
+0 90.65 l
+o
+np
+104.67 18.00 m
+0 131.25 l
+o
+np
+436.59 18.00 m
+0 82.53 l
+o
+np
+237.70 18.00 m
+0 163.72 l
+o
+np
+227.56 18.00 m
+0 90.65 l
+o
+np
+317.98 18.00 m
+0 90.65 l
+o
+np
+390.24 18.00 m
+0 188.08 l
+o
+np
+506.34 18.00 m
+0 82.53 l
+o
+np
+370.19 18.00 m
+0 106.89 l
+o
+np
+167.59 18.00 m
+0 98.77 l
+o
+np
+166.34 18.00 m
+0 106.89 l
+o
+np
+190.87 18.00 m
+0 90.65 l
+o
+np
+470.15 18.00 m
+0 90.65 l
+o
+np
+497.67 18.00 m
+0 98.77 l
+o
+np
+281.36 18.00 m
+0 131.25 l
+o
+np
+117.79 18.00 m
+0 82.53 l
+o
+np
+271.29 18.00 m
+0 115.01 l
+o
+np
+327.13 18.00 m
+0 106.89 l
+o
+np
+491.03 18.00 m
+0 147.49 l
+o
+np
+308.39 18.00 m
+0 236.80 l
+o
+np
+191.09 18.00 m
+0 131.25 l
+o
+np
+344.87 18.00 m
+0 98.77 l
+o
+np
+369.69 18.00 m
+0 171.84 l
+o
+np
+447.28 18.00 m
+0 98.77 l
+o
+np
+468.16 18.00 m
+0 147.49 l
+o
+np
+148.10 18.00 m
+0 82.53 l
+o
+np
+516.07 18.00 m
+0 115.01 l
+o
+np
+143.38 18.00 m
+0 82.53 l
+o
+np
+322.48 18.00 m
+0 82.53 l
+o
+np
+450.51 18.00 m
+0 171.84 l
+o
+np
+332.12 18.00 m
+0 90.65 l
+o
+18.00 18.00 594.00 774.00 cl
+0 0 0 rgb
+0.75 setlinewidth
+[] 0 setdash
+np
+94.84 91.44 m
+450.90 0 l
+o
+np
+94.84 91.44 m
+0 -7.20 l
+o
+np
+185.02 91.44 m
+0 -7.20 l
+o
+np
+275.20 91.44 m
+0 -7.20 l
+o
+np
+365.38 91.44 m
+0 -7.20 l
+o
+np
+455.56 91.44 m
+0 -7.20 l
+o
+np
+545.74 91.44 m
+0 -7.20 l
+o
+/ps 12 def R 12 s
+94.84 65.52 (0.0) .5 0 0 t
+185.02 65.52 (0.2) .5 0 0 t
+275.20 65.52 (0.4) .5 0 0 t
+365.38 65.52 (0.6) .5 0 0 t
+455.56 65.52 (0.8) .5 0 0 t
+545.74 65.52 (1.0) .5 0 0 t
+np
+77.04 100.53 m
+0 202.98 l
+o
+np
+77.04 100.53 m
+-7.20 0 l
+o
+np
+77.04 141.13 m
+-7.20 0 l
+o
+np
+77.04 181.72 m
+-7.20 0 l
+o
+np
+77.04 222.32 m
+-7.20 0 l
+o
+np
+77.04 262.91 m
+-7.20 0 l
+o
+np
+77.04 303.51 m
+-7.20 0 l
+o
+59.76 100.53 (2.5) .5 0 90 t
+59.76 141.13 (3.0) .5 0 90 t
+59.76 181.72 (3.5) .5 0 90 t
+59.76 222.32 (4.0) .5 0 90 t
+59.76 262.91 (4.5) .5 0 90 t
+59.76 303.51 (5.0) .5 0 90 t
+np
+77.04 91.44 m
+486.72 0 l
+0 245.52 l
+-486.72 0 l
+0 -245.52 l
+o
+18.00 18.00 594.00 396.00 cl
+/ps 12 def R 12 s
+0 0 0 rgb
+320.40 36.72 (Superposed Occurrence Times) .5 0 0 t
+30.96 214.20 (Magnitude) .5 0 90 t
+ep
+%%Trailer
+%%Pages: 1
+%%EOF

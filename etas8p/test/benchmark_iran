@@ -1,0 +1,550 @@
+> library("ETAS")
+Loading required package: maps
+> 
+> 
+> gregion <- list(lat = c(26, 25, 29, 38, 35), long = c(52, 59, 58, 45, 43))
+> iran.cat <- catalog(iran.quakes, study.start = "1991/01/01", study.end = "2011/01/01", region.poly = gregion, mag.threshold = 4.5)
+> iran.cat
+earthquake catalog:
+  time begin 1973-01-06 15:39:31 
+  study period: 1991-01-01  to  2011-01-01 (T = 7305 days)
+geographical region:
+    polygonal with vertices:
+     lat long
+[1,]  26   52
+[2,]  25   59
+[3,]  29   58
+[4,]  38   45
+[5,]  35   43
+threshold magnitude: 4.5
+number of events:
+  total events 2500 : 695 target events,  1805 complementary events
+  ( 438 events outside geographical region, 1367 events outside study period)
+> plot(iran.cat)
+> param01 <- c(0.5, 0.2, 0.05, 2.7, 1.2, 0.02, 2.3, 0.03)
+> 
+> iran.fit <- etas(iran.cat, param0 = param01)
+declustering:
+
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======                                                                |   9%
+  |                                                                            
+  |=============                                                         |  18%
+  |                                                                            
+  |===================                                                   |  27%
+  |                                                                            
+  |=========================                                             |  36%
+  |                                                                            
+  |================================                                      |  45%
+  |                                                                            
+  |======================================                                |  55%
+  |                                                                            
+  |=============================================                         |  64%
+  |                                                                            
+  |===================================================                   |  73%
+  |                                                                            
+  |=========================================================             |  82%
+  |                                                                            
+  |================================================================      |  91%
+  |                                                                            
+  |======================================================================| 100%
+iteration:  1 
+======================================================
+background seismicity rate:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+0.0000081 0.0013420 0.0034733 0.0063401 0.0082289 0.0420246 
+probability of being a background event:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+0.0000029 0.0881436 0.8987881 0.6284733 0.9731342 1.0000000 
+integral of background seismicity rate:  872.8452 
+======================================================
+estimating:
+        start Davidon-Fletcher-Powell procedure ... 
+Function Value = 3895.6343
+Gradient[1] =  -120.51  theta[1] = 0.707107
+Gradient[2] =   111.44  theta[2] = 0.447214
+Gradient[3] =   -57.87  theta[3] = 0.223607
+Gradient[4] =    25.07  theta[4] = 1.643168
+Gradient[5] =   261.80  theta[5] = 1.095445
+Gradient[6] =   156.03  theta[6] = 0.141421
+Gradient[7] =   -31.10  theta[7] = 1.516575
+Gradient[8] =     1.32  theta[8] = 0.173205
+
+line search along the specified direction ... zeta = 0.000085
+Function Value = 3889.5937
+Gradient[1] =   -81.37  theta[1] = 0.717410
+Gradient[2] =   -15.16  theta[2] = 0.437686
+Gradient[3] =     8.43  theta[3] = 0.228554
+Gradient[4] =    -3.19  theta[4] = 1.641025
+Gradient[5] =    -9.99  theta[5] = 1.073061
+Gradient[6] =    18.65  theta[6] = 0.128080
+Gradient[7] =    -3.29  theta[7] = 1.519234
+Gradient[8] =     0.15  theta[8] = 0.173092
+
+line search along the specified direction ... zeta = 0.000241
+Function Value = 3888.7073
+Gradient[1] =   -20.20  theta[1] = 0.736942
+Gradient[2] =    28.90  theta[2] = 0.441479
+Gradient[3] =     1.36  theta[3] = 0.226451
+Gradient[4] =     6.51  theta[4] = 1.641825
+Gradient[5] =    42.86  theta[5] = 1.075776
+Gradient[6] =   -37.08  theta[6] = 0.123751
+Gradient[7] =     7.65  theta[7] = 1.519995
+Gradient[8] =    -0.24  theta[8] = 0.173057
+
+line search along the specified direction ... zeta = 0.000131
+Function Value = 3888.5519
+Gradient[1] =    -3.39  theta[1] = 0.741865
+Gradient[2] =    21.31  theta[2] = 0.440635
+Gradient[3] =     3.84  theta[3] = 0.225406
+Gradient[4] =     4.71  theta[4] = 1.641624
+Gradient[5] =    23.97  theta[5] = 1.074709
+Gradient[6] =    17.13  theta[6] = 0.127421
+Gradient[7] =    -3.27  theta[7] = 1.519218
+Gradient[8] =     0.14  theta[8] = 0.173082
+
+line search along the specified direction ... zeta = 0.000782
+Function Value = 3888.4752
+Gradient[1] =    -3.84  theta[1] = 0.743818
+Gradient[2] =    12.16  theta[2] = 0.434028
+Gradient[3] =    -5.59  theta[3] = 0.217370
+Gradient[4] =     2.23  theta[4] = 1.640179
+Gradient[5] =    29.50  theta[5] = 1.076545
+Gradient[6] =    14.54  theta[6] = 0.126840
+Gradient[7] =    -2.90  theta[7] = 1.519179
+Gradient[8] =     0.12  theta[8] = 0.173081
+
+line search along the specified direction ... zeta = 0.003206
+Function Value = 3888.4675
+Gradient[1] =    -3.32  theta[1] = 0.743183
+Gradient[2] =    11.64  theta[2] = 0.436949
+Gradient[3] =    -6.12  theta[3] = 0.212339
+Gradient[4] =     2.47  theta[4] = 1.642356
+Gradient[5] =    24.79  theta[5] = 1.073673
+Gradient[6] =    12.51  theta[6] = 0.126723
+Gradient[7] =    -2.56  theta[7] = 1.519059
+Gradient[8] =     0.10  theta[8] = 0.173084
+
+line search along the specified direction ... zeta = 0.071749
+Function Value = 3888.4639
+Gradient[1] =    -3.23  theta[1] = 0.743544
+Gradient[2] =    11.01  theta[2] = 0.433788
+Gradient[3] =    -5.78  theta[3] = 0.213522
+Gradient[4] =     3.06  theta[4] = 1.651027
+Gradient[5] =    23.97  theta[5] = 1.074383
+Gradient[6] =    12.04  theta[6] = 0.127007
+Gradient[7] =    -2.33  theta[7] = 1.520848
+Gradient[8] =     0.09  theta[8] = 0.173423
+
+line search along the specified direction ... zeta = 0.926500
+Function Value = 3888.4261
+Gradient[1] =    -0.00  theta[1] = 0.745124
+Gradient[2] =     0.01  theta[2] = 0.431783
+Gradient[3] =     0.15  theta[3] = 0.217260
+Gradient[4] =     0.05  theta[4] = 1.645439
+Gradient[5] =    -0.39  theta[5] = 1.074507
+Gradient[6] =     0.22  theta[6] = 0.126142
+Gradient[7] =    -0.05  theta[7] = 1.522218
+Gradient[8] =     0.01  theta[8] = 0.179020
+
+line search along the specified direction ... zeta = 0.059166
+Function Value = 3888.4260
+Gradient[1] =    -0.00  theta[1] = 0.745126
+Gradient[2] =     0.03  theta[2] = 0.431803
+Gradient[3] =     0.14  theta[3] = 0.217243
+Gradient[4] =     0.04  theta[4] = 1.645347
+Gradient[5] =    -0.34  theta[5] = 1.074504
+Gradient[6] =     0.21  theta[6] = 0.126218
+Gradient[7] =    -0.01  theta[7] = 1.522587
+Gradient[8] =     0.01  theta[8] = 0.178419
+
+line search along the specified direction ... zeta = 1.425592
+Function Value = 3888.4259
+Gradient[1] =     0.00  theta[1] = 0.745195
+Gradient[2] =    -0.00  theta[2] = 0.431699
+Gradient[3] =    -0.08  theta[3] = 0.217286
+Gradient[4] =    -0.02  theta[4] = 1.644681
+Gradient[5] =     0.28  theta[5] = 1.074670
+Gradient[6] =    -0.10  theta[6] = 0.126210
+Gradient[7] =     0.02  theta[7] = 1.522198
+Gradient[8] =     0.00  theta[8] = 0.163994
+
+line search along the specified direction ... zeta = 1.431654
+Function Value = 3888.4259
+Gradient[1] =    -0.00  theta[1] = 0.745150
+Gradient[2] =     0.01  theta[2] = 0.431869
+Gradient[3] =    -0.01  theta[3] = 0.217189
+Gradient[4] =    -0.01  theta[4] = 1.644607
+Gradient[5] =    -0.02  theta[5] = 1.074565
+Gradient[6] =     0.03  theta[6] = 0.126279
+Gradient[7] =    -0.01  theta[7] = 1.522180
+Gradient[8] =     0.00  theta[8] = 0.155244
+
+line search along the specified direction ... zeta = 1.057181
+Function Value = 3888.4259
+Gradient[1] =    -0.00  theta[1] = 0.745162
+Gradient[2] =    -0.00  theta[2] = 0.431804
+Gradient[3] =     0.00  theta[3] = 0.217250
+Gradient[4] =     0.00  theta[4] = 1.644709
+Gradient[5] =    -0.01  theta[5] = 1.074596
+Gradient[6] =     0.02  theta[6] = 0.126293
+Gradient[7] =    -0.00  theta[7] = 1.522212
+Gradient[8] =     0.00  theta[8] = 0.153648
+
+line search along the specified direction ... zeta = 1.138828
+Function Value = 3888.4259
+Gradient[1] =     0.00  theta[1] = 0.745162
+Gradient[2] =     0.00  theta[2] = 0.431807
+Gradient[3] =     0.00  theta[3] = 0.217246
+Gradient[4] =     0.00  theta[4] = 1.644698
+Gradient[5] =     0.00  theta[5] = 1.074596
+Gradient[6] =    -0.00  theta[6] = 0.126293
+Gradient[7] =     0.00  theta[7] = 1.522209
+Gradient[8] =    -0.00  theta[8] = 0.153380
+
+line search along the specified direction ... zeta = 0.907895
+Function Value = 3888.4259
+Gradient[1] =     0.00  theta[1] = 0.745162
+Gradient[2] =     0.00  theta[2] = 0.431807
+Gradient[3] =    -0.00  theta[3] = 0.217246
+Gradient[4] =     0.00  theta[4] = 1.644698
+Gradient[5] =     0.00  theta[5] = 1.074596
+Gradient[6] =    -0.00  theta[6] = 0.126293
+Gradient[7] =     0.00  theta[7] = 1.522209
+Gradient[8] =     0.00  theta[8] = 0.153365
+
+line search along the specified direction ... zeta = 0.000000
+Function Value = 3888.4259
+Gradient[1] =     0.00  theta[1] = 0.745162
+Gradient[2] =     0.00  theta[2] = 0.431807
+Gradient[3] =    -0.00  theta[3] = 0.217246
+Gradient[4] =     0.00  theta[4] = 1.644698
+Gradient[5] =     0.00  theta[5] = 1.074596
+Gradient[6] =    -0.00  theta[6] = 0.126293
+Gradient[7] =     0.00  theta[7] = 1.522209
+Gradient[8] =     0.00  theta[8] = 0.153365
+loglikelihood = -3888.42590     AIC = 7792.85180
+theta[1] = 0.55526637    gradient[1] =   0.0000
+theta[2] = 0.18645759    gradient[2] =   0.0000
+theta[3] = 0.04719587    gradient[3] =  -0.0000
+theta[4] = 2.70503086    gradient[4] =   0.0000
+theta[5] = 1.15475582    gradient[5] =   0.0000
+theta[6] = 0.01594994    gradient[6] =  -0.0001
+theta[7] = 2.31712049    gradient[7] =   0.0000
+theta[8] = 0.02352070    gradient[8] =   0.0000
+======================================================
+MLE:
+        mu          A          c      alpha          p          D          q 
+0.55526637 0.18645759 0.04719587 2.70503086 1.15475582 0.01594994 2.31712049 
+     gamma 
+0.02352070 
+======================================================
+declustering:
+
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |=======                                                               |  10%
+  |                                                                            
+  |==============                                                        |  20%
+  |                                                                            
+  |=====================                                                 |  30%
+  |                                                                            
+  |============================                                          |  40%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |==========================================                            |  60%
+  |                                                                            
+  |=================================================                     |  70%
+  |                                                                            
+  |========================================================              |  80%
+  |                                                                            
+  |===============================================================       |  90%
+  |                                                                            
+  |======================================================================| 100%
+iteration:  2 
+======================================================
+background seismicity rate:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+8.180e-06 1.374e-03 3.526e-03 6.422e-03 8.384e-03 4.125e-02 
+probability of being a background event:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+0.0000039 0.1112075 0.9041688 0.6372822 0.9771254 1.0000000 
+integral of background seismicity rate:  885.1694 
+======================================================
+estimating:
+        start Davidon-Fletcher-Powell procedure ... 
+Function Value = 3888.7592
+Gradient[1] =    16.27  theta[1] = 0.745162
+Gradient[2] =     3.62  theta[2] = 0.431807
+Gradient[3] =     0.87  theta[3] = 0.217246
+Gradient[4] =     0.69  theta[4] = 1.644698
+Gradient[5] =    -1.73  theta[5] = 1.074596
+Gradient[6] =     4.49  theta[6] = 0.126293
+Gradient[7] =    -1.15  theta[7] = 1.522209
+Gradient[8] =     0.03  theta[8] = 0.153365
+
+line search along the specified direction ... zeta = 0.997979
+Function Value = 3888.7170
+Gradient[1] =    -0.00  theta[1] = 0.740153
+Gradient[2] =     0.01  theta[2] = 0.431344
+Gradient[3] =     0.02  theta[3] = 0.217146
+Gradient[4] =     0.01  theta[4] = 1.645455
+Gradient[5] =    -0.13  theta[5] = 1.074623
+Gradient[6] =     0.05  theta[6] = 0.126469
+Gradient[7] =    -0.01  theta[7] = 1.524171
+Gradient[8] =    -0.00  theta[8] = 0.153153
+
+line search along the specified direction ... zeta = 1.015373
+Function Value = 3888.7170
+Gradient[1] =    -0.00  theta[1] = 0.740173
+Gradient[2] =     0.00  theta[2] = 0.431288
+Gradient[3] =    -0.00  theta[3] = 0.217214
+Gradient[4] =     0.00  theta[4] = 1.645361
+Gradient[5] =     0.00  theta[5] = 1.074678
+Gradient[6] =    -0.00  theta[6] = 0.126461
+Gradient[7] =     0.00  theta[7] = 1.524200
+Gradient[8] =    -0.00  theta[8] = 0.154382
+
+line search along the specified direction ... zeta = 1.015373
+Function Value = 3888.7170
+Gradient[1] =     0.00  theta[1] = 0.740173
+Gradient[2] =    -0.00  theta[2] = 0.431288
+Gradient[3] =    -0.00  theta[3] = 0.217213
+Gradient[4] =    -0.00  theta[4] = 1.645360
+Gradient[5] =    -0.00  theta[5] = 1.074678
+Gradient[6] =    -0.00  theta[6] = 0.126461
+Gradient[7] =     0.00  theta[7] = 1.524200
+Gradient[8] =    -0.00  theta[8] = 0.154383
+
+line search along the specified direction ... zeta = 0.000000
+Function Value = 3888.7170
+Gradient[1] =     0.00  theta[1] = 0.740173
+Gradient[2] =    -0.00  theta[2] = 0.431288
+Gradient[3] =    -0.00  theta[3] = 0.217213
+Gradient[4] =    -0.00  theta[4] = 1.645360
+Gradient[5] =    -0.00  theta[5] = 1.074678
+Gradient[6] =    -0.00  theta[6] = 0.126461
+Gradient[7] =     0.00  theta[7] = 1.524200
+Gradient[8] =    -0.00  theta[8] = 0.154383
+loglikelihood = -3888.71702     AIC = 7793.43405
+theta[1] = 0.54785663    gradient[1] =   0.0000
+theta[2] = 0.18600940    gradient[2] =  -0.0000
+theta[3] = 0.04718166    gradient[3] =  -0.0000
+theta[4] = 2.70720902    gradient[4] =  -0.0000
+theta[5] = 1.15493267    gradient[5] =  -0.0000
+theta[6] = 0.01599232    gradient[6] =  -0.0000
+theta[7] = 2.32318565    gradient[7] =   0.0000
+theta[8] = 0.02383419    gradient[8] =  -0.0000
+======================================================
+MLE:
+        mu          A          c      alpha          p          D          q 
+0.54785663 0.18600940 0.04718166 2.70720902 1.15493267 0.01599232 2.32318565 
+     gamma 
+0.02383419 
+======================================================
+              iteration 2              
+0.0133284980 0.0000748689 0.2427344853 
+declustering:
+
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |========                                                              |  11%
+  |                                                                            
+  |================                                                      |  22%
+  |                                                                            
+  |=======================                                               |  33%
+  |                                                                            
+  |===============================                                       |  44%
+  |                                                                            
+  |=======================================                               |  56%
+  |                                                                            
+  |===============================================                       |  67%
+  |                                                                            
+  |======================================================                |  78%
+  |                                                                            
+  |==============================================================        |  89%
+  |                                                                            
+  |======================================================================| 100%
+iteration:  3 
+======================================================
+background seismicity rate:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+8.180e-06 1.372e-03 3.515e-03 6.406e-03 8.347e-03 4.102e-02 
+probability of being a background event:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+0.0000038 0.1093699 0.9032047 0.6365291 0.9770171 1.0000000 
+integral of background seismicity rate:  884.1341 
+======================================================
+estimating:
+        start Davidon-Fletcher-Powell procedure ... 
+Function Value = 3888.7088
+Gradient[1] =    -1.31  theta[1] = 0.740173
+Gradient[2] =    -0.38  theta[2] = 0.431288
+Gradient[3] =    -0.11  theta[3] = 0.217213
+Gradient[4] =    -0.08  theta[4] = 1.645360
+Gradient[5] =     0.24  theta[5] = 1.074678
+Gradient[6] =    -0.07  theta[6] = 0.126461
+Gradient[7] =     0.02  theta[7] = 1.524200
+Gradient[8] =    -0.00  theta[8] = 0.154383
+
+line search along the specified direction ... zeta = 0.998281
+Function Value = 3888.7085
+Gradient[1] =    -0.00  theta[1] = 0.740545
+Gradient[2] =     0.00  theta[2] = 0.431457
+Gradient[3] =     0.00  theta[3] = 0.217139
+Gradient[4] =    -0.00  theta[4] = 1.645318
+Gradient[5] =     0.00  theta[5] = 1.074592
+Gradient[6] =     0.00  theta[6] = 0.126475
+Gradient[7] =    -0.00  theta[7] = 1.524269
+Gradient[8] =     0.00  theta[8] = 0.154205
+
+line search along the specified direction ... zeta = 0.998281
+Function Value = 3888.7085
+Gradient[1] =     0.00  theta[1] = 0.740546
+Gradient[2] =     0.00  theta[2] = 0.431454
+Gradient[3] =     0.00  theta[3] = 0.217139
+Gradient[4] =     0.00  theta[4] = 1.645326
+Gradient[5] =     0.00  theta[5] = 1.074593
+Gradient[6] =    -0.00  theta[6] = 0.126476
+Gradient[7] =    -0.00  theta[7] = 1.524273
+Gradient[8] =    -0.00  theta[8] = 0.154180
+
+line search along the specified direction ... zeta = 0.099828
+Function Value = 3888.7085
+Gradient[1] =     0.00  theta[1] = 0.740546
+Gradient[2] =     0.00  theta[2] = 0.431454
+Gradient[3] =     0.00  theta[3] = 0.217139
+Gradient[4] =     0.00  theta[4] = 1.645326
+Gradient[5] =     0.00  theta[5] = 1.074593
+Gradient[6] =    -0.00  theta[6] = 0.126476
+Gradient[7] =    -0.00  theta[7] = 1.524274
+Gradient[8] =    -0.00  theta[8] = 0.154180
+
+line search along the specified direction ... zeta = 0.000100
+Function Value = 3888.7085
+Gradient[1] =     0.00  theta[1] = 0.740546
+Gradient[2] =     0.00  theta[2] = 0.431454
+Gradient[3] =     0.00  theta[3] = 0.217139
+Gradient[4] =     0.00  theta[4] = 1.645326
+Gradient[5] =     0.00  theta[5] = 1.074593
+Gradient[6] =    -0.00  theta[6] = 0.126476
+Gradient[7] =    -0.00  theta[7] = 1.524274
+Gradient[8] =    -0.00  theta[8] = 0.154180
+loglikelihood = -3888.70852     AIC = 7793.41705
+theta[1] = 0.54840860    gradient[1] =   0.0000
+theta[2] = 0.18615215    gradient[2] =   0.0000
+theta[3] = 0.04714951    gradient[3] =   0.0000
+theta[4] = 2.70709855    gradient[4] =   0.0000
+theta[5] = 1.15475075    gradient[5] =   0.0000
+theta[6] = 0.01599614    gradient[6] =  -0.0000
+theta[7] = 2.32340970    gradient[7] =  -0.0000
+theta[8] = 0.02377138    gradient[8] =  -0.0000
+======================================================
+MLE:
+        mu          A          c      alpha          p          D          q 
+0.54840860 0.18615215 0.04714951 2.70709855 1.15475075 0.01599614 2.32340970 
+     gamma 
+0.02377138 
+======================================================
+              iteration 3              
+1.007504e-03 2.185482e-06 1.426446e-02 
+declustering:
+
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |=========                                                             |  12%
+  |                                                                            
+  |==================                                                    |  25%
+  |                                                                            
+  |==========================                                            |  38%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |============================================                          |  62%
+  |                                                                            
+  |====================================================                  |  75%
+  |                                                                            
+  |=============================================================         |  88%
+  |                                                                            
+  |======================================================================| 100%
+iteration:  4 
+======================================================
+background seismicity rate:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+8.180e-06 1.372e-03 3.515e-03 6.406e-03 8.348e-03 4.102e-02 
+probability of being a background event:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+0.0000038 0.1094174 0.9032022 0.6365367 0.9770118 1.0000000 
+integral of background seismicity rate:  884.1462 
+======================================================
+estimating:
+        start Davidon-Fletcher-Powell procedure ... 
+Function Value = 3888.7091
+Gradient[1] =     0.01  theta[1] = 0.740546
+Gradient[2] =     0.01  theta[2] = 0.431454
+Gradient[3] =     0.00  theta[3] = 0.217139
+Gradient[4] =     0.00  theta[4] = 1.645326
+Gradient[5] =    -0.00  theta[5] = 1.074593
+Gradient[6] =     0.00  theta[6] = 0.126476
+Gradient[7] =    -0.00  theta[7] = 1.524274
+Gradient[8] =     0.00  theta[8] = 0.154180
+
+line search along the specified direction ... zeta = 1.000223
+Function Value = 3888.7091
+Gradient[1] =    -0.00  theta[1] = 0.740542
+Gradient[2] =    -0.00  theta[2] = 0.431451
+Gradient[3] =    -0.00  theta[3] = 0.217139
+Gradient[4] =    -0.00  theta[4] = 1.645329
+Gradient[5] =    -0.00  theta[5] = 1.074594
+Gradient[6] =    -0.00  theta[6] = 0.126476
+Gradient[7] =     0.00  theta[7] = 1.524276
+Gradient[8] =    -0.00  theta[8] = 0.154187
+
+line search along the specified direction ... zeta = 0.100022
+Function Value = 3888.7091
+Gradient[1] =    -0.00  theta[1] = 0.740542
+Gradient[2] =    -0.00  theta[2] = 0.431451
+Gradient[3] =    -0.00  theta[3] = 0.217139
+Gradient[4] =    -0.00  theta[4] = 1.645329
+Gradient[5] =    -0.00  theta[5] = 1.074594
+Gradient[6] =    -0.00  theta[6] = 0.126476
+Gradient[7] =     0.00  theta[7] = 1.524276
+Gradient[8] =    -0.00  theta[8] = 0.154187
+
+line search along the specified direction ... zeta = 0.010002
+Function Value = 3888.7091
+Gradient[1] =    -0.00  theta[1] = 0.740542
+Gradient[2] =    -0.00  theta[2] = 0.431451
+Gradient[3] =    -0.00  theta[3] = 0.217139
+Gradient[4] =    -0.00  theta[4] = 1.645329
+Gradient[5] =    -0.00  theta[5] = 1.074594
+Gradient[6] =    -0.00  theta[6] = 0.126476
+Gradient[7] =     0.00  theta[7] = 1.524276
+Gradient[8] =    -0.00  theta[8] = 0.154187
+loglikelihood = -3888.70910     AIC = 7793.41820
+theta[1] = 0.54840226    gradient[1] =  -0.0000
+theta[2] = 0.18615038    gradient[2] =  -0.0000
+theta[3] = 0.04714954    gradient[3] =  -0.0000
+theta[4] = 2.70710592    gradient[4] =  -0.0000
+theta[5] = 1.15475188    gradient[5] =  -0.0000
+theta[6] = 0.01599621    gradient[6] =  -0.0000
+theta[7] = 2.32341768    gradient[7] =   0.0000
+theta[8] = 0.02377364    gradient[8] =  -0.0000
+======================================================
+MLE:
+        mu          A          c      alpha          p          D          q 
+0.54840226 0.18615038 0.04714954 2.70710592 1.15475188 0.01599621 2.32341768 
+     gamma 
+0.02377364 
+======================================================
+              iteration 4              
+9.532141e-05 1.484071e-07 5.052709e-04 
+Execution time:
+   user  system elapsed 
+1514.36    0.20 1515.04 

@@ -1,0 +1,25 @@
+
+plot.timsac.pgraph7<-function(file="out.pgPalm", ps.file, xlab="Elapsed Time After Each Event", ylab="Occurrence Rate",...)
+{
+
+  if(!missing(ps.file)){
+     postscript(ps.file,horizontal=F)
+     par(mfrow=c(2,1))
+  }
+
+  band<- scan(file,nline=1)
+  data<- matrix(scan(file, skip=1), ncol=2, byrow=T)
+
+#  print(data)
+  plot(data,type="p", pch="*", xlab=xlab, ylab=ylab, main="PGRAH: Palm Intensity",...)
+  points(data,type="l")
+  abline(h=band,lty=2)
+  abline(h=mean(band))
+
+
+  if(!missing(ps.file))dev.off()
+}
+
+plot.timsac.pgraph7("out.pgPalm", ps.file="pgPalm.ps")
+plot.timsac.pgraph7("out.pgPalm")
+

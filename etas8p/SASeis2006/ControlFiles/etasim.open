@@ -1,0 +1,20 @@
+1         1.0               ic    dummy(b-value)
+0.01      999               tstart, dummy(number of events)
+2.5       6.2               cutoff-mag. ref-mag.
+0.00000E+00 0.63348E+02 0.38209E-01 0.26423E+01 0.10169E+01  ETAS parameters
+The parameters above are for the case where magnitudes are from [work.etas].
+
+
+0         1.0            ic   b-value
+0.0       999            dummy(tstart), number of events
+3.5       3.5            cutoff-mag. ref-mag.
+0.002 0.004 0.003 2.4 1.3   ETAS parameters
+The parameters above are for the case where magnitudes are generated
+
+
+1         1.5
+0.0       18.68     0.01
+2.5       6.2
+0.00000E+00 0.69845E+02 0.40761E-01 0.28263E+01 0.10024E+01
+The parameters above are for the case where magnitudes are from [work.etas].
+

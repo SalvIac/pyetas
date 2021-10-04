@@ -1,0 +1,27 @@
+        column <- 9
+        para <- scan("etas.open")
+        mag0 <- para[6]; ts <- para[3]; te <- para[4]
+        data <- scan("work.etas",skip=1)
+	hypo <- matrix(data, ncol = column, byrow = T)
+        hypo <- hypo[hypo[, 4] >= mag0,  ]
+        hypo <- hypo[hypo[, 5] >= ts,  ]
+        hypo <- hypo[hypo[, 5] <= te,  ]
+	mag1 <- min(hypo[, 4])
+	mag <- hypo[, 4]
+	ti <- hypo[, 5]
+	zero <- hypo[, 1] * 0
+	cn <- 1:length(hypo[, 1])
+        par(pty="s",xaxs='r',yaxs='i')
+	xrange <- c(min(ti), max(ti))
+	mgrange <- max(cn)/4
+	bottom <- min(cn) - mgrange
+	yrange <- c(bottom, max(cn))
+	plot(xrange, yrange, type = "n", main = "Seismicity CUM & M-T plot", 
+             xlab = "ORDINARY TIME (DAYS)", 
+             ylab = "CUMULATIVE NUMBER OF EVENTS", lwd = 1)
+	lines(ti, cn, type='S')
+	mgmax <- max(mag - mag1 + 1)
+	mag <- mag - mag1 + 0.5
+	segments(ti, bottom, ti, mag/mgmax * mgrange + bottom)	
+	abline(h = 0)
+	abline(h = bottom)

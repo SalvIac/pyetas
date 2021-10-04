@@ -1,0 +1,24 @@
+plan
+
+- find a method to merge previous work (faults) with simulations (1-2weeks)
+
+moving on:
+- write conference paper
+
+journal papers
+(1) extend previous work + etas + merging problems
+(2) extend previous work without etas, adding risk (multi-sites)
+(3) extend (1) adding risk (multi-sites) with simple vulnerability
+
+future work/papers:
+- vulnerability models with aftershocks
+- extend (3) with advanced vulnerability models
+
+cool ideas:
+- use ETAS results and/or ML to produce the area sources (see chu et al. 2011, kagan et al. 2010 for broad tectonics)
+- use ML (DL) to simulate damage states with several (multi) IMs
+- ETAS include a stochastic clustering procedure (it gives the probabilities for each event being a background event or a triggered event): this might be the key to explore the epistemic uncertainty of diffeernt source models (in the ERF)
+- use seismicity to infer the location of the active faults? not sure it's possible but it's interesting and useful
+- reinforcement learning to calibrate ETAS
+
+

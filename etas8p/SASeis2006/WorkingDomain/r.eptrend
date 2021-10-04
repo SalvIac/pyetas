@@ -1,0 +1,43 @@
+plot.timsac1<-function(file="out.eptrend1", ...)
+{
+  data1 <-matrix(scan(file, skip=1), ncol=2, byrow=T)  
+  plot(data1, type="h", ...)
+  
+}
+
+plot.timsac2<-function(file="out.eptrend2", main, ...)
+{
+  data1 <-matrix(scan(file, skip=1), ncol=2, byrow=T)
+  #print(main)
+  if(missing(main))main=scan(file, what="", nlines=1)  
+  plot(data1, type="l",  main=main, ...)
+
+}
+
+
+plot.timsac.eptren<-function(file1="out.eptrend1", file2="out.eptrend1",
+                             main.title, xlab1="Time", ylab1="Magnitude", 
+                             xlab2="Time", ylab2="Intensity Rate", ps.file, ...)
+{
+  if(!missing( ps.file) ) {
+     postscript(ps.file, horizontal=F)
+  }
+     par(mfrow=c(2,1))
+  
+  plot.timsac2(file2, xlab=xlab2, ylab=ylab2, main=main.title, ...)
+  plot.timsac1(file1, xlab=xlab1, ylab=ylab1, ...)
+   
+  if(!missing( ps.file))   dev.off()
+  
+}
+
+plot.timsac.eptren("./out.eptrend1", "./out.eptrend2", 
+           main.title="EPTREN-Trend", ps.file="eptrend.ps")
+
+plot.timsac.eptren("./out.eptrend1", "./out.eptrend2", 
+           main.title="EPTREN-Trend")
+
+
+#plot.timsac.eptren("../out.cycle1", "../out.cycle2", 
+#           main.title="CYCLE", ps.file="cycle.ps", xlim=c(0,1))
+

@@ -1,0 +1,41 @@
+library("ETAS")
+
+param0=NULL
+bwd = NULL
+nnp = 5
+bwm = 0.05
+verbose = TRUE
+plot.it = FALSE
+ndiv = 1000
+no.itr = 11
+rel.tol=1e-03
+eps = 1e-06
+cxxcode = FALSE
+nthreads = 1
+
+
+time.begin=NULL
+study.start=NULL
+study.end=NULL
+study.length=NULL
+lat.range=NULL
+long.range=NULL
+region.poly=NULL
+mag.threshold=NULL
+flatmap=TRUE
+dist.unit="degree"
+roundoff=TRUE
+tz="GMT"
+
+
+japan.cat <- catalog(japan.quakes)
+
+jpoly <- list(long = c(134.0, 137.9, 143.1, 144.9, 147.8, 137.8, 137.4, 135.1, 130.6), lat = c(31.9, 33.0, 33.2, 35.2, 41.3, 44.2, 40.2, 38.0, 35.4))
+
+japan.cat <- catalog(japan.quakes, study.start = "1953-05-26", study.end = "1990-01-08", region.poly = jpoly, mag.threshold = 4.5)
+japan.cat
+
+param0 <- c(0.592844590, 0.204288231, 0.022692883, 1.495169224, 1.109752319, 0.001175925, 1.860044210, 1.041549634)
+
+japan.fit <- etas(japan.cat, param0, cxxcode=FALSE)
+japan.fit
