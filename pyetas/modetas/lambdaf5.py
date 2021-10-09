@@ -34,17 +34,6 @@ def clambdaj(theta, j, t, x, y, m, bk):
               (p - 1)/c * np.power(1. + delta/c, -p) * \
               (q - 1) / (sig * np.pi) * np.power(1. + r2 / sig, -q)
     s = mu * bk[j] + np.sum(part_s)
-    # # old loop
-    # s = mu * bk[j]
-    # vect_r2 = dist2(x[j], y[j], x, y)
-    # for i in range(0, j):
-    #     part1 = np.exp(alpha * m[i])
-    #     delta = t[j] - t[i]
-    #     part2 = (p - 1)/c * (1 + delta/c)**(-p)
-    #     sig = D * np.exp(gamma * m[i])
-    #     r2 = vect_r2[i]
-    #     part3 = (q - 1) / (sig * np.pi) * (1 + r2 / sig)**(-q)
-    #     s += A * part1 * part2 * part3
     return s
 
 
@@ -111,79 +100,10 @@ def clambdajGr(theta, j, t, x, y, m, bk, fv, dfv):
 
 
 
-def clambdajGr_old(theta, j, t, x, y, m, bk, fv, dfv):
-    # extract model parameters
-    mu = theta[0]**2
-    A = theta[1]**2
-    c = theta[2]**2
-    alpha = theta[3]**2
-    p = theta[4]**2
-    D = theta[5]**2
-    q = theta[6]**2
-    gamma = theta[7]**2
-    
-    # double part1, part2, part3, part1_alpha, part2_c, part2_p, part3_d, part3_q,
-    # part3_gamma, delta, sig, r2, sg1,
-    sg1 = bk[j]
-    sg2 = 0.
-    sg3 = 0.
-    sg4 = 0.
-    sg5 = 0.
-    sg6 = 0.
-    sg7 = 0.
-    sg8 = 0.
-
-    s = mu * bk[j]
-
-    for i in range(0, j):
-        part1 = np.exp(alpha * m[i])
-        
-        delta = t[j] - t[i]
-        part2 = (p - 1)/c * np.power(1 + delta / c, - p)
-        
-        sig   = D * np.exp(gamma * m[i])
-        r2 = dist2(x[j], y[j], x[i], y[i])
-        part3 = (q - 1)/(sig * np.pi) * np.power(1 + r2/sig, - q)
-        
-        s += A * part1 * part2 * part3
-        sg2 += part1 * part2 * part3
-        
-        part2_c = part2 * (-1/c - p/(c + delta) + p/c)
-        sg3 += A * part1 * part2_c * part3
-        
-        part1_alpha = part1 * m[i]
-        sg4 += A * part1_alpha * part2 * part3
-        
-        part2_p = part2 * (1/(p - 1) - np.log(1 + delta/c))
-        sg5 += A * part1 * part2_p * part3
-        
-        part3_d = part3 / D * (-1 + q * (1 - 1/(1 + r2/sig)))
-        sg6 += A * part1 * part2 * part3_d
-        
-        part3_q = part3 * (1/(q - 1) - np.log(1 + r2/sig))
-        sg7 += A * part1 * part2 * part3_q
-        
-        part3_gamma = part3 * (-m[i] + q * m[i] * (1 - 1/(1 + r2/sig)))
-        sg8 += A * part1 * part2 * part3_gamma
-          
-    fv = s
-    dfv[ 0 ] = sg1 * 2 * theta[0]
-    dfv[ 1 ] = sg2 * 2 * theta[1]
-    dfv[ 2 ] = sg3 * 2 * theta[2]
-    dfv[ 3 ] = sg4 * 2 * theta[3]
-    dfv[ 4 ] = sg5 * 2 * theta[4]
-    dfv[ 5 ] = sg6 * 2 * theta[5]
-    dfv[ 6 ] = sg7 * 2 * theta[6]
-    dfv[ 7 ] = sg8 * 2 * theta[7]
-    return fv, dfv
-
-
-
 #%% ***************************************************************************
 
 
 def cintegj(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength):
-
     # extract model parameters
     mu = theta[0]**2
     A = theta[1]**2
@@ -193,10 +113,7 @@ def cintegj(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength):
     D = theta[5]**2
     q = theta[6]**2
     gamma = theta[7]**2
-    
-    # double ttemp, ttemp1, ttemp2, gi, gi1, gi2, w[4], si, sk
-    w = [None]*4
-    
+       
     if t[j] > tstart2:
         ttemp = tlength - t[j]
         gi  = 1 - (1 + ttemp/c)**(1 - p)
@@ -274,74 +191,6 @@ def cintegjGr(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength, fv, dfv):
     dfv[7] = sk * gi  * sigamma       * 2 * theta[7]
     return fv, dfv
 
-
-
-#%% ***************************************************************************
-
-
-# SEXP clambdax(SEXP rt,
-#              SEXP rx,
-#              SEXP ry,
-#              SEXP theta,
-#              SEXP revents)
-# {
-#   SEXP dim
-
-#   # extract events
-#   PROTECT(dim = allocVector(INTSXP, 2))
-#   dim = getAttrib(revents, R_DimSymbol)
-#   int N = INTEGER(dim)[0]
-#   double *events = REAL(revents)
-#   double t[N], x[N], y[N], m[N]
-#   for (int i = 0 i < N i++)
-#     {
-#       t[i] = events[i]
-#       x[i] = events[N + i]
-#       y[i] = events[2 * N + i]
-#       m[i] = events[3 * N + i]
-#     }
-
-#   # extract model parameters
-#   double *tht = REAL(theta)
-#   double #mu = tht[0] * tht[0],
-#     A     = tht[1] * tht[1],
-#     c     = tht[2] * tht[2],
-#     alpha = tht[3] * tht[3],
-#     p     = tht[4] * tht[4],
-#     D     = tht[5] * tht[5],
-#     q     = tht[6] * tht[6],
-#     gamma = tht[7] * tht[7]
-
-#   # extract arguments
-#   double tt = *REAL(rt), xx = *REAL(rx), yy = *REAL(ry)
-
-#   double part1, part2, part3, delta, sig, r2
-
-#   double s = 0
-
-#   int i = 0
-#   while (t[i] < tt && i < N)
-#     {
-#       part1 = exp(alpha * m[i])
-
-#       delta = tt - t[i]
-#       part2 = (p - 1)/c * pow(1 + delta/c, - p)
-
-#       sig = D * exp(gamma * m[i])
-#       r2 = dist2(xx, yy, x[i], y[i])
-#       part3 = (q - 1) / (sig * PI) * pow(1 + r2 / sig, - q)
-
-#       s += A * part1 * part2 * part3
-#       i++
-#     }
-
-#   SEXP out
-#   PROTECT(out = allocVector(REALSXP, 1))
-#   double *outP = REAL(out)
-#   *outP = s
-#   UNPROTECT(2)
-#   return out
-# }
 
 
 #%% ***************************************************************************

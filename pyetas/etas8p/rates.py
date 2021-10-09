@@ -13,10 +13,10 @@ from mpl_toolkits.basemap import Basemap
 from matplotlib.patches import Polygon
 from matplotlib.collections import PatchCollection
 
-from pyrisk.etas.etas8p.etas import Etas
-from pyrisk.etas.etas8p.catalog import CatalogueEtas
-from pyrisk.etas.etas8p.dist import dist, dist2
-from pyrisk.etas.etas8p.poly import dGauss
+from pyetas.etas8p.etas import Etas
+from pyetas.etas8p.catalog import CatalogueEtas
+from pyetas.etas8p.dist import dist, dist2
+from pyetas.etas8p.poly import dGauss
 from myutils.utils_pickle import load_pickle, save_pickle
 
 

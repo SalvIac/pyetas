@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 @author: Salvatore Iacoletti
+lambdaf6 is similar to lambdaf5 with a truncated time distribution
 """
 
 

@@ -7,18 +7,18 @@
 import numpy as np
 from openquake.hazardlib.scalerel.wc1994 import WC1994
 
-from pyrisk.etas.etas8p.dist import norm, dist
-# import pyrisk.etas.etas8p.lambdaf0 as m0
-import pyrisk.etas.etas8p.lambdaf1 as m1
-import pyrisk.etas.etas8p.lambdaf2 as m2
-import pyrisk.etas.etas8p.lambdaf3 as m3
-import pyrisk.etas.etas8p.lambdaf4 as m4
-import pyrisk.etas.etas8p.lambdaf5 as m5
-import pyrisk.etas.etas8p.lambdaf6 as m6
-import pyrisk.etas.etas8p.lambdaf6f as m6f
-import pyrisk.etas.etas8p.lambdaf7 as m7
-import pyrisk.etas.etas8p.lambdaf7 as m7f
-import pyrisk.etas.etas8p.lambdaf6f_schoenberg as m6fs
+from pyetas.etas8p.dist import norm, dist
+# import pyetas.etas8p.lambdaf0 as m0
+import pyetas.etas8p.lambdaf1 as m1
+import pyetas.etas8p.lambdaf2 as m2
+import pyetas.etas8p.lambdaf3 as m3
+import pyetas.etas8p.lambdaf4 as m4
+import pyetas.etas8p.lambdaf5 as m5
+import pyetas.etas8p.lambdaf6 as m6
+import pyetas.etas8p.lambdaf6f as m6f
+import pyetas.etas8p.lambdaf7 as m7
+import pyetas.etas8p.lambdaf7f as m7f
+import pyetas.etas8p.lambdaf6f_schoenberg as m6fs
 # from pyrisk.utils.gardner_knopoff_window import GardnerKnopoffWindowOrig
 
 
@@ -167,7 +167,6 @@ def clinesearch(rdata, xOld, h, fv, verbose, ram, model_module, voronoi):
 # log-likelihood function of the model
 
 def cloglkhd(tht, rdata, verbose, model_module, voronoi):
-    
     # extract events
     t = np.array(rdata['revents']['tt'])
     x = np.array(rdata['revents']['xx'])
@@ -665,7 +664,9 @@ def etasfit(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose, ndiv,
 
     else:
         raise Exception('invalid model')
-    
+    print(model_module.__name__)
+
+    x0 = [j[1] for j in tht.items()]
     cfit_res = cfit(tht, rdata, ihess, int(verbose), model_module, voronoi)
     
     if cfit_res == 0:

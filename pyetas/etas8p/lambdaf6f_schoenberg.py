@@ -8,11 +8,11 @@ import warnings
 import numpy as np
 from openquake.hazardlib.scalerel.wc1994 import WC1994
 
-from pyrisk.etas.etas8p.dist import dist, dist2
-from pyrisk.etas.etas8p.spatial5 import (fr, dq_fr, dgamma_fr, dD_fr,
+from pyetas.etas8p.dist import dist, dist2
+from pyetas.etas8p.spatial5 import (fr, dq_fr, dgamma_fr, dD_fr,
                                          pdf_fr, dq_pdf_fr, dgamma_pdf_fr, dD_pdf_fr)
-from pyrisk.etas.etas8p.poly import polyinteg
-from pyrisk.etas.etas8p.lambdaf6 import (pdf_time_trunc, pdf_time_trunc_p, 
+from pyetas.etas8p.poly import polyinteg
+from pyetas.etas8p.lambdaf6 import (pdf_time_trunc, pdf_time_trunc_p, 
                                          pdf_time_trunc_c, integral_pdf_time_trunc,
                                          integral_pdf_time_trunc_p,
                                          integral_pdf_time_trunc_c)

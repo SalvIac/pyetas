@@ -9,19 +9,19 @@ import numpy as np
 import math
 # import multiprocessing as mp
 
-from pyrisk.etas.etas8p.dist import dist
-from pyrisk.etas.etas8p.poly import polyinteg, pGauss, dGauss
-import pyrisk.etas.etas8p.lambdaf0 as m0
-import pyrisk.etas.etas8p.lambdaf1 as m1
-import pyrisk.etas.etas8p.lambdaf2 as m2
-import pyrisk.etas.etas8p.lambdaf3 as m3
-import pyrisk.etas.etas8p.lambdaf4 as m4
-import pyrisk.etas.etas8p.lambdaf5 as m5
-import pyrisk.etas.etas8p.lambdaf6 as m6
-import pyrisk.etas.etas8p.lambdaf6f as m6f
-import pyrisk.etas.etas8p.lambdaf7 as m7
-import pyrisk.etas.etas8p.lambdaf7f as m7f
-from pyrisk.etas.etas8p.etasfit import calc_timedep_mc
+from pyetas.etas8p.dist import dist
+from pyetas.etas8p.poly import polyinteg, pGauss, dGauss
+import pyetas.etas8p.lambdaf0 as m0
+import pyetas.etas8p.lambdaf1 as m1
+import pyetas.etas8p.lambdaf2 as m2
+import pyetas.etas8p.lambdaf3 as m3
+import pyetas.etas8p.lambdaf4 as m4
+import pyetas.etas8p.lambdaf5 as m5
+import pyetas.etas8p.lambdaf6 as m6
+import pyetas.etas8p.lambdaf6f as m6f
+import pyetas.etas8p.lambdaf7 as m7
+import pyetas.etas8p.lambdaf7f as m7f
+from pyetas.etas8p.etasfit import calc_timedep_mc
 # from pyrisk.utils.gardner_knopoff_window import GardnerKnopoffWindowOrig
 
 

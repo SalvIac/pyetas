@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 @author: Salvatore Iacoletti
+
+the core of the code is similar to:
 https://github.com/jalilian/ETAS/tree/master/R
 http://bemlar.ism.ac.jp/zhuang/software.html
+with the changes explained in Iacoletti et al. 2021
 """
 
 import time
@@ -16,11 +19,11 @@ from copy import deepcopy
 
 from openquake.hmtk.seismicity.occurrence.aki_maximum_likelihood import AkiMaxLikelihood
 
-from pyrisk.etas.etas8p.catalog import CatalogueEtas
-from pyrisk.etas.etas8p.decluster import decluster
-from pyrisk.etas.etas8p.etasfit import etasfit
-from pyrisk.etas.etas8p.etasfit_scipy import etasfit_scipy # q=1.5 alpha=beta
-from pyrisk.etas.etas8p.voronoi import get_voronoi
+from pyetas.etas8p.catalog import CatalogueEtas
+from pyetas.etas8p.decluster import decluster
+from pyetas.etas8p.etasfit import etasfit
+from pyetas.etas8p.etasfit_scipy import etasfit_scipy # q=1.5 alpha=beta
+from pyetas.etas8p.voronoi import get_voronoi
 from myutils.utils_pickle import load_pickle, save_pickle
 
 

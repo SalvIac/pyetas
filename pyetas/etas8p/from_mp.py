@@ -6,11 +6,10 @@
 
 import numpy as np
 
-from pyrisk.etas.etas8p.dist import dist, dist2
+from pyetas.etas8p.dist import dist, dist2
+from pyetas.etas8p.spatial5 import fr
+from pyetas.etas8p.poly import polyinteg
 from myutils.utils_pickle import load_pickle, save_pickle
-from pyrisk.etas.etas8p.spatial5 import fr
-from pyrisk.etas.etas8p.poly import polyinteg
-
 
 # # spatial density function and its derivatives
 # def fr(r, w):

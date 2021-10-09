@@ -9,7 +9,7 @@ import numpy as np
 from scipy.special import gammaln
 from shapely.geometry import Point
 from openquake.hmtk.seismicity.utils import haversine
-from pyrisk.etas.utils import get_region
+from pyetas.utils import get_region
 
 
 

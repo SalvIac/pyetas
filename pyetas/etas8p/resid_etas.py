@@ -13,8 +13,8 @@ from mpl_toolkits.basemap import Basemap
 from matplotlib.collections import PatchCollection
 from shapely.geometry import Point, Polygon
 
-from pyrisk.etas.etas8p.etas import Etas
-from pyrisk.etas.etas8p.from_mp import lambdaspatial, lambdatemporal, timetransform
+from pyetas.etas8p.etas import Etas
+from pyetas.etas8p.from_mp import lambdaspatial, lambdatemporal, timetransform
 from myutils.utils_pickle import load_pickle, save_pickle
 
 

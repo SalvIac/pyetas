@@ -8,7 +8,6 @@ import pandas as pd
 import numpy as np
 from scipy.stats import uniform
 from shapely.geometry import Point, Polygon, box, polygon
-
 from openquake.hmtk.seismicity.catalogue import Catalogue
 
 
@@ -61,6 +60,22 @@ class CatalogueEtas(Catalogue):
                  study_length=None, lat_range=None, long_range=None,
                  region_poly=None, mag_threshold=None, flatmap=True,
                  dist_unit="degree", roundoff=True, tz="GMT", map_faults=None):
+
+        # accounting for round-off error in coordinates of epicenters
+        if roundoff:
+            # two random numbers uniformly distributed in (-0.005, 0.005)
+            print("roundoff activated")
+            np.random.seed(seed=42)
+            # ind = data[['longitude', 'latitude']].duplicated()
+            # size = np.sum(ind)
+            size = data['longitude'].shape[0]
+            loc = -0.005
+            scale = 0.005-loc
+            r = uniform.rvs(loc=loc, scale=scale, size=(size, 2))
+            # data.loc[ind, 'longitude'] += r[:,0]
+            # data.loc[ind, 'latitude'] += r[:,1]
+            data['longitude'] += r[:,0]
+            data['latitude'] += r[:,1]
         
         super().__init__()
         self.data = data
@@ -82,19 +97,7 @@ class CatalogueEtas(Catalogue):
         # if (!is.numeric(data$lat) || !is.numeric(data$long) || !is.numeric(data$mag))
         #     stop("lat, long and mag columns must be numeric vectors")
 
-        # accounting for round-off error in coordinates of epicenters
-        if roundoff:
-            # two random numbers uniformly distributed in (-0.005, 0.005)
-            np.random.seed(seed=1992)
-            ind = data[['longitude', 'latitude']].duplicated()
-            loc = -0.005
-            scale = 0.005-loc
-            size = np.sum(ind)
-            r = uniform.rvs(loc=loc, scale=scale, size=(size, 2))
-            data.loc[ind, 'longitude'] += r[:,0]
-            data.loc[ind, 'latitude'] += r[:,1]
-        
-        
+
         # extract spatial coordinates and magnitude
         xx = data['longitude']  # longitude of epicenter: coordinates
         yy = data['latitude']   # latitude of epicenter : coordinates

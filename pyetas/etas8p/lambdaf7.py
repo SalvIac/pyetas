@@ -6,11 +6,11 @@
 
 import numpy as np
 
-from pyrisk.etas.etas8p.dist import dist, dist2
-from pyrisk.etas.etas8p.spatial5 import (fr, dq_fr, dgamma_fr, dD_fr,
+from pyetas.etas8p.dist import dist, dist2
+from pyetas.etas8p.spatial5 import (fr, dq_fr, dgamma_fr, dD_fr,
                                          pdf_fr, dq_pdf_fr, dgamma_pdf_fr, dD_pdf_fr)
-from pyrisk.etas.etas8p.poly import polyinteg
-from pyrisk.etas.etas8p.lambdaf6 import (pdf_time_trunc, pdf_time_trunc_p, 
+from pyetas.etas8p.poly import polyinteg
+from pyetas.etas8p.lambdaf6 import (pdf_time_trunc, pdf_time_trunc_p, 
                                          pdf_time_trunc_c, integral_pdf_time_trunc,
                                          integral_pdf_time_trunc_p,
                                          integral_pdf_time_trunc_c)
@@ -197,7 +197,7 @@ def cintegjGr(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength, fv, dfv,
 if __name__ == "__main__":
     
     import time
-    from pyrisk.etas.etas8p.voronoi import get_mixed_voronoi
+    from pyetas.etas8p.voronoi import get_mixed_voronoi
 
     theta = [np.sqrt(j[1]) for j in {'mu': 0.11459513439367879,
                                     'A': 0.01,

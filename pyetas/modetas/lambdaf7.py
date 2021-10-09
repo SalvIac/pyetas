@@ -6,22 +6,21 @@
 
 import numpy as np
 
-from pyrisk.etas.etas8p.dist import dist, dist2
-from pyrisk.etas.etas8p.spatial5_trunc import pdf_fr, dq_pdf_fr, dgamma_pdf_fr, dD_pdf_fr
-from pyrisk.etas.etas8p.poly import polyinteg
-from pyrisk.etas.etas8p.lambdaf6 import (pdf_time_trunc, pdf_time_trunc_p, 
+from pyetas.etas8p.dist import dist, dist2
+from pyetas.etas8p.spatial5 import (fr, dq_fr, dgamma_fr, dD_fr,
+                                         pdf_fr, dq_pdf_fr, dgamma_pdf_fr, dD_pdf_fr)
+from pyetas.etas8p.poly import polyinteg
+from pyetas.etas8p.lambdaf6 import (pdf_time_trunc, pdf_time_trunc_p, 
                                          pdf_time_trunc_c, integral_pdf_time_trunc,
                                          integral_pdf_time_trunc_p,
                                          integral_pdf_time_trunc_c)
 
 
-''' model 7 is identical to model 6 but the spatial pdf is truncated at 95th percentile'''
-
 
 #%% ***************************************************************************
 
 
-def clambdaj(theta, j, t, x, y, m, bk, ta):
+def clambdaj(theta, j, t, x, y, m, bk, ta, mc):
     # extract model parameters
     mu = theta[0]**2
     A = theta[1]**2
@@ -33,19 +32,15 @@ def clambdaj(theta, j, t, x, y, m, bk, ta):
     gamma = theta[7]**2
     # ta = 3*365 # 10yr
     
+    part1 = A * np.exp(alpha * mc[:j]) # m[:j])
+    
     # for loop modified for speed
     delta = t[j] - t[:j]
-    
-    part1 = A * np.exp(alpha * m[:j])
-
-    # sig = D * np.exp(gamma * m[:j])
-    # r2 = dist2(x[j], y[j], x[:j], y[:j])
-    r = dist(x[j], y[j], x[:j], y[:j])
-    part3 = pdf_fr(r, gamma, D, q, m[:j]) # (q - 1) / (sig * np.pi) * np.power(1. + r2 / sig, -q)
-
+    sig = D * np.exp(gamma * m[:j])
+    r2 = dist2(x[j], y[j], x[:j], y[:j])
     part_s = part1 * \
              pdf_time_trunc(delta, c, p, ta[:j]) * \
-             part3
+             (q - 1) / (sig * np.pi) * np.power(1. + r2 / sig, -q)
     s = mu * bk[j] + np.sum(part_s)
     return s
 
@@ -54,7 +49,7 @@ def clambdaj(theta, j, t, x, y, m, bk, ta):
 #%% ***************************************************************************
 
 
-def clambdajGr(theta, j, t, x, y, m, bk, fv, dfv, ta):
+def clambdajGr(theta, j, t, x, y, m, bk, fv, dfv, ta, mc):
     # extract model parameters
     mu = theta[0]**2
     A = theta[1]**2
@@ -67,15 +62,14 @@ def clambdajGr(theta, j, t, x, y, m, bk, fv, dfv, ta):
     # ta = 3*365 # 10yr
     
     # for loop modified for speed
-    part1 = np.exp(alpha * m[:j])
-    
+    part1 = np.exp(alpha * mc[:j]) # m[:j])
+
     delta = t[j] - t[:j]
     part2 = pdf_time_trunc(delta, c, p, ta[:j])
     
     sig = D * np.exp(gamma * m[:j])
     r2 = dist2(x[j], y[j], x[:j], y[:j])
-    r = dist(x[j], y[j], x[:j], y[:j])
-    part3 = pdf_fr(r, gamma, D, q, m[:j]) # (q - 1) / (sig * np.pi) * np.power(1. + r2 / sig, -q)
+    part3 = (q - 1)/(sig * np.pi) * np.power(1 + r2/sig, - q)
     
     part_s = A * part1 * part2 * part3
     s = mu * bk[j] + np.sum(part_s)
@@ -87,7 +81,7 @@ def clambdajGr(theta, j, t, x, y, m, bk, fv, dfv, ta):
     part2_c = pdf_time_trunc_c(delta, c, p, ta[:j])
     sg3 = A * np.sum(part1 * part2_c * part3)
     
-    part1_alpha = part1 * m[:j]
+    part1_alpha = part1 * mc[:j] # m[:j]
     sg4 = A * np.sum(part1_alpha * part2 * part3)
     
     part2_p = pdf_time_trunc_p(delta, c, p, ta[:j])
@@ -118,7 +112,7 @@ def clambdajGr(theta, j, t, x, y, m, bk, fv, dfv, ta):
 #%% ***************************************************************************
 
 
-def cintegj(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength, ta,
+def cintegj(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength, ta, mc,
             voronoi=None):
 
     # extract model parameters
@@ -135,13 +129,15 @@ def cintegj(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength, ta,
     gi = integral_pdf_time_trunc(t[j], c, p, ta[j], tstart2, tlength)
 
     if voronoi is None:
-        raise Exception("model 7 with truncated spatial pdf does not work without Vonoroi mode")
+        w = np.array([ gamma, D, q, m[j] ])
+        si = polyinteg(fr, w, npoly, px, py, x[j], y[j])
     else: # numerical integration with precomputed Voronoi tassellation
-        points, areas = voronoi["points"], voronoi["areas"]
-        r = dist(x[j], y[j], points[:,0], points[:,1])
-        si = np.min([1., np.sum(pdf_fr(r, gamma, D, q, m[j])*areas)])
-    
-    sk = A * np.exp(alpha * m[j])
+        raise Exception("not working")
+        # points, areas = voronoi[j]["points"], voronoi[j]["areas"]
+        # r = dist(x[j], y[j], points[:,0], points[:,1])
+        # si = np.min([1., np.sum(pdf_fr(r, gamma, D, q, m[j])*areas)])
+        
+    sk = A * np.exp(alpha * mc[j]) #m[j])
     return sk * gi * si
 
 
@@ -150,8 +146,8 @@ def cintegj(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength, ta,
 
 
 def cintegjGr(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength, fv, dfv,
-              ta, voronoi=None):
-    
+              ta, mc, voronoi=None):
+
     # extract model parameters
     A = theta[1]**2
     c = theta[2]**2
@@ -166,24 +162,27 @@ def cintegjGr(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength, fv, dfv,
     gi = integral_pdf_time_trunc(t[j], c, p, ta[j], tstart2, tlength)
     gip = integral_pdf_time_trunc_p(t[j], c, p, ta[j], tstart2, tlength)
     gic = integral_pdf_time_trunc_c(t[j], c, p, ta[j], tstart2, tlength)
-    
+
     if voronoi is None:
-        raise Exception("model 7 with truncated spatial pdf does not work without Voronoi mode")
+        w = np.array([ gamma, D, q, m[j] ])
+        si      = polyinteg(fr, w, npoly, px, py, x[j], y[j])
+        sid     = polyinteg(dD_fr, w, npoly, px, py, x[j], y[j])
+        siq     = polyinteg(dq_fr, w, npoly, px, py, x[j], y[j])
+        sigamma = polyinteg(dgamma_fr, w, npoly, px, py, x[j], y[j])
     else: # numerical integration with precomputed Voronoi tassellation
-        points, areas = voronoi["points"], voronoi["areas"]
+        points, areas = voronoi[j]["points"], voronoi[j]["areas"]
         r = dist(x[j], y[j], points[:,0], points[:,1])
         si      = np.min([1., np.sum(pdf_fr(r, gamma, D, q, m[j])*areas)])
         sid     = np.sum(dD_pdf_fr(r, gamma, D, q, m[j])*areas)
         siq     = np.sum(dq_pdf_fr(r, gamma, D, q, m[j])*areas)
         sigamma = np.sum(dgamma_pdf_fr(r, gamma, D, q, m[j])*areas)
-
-    sk = A * np.exp(alpha * m[j])
     
+    sk = A * np.exp(alpha * mc[j]) #m[j])
     fv = sk * gi * si
     dfv[0] = 0.
     dfv[1] = sk * gi  * si / A        * 2 * theta[1]
     dfv[2] = sk * gic * si            * 2 * theta[2]
-    dfv[3] = sk * gi  * si * m[j]     * 2 * theta[3]
+    dfv[3] = sk * gi  * si * mc[j]    * 2 * theta[3] # m[j]
     dfv[4] = sk * gip * si            * 2 * theta[4]
     dfv[5] = sk * gi  * sid           * 2 * theta[5]
     dfv[6] = sk * gi  * siq           * 2 * theta[6]
@@ -198,7 +197,7 @@ def cintegjGr(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength, fv, dfv,
 if __name__ == "__main__":
     
     import time
-    from pyrisk.etas.etas8p.voronoi import get_voronoi
+    from pyetas.etas8p.voronoi import get_mixed_voronoi
 
     theta = [np.sqrt(j[1]) for j in {'mu': 0.11459513439367879,
                                     'A': 0.01,
@@ -216,9 +215,9 @@ if __name__ == "__main__":
                   14.265266203703703,
                   17.982349537037038,
                   22.867060185185185,
-                  26.31388888888889,
-                  27.278854166666665,
-                  27.652256944444446])
+                  23.31388888888889,
+                  23.378854166666665,
+                  23.652256944444446])
     x = np.array([4.883913500346288,
                   4.0649713749413,
                   4.292608153475305,
@@ -268,31 +267,25 @@ if __name__ == "__main__":
     npoly = 5
     
     ta = 5*365*np.ones(m.shape)
-    
-    
+
     
     print('\nclambdaj')
-    print(clambdaj(theta, j, t, x, y, m, bk, ta))
+    print(clambdaj(theta, j, t, x, y, m, bk, ta, 3.5))
 
     print('\nclambdajGr')
     fv = None
     dfv = [None]*8
-    print(clambdajGr(theta, j, t, x, y, m, bk, fv, dfv, ta))
-
+    print(clambdajGr(theta, j, t, x, y, m, bk, fv, dfv, ta, 3.5))
     
-
-    # integration done with Voronoi tessellation
-    points, areas, _ = get_voronoi({"px": px, "py": py}, min_prec=0.05)
-    voronoi = {"points": points,
-               "areas": areas}
     
     start_time = time.time()
-    print('\ncintegj Voronoi')
-    print(cintegj(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength, ta, voronoi))
+    print('\ncintegj')
+    print(cintegj(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength, ta, 3.5))
     
-    print('\ncintegjGr Voronoi')
+    print('\ncintegjGr')
     fv = None
     dfv = [None]*8
-    print(cintegjGr(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength, fv, dfv, ta, voronoi))    
+    print(cintegjGr(theta, j, t, x, y, m, npoly, px, py, tstart2, tlength, fv, dfv, ta, 3.5))
     print(time.time()-start_time)
+
     

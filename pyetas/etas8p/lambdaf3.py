@@ -6,9 +6,9 @@
 
 import numpy as np
 
-from pyrisk.etas.etas8p.dist import dist2
-from pyrisk.etas.etas8p.spatial3 import fr, dq_fr, dD_fr
-from pyrisk.etas.etas8p.poly import polyinteg
+from pyetas.etas8p.dist import dist2
+from pyetas.etas8p.spatial3 import fr, dq_fr, dD_fr
+from pyetas.etas8p.poly import polyinteg
 
 
 

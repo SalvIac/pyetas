@@ -7,12 +7,12 @@
 import numpy as np
 from numba import jit, prange
 
-from pyrisk.etas.etas8p.dist import dist
+from pyetas.etas8p.dist import dist
 
-import pyrisk.etas.etas8p.spatial1 as sp1
-import pyrisk.etas.etas8p.spatial2 as sp2
-import pyrisk.etas.etas8p.spatial3 as sp3
-import pyrisk.etas.etas8p.spatial5 as sp5
+import pyetas.etas8p.spatial1 as sp1
+import pyetas.etas8p.spatial2 as sp2
+import pyetas.etas8p.spatial3 as sp3
+import pyetas.etas8p.spatial5 as sp5
 
 
 
@@ -256,8 +256,8 @@ if __name__ == "__main__":
     cx = 4.883913500346288
     cy = 3.3641999999999967
     
-    # from pyrisk.etas.etas8p.decluster import pGauss
-    # from pyrisk.etas.etas8p.lambdaf import fr, dq_fr, dD_fr, dgamma_fr 
+    # from pyetas.etas8p.decluster import pGauss
+    # from pyetas.etas8p.lambdaf import fr, dq_fr, dD_fr, dgamma_fr 
     import time
     
     # print('\nfrint_orig')

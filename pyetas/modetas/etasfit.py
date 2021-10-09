@@ -134,14 +134,14 @@ def etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
     print(bounds_seq)
     bounds = optimize.Bounds([b[0] for b in bounds_seq], [b[1] for b in bounds_seq])
 
-    res = optimize.minimize(cloglkhd, x0,
-                            args=(rdata, verbose, model_module, voronoi), 
-                            method='trust-constr', jac=grad,
-                            hess=optimize.BFGS(), bounds=bounds,
-                            constraints=linear_constraint)#,
-                            # defaults all 1e-08
-                            # options={'xtol': 1e-06, 'gtol': 1e-04,
-                            #           'barrier_tol': 1e-05, 'verbose': 1})
+    # res = optimize.minimize(cloglkhd, x0,
+    #                         args=(rdata, verbose, model_module, voronoi), 
+    #                         method='trust-constr', jac=grad,
+    #                         hess=optimize.BFGS(), bounds=bounds,
+    #                         constraints=linear_constraint)#,
+    #                         # defaults all 1e-08
+    #                         # options={'xtol': 1e-06, 'gtol': 1e-04,
+    #                         #           'barrier_tol': 1e-05, 'verbose': 1})
     # res = optimize.minimize(cloglkhd, x0, bounds=bounds,
     #                         args=(rdata, verbose, model_module, voronoi), 
     #                         method='L-BFGS-B', jac=grad, 
@@ -158,12 +158,14 @@ def etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
     # res = optimize.shgo(cloglkhd, bounds_seq,
     #                     args=(rdata, verbose, model_module, voronoi))
     # x0 = [1. for j in theta.items()]
-    # bounds_seq = [(lb, ub) for lb, ub in zip(
-    #                                 1e-2*np.array(x0), # -np.inf
-    #                                 1e2*np.array(x0))] # +np.inf
-    # res = optimize.dual_annealing(cloglkhd, bounds_seq, x0=x0,
-    #                               args=(rdata, verbose, model_module, voronoi))
-    # print(res)
+    bounds_seq = [(lb, ub) for lb, ub in zip(1e-2*np.array(x0), 2.*np.array(x0))] # -np.inf, +np.inf
+    bounds_seq[-2] = (1.+1e-6, bounds_seq[-2][1]) # q
+    print(bounds_seq)
+    res = optimize.dual_annealing(cloglkhd, bounds_seq,
+                                  args=(rdata, verbose, model_module, voronoi),
+                                  initial_temp=5230.0, restart_temp_ratio=2e-05, 
+                                  visit=2.62, accept=-5.0, no_local_search=True)
+    print(res)
     
     # unconstrained
     # res = optimize.minimize(cloglkhd, x0, args=(rdata, verbose, model_module, voronoi),
@@ -200,23 +202,24 @@ def etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
 
 if __name__ == "__main__":
 
+    import os
     import time
-    import sys
-    sys.path.append('C:\\Users\\Salvatore\\Dropbox\\SalvIac')
     from pyetas.etas8p.voronoi import get_voronoi
+    from pyetas.etas8p.etasfit import etasfit
     from myutils.utils_pickle import load_pickle, save_pickle
     
-    theta = load_pickle('test/param1')
-    rdata = load_pickle('test/rdata')
+    path = os.path.abspath(os.path.join(os.getcwd(), ".."))
+    theta = load_pickle(os.path.join(path, 'etas8p','test', 'param1'))
+    rdata = load_pickle(os.path.join(path, 'etas8p','test', 'rdata'))
     revents = rdata['revents']
     rpoly = rdata['rpoly']
     tperiod = rdata['tperiod']
     integ0 = rdata['integ0']
-    ihess = load_pickle('test/ihess')
+    ihess = load_pickle(os.path.join(path, 'etas8p','test', 'ihess'))
     rverbose = verbose = 1
 
     ndiv = 1000
-    eps=1e-06
+    eps = 1e-06
     # cxxcode=False
     # nthreads=1  
     m0 = 3.5
@@ -235,11 +238,11 @@ if __name__ == "__main__":
 
 
     # ##########################################################################
-    # print('\netasfit constrained with scipy minimize model 6')
+    # print('\netasfit original etasfit model 6')
     # time1 = time.time()
     # print(theta)
-    # res = etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess,
-    #                     verbose, ndiv, eps, model=6, impbounds={"q":1.5},
+    # res = etasfit(theta, revents, rpoly, tperiod, integ0, m0, ihess,
+    #                     verbose, ndiv, eps, model=6,
     #                     modified_etas=False, voronoi=None)
     # print(time.time()-time1)
     # print(res)
@@ -248,7 +251,7 @@ if __name__ == "__main__":
 
 
     ##########################################################################
-    print('\netasfit with scipy minimize model 6')
+    print('\netasfit with scipy simulated annealing model 6')
     time1 = time.time()
     print(theta)
     res = etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess,
@@ -258,94 +261,111 @@ if __name__ == "__main__":
     print(res)
     
 
-
-
-    ##########################################################################
-    # print('\netasfit with scipy minimize model 5')
-    # time1 = time.time()
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=5)
-    # print(time.time()-time1)
-    # print(res)
-    # results = [0.555266260648366, 0.1864583473888933, 0.047195657755165474,
-                # 2.7050217320762324, 1.1547553549260672, 0.015949991076632867,
-                # 2.317120770715824, 0.023512565102052223]
-
-
-
-
-    ##########################################################################
-    # print('\netasfit with scipy minimize model 4')
-    # time1 = time.time()
-    # del theta['gamma']
-    # ihess = ihess[:7,:7]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=4)
-    # print(res)
-    # print(time.time()-time1)
-
-
-
-
-    ##########################################################################
-    # print('\netasfit with scipy minimize model 3')
-    # time1 = time.time()
-    # del theta['gamma']
-    # ihess = ihess[:7,:7]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=3)
-    # print(res)
-    # print(time.time()-time1)
-
-
-
-
-    ##########################################################################
-    # print('\netasfit with scipy minimize model 2')
-    # time1 = time.time()
-    # del theta['gamma']
-    # del theta['q']
-    # ihess = ihess[:6,:6]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=2)
-    # print(res)
-    # print(time.time()-time1)
-
-
-
-
-    ##########################################################################
-    # print('\netasfit with scipy minimize model 1')
-    # time1 = time.time()
-    # del theta['gamma']
-    # del theta['q']
-    # ihess = ihess[:6,:6]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=1)
-    # print(res)
-    # print(time.time()-time1)
-
-
-
-
-    ##########################################################################
-    # print('\netasfit with scipy minimize model 0')
-    # time1 = time.time()
-    # del theta['gamma']
-    # del theta['q']
-    # del theta['D']
-    # ihess = ihess[:5,:5]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=0)
-    # print(res)
-    # print(time.time()-time1)
     
 
+
+# # -*- coding: utf-8 -*-
+# """
+# @author: Salvatore
+# """
+
+# import numpy as np
+# from pyetas.etas8p.etasfit import calc_timedep_mc
+
+
+# def cloglkhd(tht, rdata, verbose, model_module, voronoi):
+#     # extract events
+#     t = np.array(rdata['revents']['tt'])
+#     x = np.array(rdata['revents']['xx'])
+#     y = np.array(rdata['revents']['yy'])
+#     m = np.array(rdata['revents']['mm'])
+#     flag = rdata['revents']['flag']
+#     bk = rdata['revents']['bkgd']
+#     events = [rdata['revents'][j] for j in rdata['revents'].keys()]
+#     N = len(events[0])
+#     fault = np.array(rdata['revents']['fault'])
+#     mmin = rdata['mmin'] # for faults
+
+#     # extract polygon information
+#     px = rdata['rpoly']['px']
+#     py = rdata['rpoly']['py']
+#     npoly = len(py)
+
+#     # extract time period information
+#     tstart2 = rdata['tperiod']['study_start']
+#     tlength = rdata['tperiod']['study_end']
+
+#     # extract integral of spatial intensity over the obsevation window
+#     integ0 = rdata['integ0']
+
+#     if "lambdaf6" in model_module.__name__ or "lambdaf7" in model_module.__name__:
+#         # gk = GardnerKnopoffWindowOrig()
+#         # ta = gk.calc(m+mmin)[1]*364.75
+#         ta = np.array([5*365]*m.shape[0])
+
+#     if "lambdaf7" in model_module.__name__:
+#         # mc here is the corrected relative magnitude (not completeness mag)
+#         mc = list()
+#         for jj in range(0,N):
+#             mc.append(calc_timedep_mc(jj, t, m, mmin))
+#         mc = np.array(mc)
+
+#     fv1 = 0.
+#     fv2 = 0.
+
+#     for j in range(0, N):
+        
+#         if flag[j] == 1:
+#             if "lambdaf6" in model_module.__name__:
+#                 if "f" == model_module.__name__[-1]: # fault mode
+#                     s = model_module.clambdaj(tht, j, t, x, y, m, bk, ta,
+#                                               fault, mmin)
+#                 else:
+#                     s = model_module.clambdaj(tht, j, t, x, y, m, bk, ta)
+
+#             elif "lambdaf7" in model_module.__name__:
+#                 if "f" == model_module.__name__[-1]: # fault mode
+#                     s = model_module.clambdaj(tht, j, t, x, y, m, bk, ta,
+#                                               fault, mmin, mc)
+#                 else:
+#                     s = model_module.clambdaj(tht, j, t, x, y, m, bk, ta, mc)
+
+#             else:
+#                 s = model_module.clambdaj(tht, j, t, x, y, m, bk)
+                
+#             if s > 1.0e-25:
+#                 fv1 += np.log(s)
+#             else:
+#                 fv1 -= 100.0
+        
+#         if "lambdaf6" in model_module.__name__:
+#             if "f" == model_module.__name__[-1]: # fault mode
+#                 fv2 += model_module.cintegj(tht, j, t, x, y, m, npoly, px, py, 
+#                                             tstart2, tlength, ta, fault, mmin,
+#                                             voronoi)
+#             else:
+#                 fv2 += model_module.cintegj(tht, j, t, x, y, m, npoly, px, py,
+#                                             tstart2, tlength, ta, voronoi)
+
+#         elif "lambdaf7" in model_module.__name__:
+#             if "f" == model_module.__name__[-1]: # fault mode
+#                 fv2 += model_module.cintegj(tht, j, t, x, y, m, npoly, px, py, 
+#                                             tstart2, tlength, ta, fault, mmin,
+#                                             mc, voronoi)
+#             else:
+#                 fv2 += model_module.cintegj(tht, j, t, x, y, m, npoly, px, py,
+#                                             tstart2, tlength, ta, mc, voronoi)
+
+#         else:
+#             fv2 += model_module.cintegj(tht, j, t, x, y, m, npoly, px, py,
+#                                         tstart2, tlength)
+
+#     fv2 += tht[0]**2 * (integ0)
+#     fv = -fv1 + fv2
+
+#     if verbose == 1:
+#         print("Function Value = {:8.5f}  {:7.2f}  {:7.2f}".format(fv, -fv1, fv2))
+
+#     return fv
 
 

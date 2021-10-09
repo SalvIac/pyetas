@@ -12,11 +12,11 @@ import pandas as pd
 from scipy.interpolate import RectBivariateSpline
 from shapely.geometry import Point
 
-from pyrisk.etas.etas8p.dist import dist
-from pyrisk.etas.etas8p.etasfit import etasfit
-from pyrisk.etas.etas8p.etasfit_scipy import etasfit_scipy # q=1.5 alpha=beta
-from pyrisk.etas.etas8p.voronoi import get_voronoi
-from pyrisk.etas.etas8p.etas import Etas
+from pyetas.etas8p.dist import dist
+from pyetas.etas8p.etasfit import etasfit
+from pyetas.etas8p.etasfit_scipy import etasfit_scipy # q=1.5 alpha=beta
+from pyetas.etas8p.voronoi import get_voronoi
+from pyetas.etas8p.etas import Etas
 from myutils.utils_pickle import load_pickle, save_pickle
 
 
@@ -106,7 +106,6 @@ class EtasMleBkg(Etas):
         # plt.show()
         # stop
 
-        
         integ0 = EtasMleBkg.calc_integ_bkg(bkg, win, rtperiod)
         bk = EtasMleBkg.calc_bkg(bkg, catalog)
         events['bkgd'] = bk

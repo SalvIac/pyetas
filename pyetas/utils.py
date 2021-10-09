@@ -6,7 +6,7 @@
 import numpy as np
 from shapely.geometry import Point, Polygon
 from openquake.hmtk.seismicity.catalogue import Catalogue
-from pyrisk.etas.etas8p.catalog import CatalogueEtas
+from pyetas.etas8p.catalog import CatalogueEtas
 
 
 
@@ -79,6 +79,12 @@ def filter_polygon(df, poly):
     return df
 
 
+def get_buffer_region(region, dist=0.5):
+    buf_region = {'lon': np.array([np.min(region['lon'])-dist, np.max(region['lon'])+dist,
+                                    np.max(region['lon'])+dist, np.min(region['lon'])-dist]),
+                  'lat': np.array([np.max(region['lat'])+dist, np.max(region['lat'])+dist,
+                                    np.min(region['lat'])-dist, np.min(region['lat'])-dist])}
+    return buf_region
 
 
 
