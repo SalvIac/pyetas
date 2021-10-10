@@ -137,15 +137,16 @@ def etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
     # res = optimize.minimize(cloglkhd, x0,
     #                         args=(rdata, verbose, model_module, voronoi), 
     #                         method='trust-constr', jac=grad,
-    #                         hess=optimize.BFGS(), bounds=bounds,
-    #                         constraints=linear_constraint)#,
+    #                         hess=optimize.BFGS(),# bounds=bounds,
+    #                         # constraints=linear_constraint,
+    #                         options={'xtol': 1e-06, 'gtol': 1e-04,
+    #                                   'barrier_tol': 1e-05, 'verbose': 1})
     #                         # defaults all 1e-08
-    #                         # options={'xtol': 1e-06, 'gtol': 1e-04,
-    #                         #           'barrier_tol': 1e-05, 'verbose': 1})
-    # res = optimize.minimize(cloglkhd, x0, bounds=bounds,
-    #                         args=(rdata, verbose, model_module, voronoi), 
-    #                         method='L-BFGS-B', jac=grad, 
-    #                         options={'disp': True}) # , "maxcor": int(1e3)
+
+    res = optimize.minimize(cloglkhd, x0, bounds=bounds,
+                            args=(rdata, verbose, model_module, voronoi), 
+                            method='L-BFGS-B', jac=grad, 
+                            options={'disp': True}) # , "maxcor": int(1e3)
     
     # res = optimize.minimize(cloglkhd, x0,
     #                         args=(rdata, verbose, model_module, voronoi),
@@ -158,14 +159,14 @@ def etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
     # res = optimize.shgo(cloglkhd, bounds_seq,
     #                     args=(rdata, verbose, model_module, voronoi))
     # x0 = [1. for j in theta.items()]
-    bounds_seq = [(lb, ub) for lb, ub in zip(1e-2*np.array(x0), 2.*np.array(x0))] # -np.inf, +np.inf
-    bounds_seq[-2] = (1.+1e-6, bounds_seq[-2][1]) # q
-    print(bounds_seq)
-    res = optimize.dual_annealing(cloglkhd, bounds_seq,
-                                  args=(rdata, verbose, model_module, voronoi),
-                                  initial_temp=5230.0, restart_temp_ratio=2e-05, 
-                                  visit=2.62, accept=-5.0, no_local_search=True)
-    print(res)
+    # bounds_seq = [(lb, ub) for lb, ub in zip(1e-2*np.array(x0), 2.*np.array(x0))] # -np.inf, +np.inf
+    # bounds_seq[-2] = (1.+1e-6, bounds_seq[-2][1]) # q
+    # print(bounds_seq)
+    # res = optimize.dual_annealing(cloglkhd, bounds_seq,
+    #                               args=(rdata, verbose, model_module, voronoi),
+    #                               initial_temp=5230.0, restart_temp_ratio=2e-05, 
+    #                               visit=2.62, accept=-5.0, no_local_search=True)
+    # print(res)
     
     # unconstrained
     # res = optimize.minimize(cloglkhd, x0, args=(rdata, verbose, model_module, voronoi),
@@ -176,8 +177,13 @@ def etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
     # res = optimize.minimize(cloglkhd, x0, args=(rdata, verbose), method='Newton-CG', jac=grad, options={'disp': True})
     # res = optimize.minimize(cloglkhd, x0, args=(rdata, verbose), method='trust-ncg', jac=grad, options={'disp': True})
 
-    
-    H = np.zeros((len(x0),len(x0)))
+    try:
+        try:
+            H = res.hess_inv.todense()
+        except:
+            H = res.hess_inv
+    except:
+        H = np.zeros((len(x0),len(x0)))
     tht = np.array(res.x)
     avcov = (1/4 * np.matmul(np.matmul(np.diag(1/tht), H), np.diag(1/tht))).tolist()
 
@@ -190,7 +196,7 @@ def etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
         cfit_res['gradient'] = res.grad
     except:
         cfit_res['gradient'] = np.zeros(len(x0))
-    cfit_res['ihessian'] = np.zeros((len(x0),len(x0)))
+    cfit_res['ihessian'] = H
     cfit_res['res'] = res
     return cfit_res
          
@@ -248,8 +254,15 @@ if __name__ == "__main__":
     # print(res)
     
     
-
-
+    # stop
+    # theta = {'mu': 0.5550567658536777,
+    #   'A': 0.15916320085945337,
+    #   'c': 0.03191834194207985,
+    #   'alpha': 2.733122131710429,
+    #   'p': 1.0892490763379579,
+    #   'D': 0.01613177945248924,
+    #   'q': 2.3170471458051125,
+    #   'gamma': 0.03270311617539947}
     ##########################################################################
     print('\netasfit with scipy simulated annealing model 6')
     time1 = time.time()
@@ -261,7 +274,7 @@ if __name__ == "__main__":
     print(res)
     
 
-    
+    optimize.BFGS()
 
 
 # # -*- coding: utf-8 -*-
@@ -368,4 +381,17 @@ if __name__ == "__main__":
 
 #     return fv
 
+
+    # from scipy.optimize import minimize, rosen, rosen_der
+
+    # x0 = [1.3, 0.7, 0.8, 1.9, 1.2]
+
+
+    # res = minimize(rosen, x0, method='L-BFGS-B', jac=rosen_der,
+    #                 options={'gtol': 1e-6, 'disp': True})
+    # array([[ 0.00749589,  0.01255155,  0.02396251,  0.04750988,  0.09495377],  # may vary
+    #        [ 0.01255155,  0.02510441,  0.04794055,  0.09502834,  0.18996269],
+    #        [ 0.02396251,  0.04794055,  0.09631614,  0.19092151,  0.38165151],
+    #        [ 0.04750988,  0.09502834,  0.19092151,  0.38341252,  0.7664427 ],
+           # [ 0.09495377,  0.18996269,  0.38165151,  0.7664427,   1.53713523]])
 

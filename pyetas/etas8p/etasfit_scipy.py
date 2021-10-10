@@ -175,7 +175,13 @@ def etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
     # res = optimize.minimize(cloglkhd, x0, args=(rdata, verbose), method='trust-ncg', jac=grad, options={'disp': True})
 
     
-    H = np.zeros((len(x0),len(x0)))
+    try:
+        try:
+            H = res.hess_inv.todense()
+        except:
+            H = res.hess_inv
+    except:
+        H = np.zeros((len(x0),len(x0)))
     tht = np.array(res.x)
     avcov = (1/4 * np.matmul(np.matmul(np.diag(1/tht), H), np.diag(1/tht))).tolist()
 
@@ -188,7 +194,7 @@ def etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
         cfit_res['gradient'] = res.grad
     except:
         cfit_res['gradient'] = np.zeros(len(x0))
-    cfit_res['ihessian'] = np.zeros((len(x0),len(x0)))
+    cfit_res['ihessian'] = H
     cfit_res['res'] = res
     return cfit_res
          
