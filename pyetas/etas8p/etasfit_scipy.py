@@ -138,14 +138,15 @@ def etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
                             args=(rdata, verbose, model_module, voronoi), 
                             method='trust-constr', jac=grad,
                             hess=optimize.BFGS(), bounds=bounds,
-                            constraints=linear_constraint)#,
-                            # defaults all 1e-08
-                            # options={'xtol': 1e-06, 'gtol': 1e-04,
-                            #           'barrier_tol': 1e-05, 'verbose': 1})
+                            options={'xtol': 1e-06, 'gtol': 1e-04, # defaults all 1e-08
+                                     'barrier_tol': 1e-05, 'verbose': 1}) 
+                            # constraints=linear_constraint)#,
+                            
+
     # res = optimize.minimize(cloglkhd, x0, bounds=bounds,
     #                         args=(rdata, verbose, model_module, voronoi), 
     #                         method='L-BFGS-B', jac=grad, 
-    #                         options={'disp': True}) # , "maxcor": int(1e3)
+    #                         options={'disp': True, 'gtol': 1e-06}) # , "maxcor": int(1e3)
     
     # res = optimize.minimize(cloglkhd, x0,
     #                         args=(rdata, verbose, model_module, voronoi),

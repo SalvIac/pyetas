@@ -180,7 +180,7 @@ class EtasMleBkg(Etas):
         self.integ0 = integ0
         self.gradient = gradient
         self.ndiv = ndiv
-        self.itr = None
+        self.itr = 0
         self.exectime = time.time()-ptm
     
 
