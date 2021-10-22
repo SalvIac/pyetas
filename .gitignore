@@ -5,8 +5,7 @@
 *.tif
 *.zip
 **\__pycache__
-results/20210713_nankai_esr_treat/data/results.zip
-results/20201100_italy_aftershocks/20201110_italy_etas_fitting/catalogs/HORUS_Ita_Catalog.txt
+pyetas\etas8p\test
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
