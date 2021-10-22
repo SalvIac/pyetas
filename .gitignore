@@ -5,7 +5,7 @@
 *.tif
 *.zip
 **\__pycache__
-pyetas\etas8p\test
+pyetas/etas8p/test/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
