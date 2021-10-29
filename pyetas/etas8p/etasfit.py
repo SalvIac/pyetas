@@ -692,7 +692,7 @@ def etasfit(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose, ndiv,
 if __name__ == "__main__":
 
     import time
-    from pyrisk.etas.etas8p.voronoi import get_voronoi
+    from pyetas.etas8p.voronoi import get_voronoi
     from myutils.utils_pickle import load_pickle, save_pickle
     
     theta = load_pickle('test/param1')

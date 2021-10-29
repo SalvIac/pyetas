@@ -11,10 +11,10 @@ import scipy.spatial
 import pandas as pd
 import datetime
 
-from pyrisk.etas.etas8p.catalog import CatalogueEtas
-from pyrisk.etas.etas8p.decluster import decluster
-from pyrisk.etas.etas8p.etasfit import etasfit
-from pyrisk.etas.etas8p.dist import dist
+from pyetas.etas8p.catalog import CatalogueEtas
+from pyetas.etas8p.decluster import decluster
+from pyetas.etas8p.etasfit import etasfit
+from pyetas.etas8p.dist import dist
 from myutils.utils_pickle import load_pickle, save_pickle
 
 
