@@ -5,6 +5,7 @@
 *.tif
 *.zip
 **\__pycache__
+*.pyc
 pyetas/etas8p/test/
 
 # Byte-compiled / optimized / DLL files
