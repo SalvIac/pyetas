@@ -18,7 +18,6 @@
 https://github.com/jalilian/ETAS/tree/master/R
 """
 
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -31,8 +30,6 @@ from pyetas.etas8p.etas import Etas
 from pyetas.etas8p.catalog import CatalogueEtas
 from pyetas.etas8p.dist import dist, dist2
 from pyetas.etas8p.poly import dGauss
-from myutils.utils_pickle import load_pickle, save_pickle
-
 
 
 
@@ -278,19 +275,18 @@ def plot_map_events(prob, fit):
         
     plt.show()
     
-        
     
-    
-
 
 #%%
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     
-    etas_iran = load_pickle('test/etas_iran')
+#     from myutils.utils_pickle import load_pickle, save_pickle
+
+#     etas_iran = load_pickle('test/etas_iran')
     
-    pr = probs(etas_iran)
-    pr['prob'].describe()
+#     pr = probs(etas_iran)
+#     pr['prob'].describe()
     
-    r = rates(etas_iran)
+#     r = rates(etas_iran)
     

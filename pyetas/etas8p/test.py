@@ -22,7 +22,6 @@ import time
 import os
 import numpy as np
 
-from myutils.utils_pickle import load_pickle, save_pickle
 
 
 def pGauss(r, w):
@@ -108,45 +107,50 @@ def polyinteg(func, funcpara, npoly, px, py, cx, cy):
     return sumv
 
 
-if __name__=="__main__":
-    
-    revents = load_pickle('events.pkl')
-    rpoly = load_pickle('rpoly.pkl')
-    rbwd = load_pickle('rbwd.pkl')
 
-    t = revents['tt']
-    x = revents['xx']
-    y = revents['yy']
-    m = revents['mm']
-    bk = revents['bkgd']
-    pb = revents['prob']
-    lam = revents['lambd']
-    N = len(t)
+#%%
+
+# if __name__=="__main__":
     
-    bwd = np.array(rbwd)
+#     from myutils.utils_pickle import load_pickle, save_pickle
     
-    theta = {'mu': 0.11459513439367879, 'A': 0.01, 'c': 0.01, 'alpha': 1, 'p': 1.3, 'D': 0.01, 'q': 2, 'gamma': 1}
-    tht = [np.sqrt(j[1]) for j in theta.items()]
+#     revents = load_pickle('events.pkl')
+#     rpoly = load_pickle('rpoly.pkl')
+#     rbwd = load_pickle('rbwd.pkl')
+
+#     t = revents['tt']
+#     x = revents['xx']
+#     y = revents['yy']
+#     m = revents['mm']
+#     bk = revents['bkgd']
+#     pb = revents['prob']
+#     lam = revents['lambd']
+#     N = len(t)
+    
+#     bwd = np.array(rbwd)
+    
+#     theta = {'mu': 0.11459513439367879, 'A': 0.01, 'c': 0.01, 'alpha': 1, 'p': 1.3, 'D': 0.01, 'q': 2, 'gamma': 1}
+#     tht = [np.sqrt(j[1]) for j in theta.items()]
     
 
-    # extract polygon information
-    px = rpoly['px']
-    py = rpoly['py']
-    npoly = len(py)
+#     # extract polygon information
+#     px = rpoly['px']
+#     py = rpoly['py']
+#     npoly = len(py)
 
-    s = 0
-    t_arr = np.array(t)
-    x_arr = np.array(x)
-    y_arr = np.array(y)
-    m_arr = np.array(m)
+#     s = 0
+#     t_arr = np.array(t)
+#     x_arr = np.array(x)
+#     y_arr = np.array(y)
+#     m_arr = np.array(m)
     
-    for i in range(0, 1000):
-        w = [bwd[i]]
-        s += pb[i] * polyinteg(pGauss, w, npoly, px, py, x[i], y[i])
-        lam[i] = clambdaj(tht, i, t_arr, x_arr, y_arr, m_arr, bk)
+#     for i in range(0, 1000):
+#         w = [bwd[i]]
+#         s += pb[i] * polyinteg(pGauss, w, npoly, px, py, x[i], y[i])
+#         lam[i] = clambdaj(tht, i, t_arr, x_arr, y_arr, m_arr, bk)
     
-    print(s)
-    print(sum(lam))   
+#     print(s)
+#     print(sum(lam))   
 
 
 

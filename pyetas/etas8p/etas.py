@@ -37,7 +37,6 @@ from pyetas.etas8p.decluster import decluster
 from pyetas.etas8p.etasfit import etasfit
 from pyetas.etas8p.etasfit_scipy import etasfit_scipy # q=1.5 alpha=beta
 from pyetas.etas8p.voronoi import get_voronoi
-from myutils.utils_pickle import load_pickle, save_pickle
 
 
 
@@ -315,146 +314,149 @@ class Etas():
 #%%        
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     
-    ###########################################
-    # japan
-    ###########################################
-    
-    # df = pd.read_csv('japan_quakes.csv')
-    # df['eventID'] = df['Unnamed: 0'].apply(lambda x: str(x))
-    # df['date'] = pd.to_datetime(df['date'])
-    # df['year'] = df['date'].apply(lambda x: x.year)
-    # df['month'] = df['date'].apply(lambda x: x.month)
-    # df['day'] = df['date'].apply(lambda x: x.day)
-    # df['time'] = pd.to_datetime(df['time'])
-    # df['hour'] = df['time'].apply(lambda x: x.hour)
-    # df['minute'] = df['time'].apply(lambda x: x.minute)
-    # df['second'] = df['time'].apply(lambda x: x.second)
-    # df['longitude'] = df['long']
-    # df['latitude'] = df['lat']
-    # df['magnitude'] = df['mag']
-    # df['depth'] = -df['depth']
-    
-    # # df = df.append(df.iloc[1])
-    # # df['year'].iat[-1] += 1
-    
-    # keys = ['eventID','year', 'month', 'day', 'hour', 'minute', 'second',
-    #         'longitude', 'latitude', 'depth', 'magnitude']
-    # data = dict()
-    # for key in keys:
-    #     data[key] = df[key].to_numpy()
-    
-    # jpoly = dict(long = [134.0, 137.9, 143.1, 144.9, 147.8, 137.8, 137.4, 135.1, 130.6],
-    #              lat = [31.9, 33.0, 33.2, 35.2, 41.3, 44.2, 40.2, 38.0, 35.4])
-
-    # catalog = CatalogueEtas(data,
-    #                         study_start= datetime.datetime(1953, 5, 26),
-    #                         study_end = datetime.datetime(1990, 1, 8),
-    #                         region_poly = jpoly, mag_threshold = 4.5)
-
-    # param0 = dict(mu=0.592844590, A=0.204288231, c=0.022692883,
-    #               alpha=1.495169224, p=1.109752319, D=0.001175925,
-    #               q=1.860044210, gamma=1.041549634)
-
-    # test = Etas(catalog, param0=param0)
-
-
-
-
-
-
-
-
-    ###########################################
-    # iran
-    ###########################################
-
-    df = pd.read_csv('test/iran_quakes.csv')
-    df['eventID'] = df['Unnamed: 0'].apply(lambda x: str(x))
-    df['date'] = pd.to_datetime(df['date'])
-    df['year'] = df['date'].apply(lambda x: x.year)
-    df['month'] = df['date'].apply(lambda x: x.month)
-    df['day'] = df['date'].apply(lambda x: x.day)
-    df['time'] = pd.to_datetime(df['time'])
-    df['hour'] = df['time'].apply(lambda x: x.hour)
-    df['minute'] = df['time'].apply(lambda x: x.minute)
-    df['second'] = df['time'].apply(lambda x: x.second)
-    df['longitude'] = df['long']
-    df['latitude'] = df['lat']
-    df['magnitude'] = df['mag']
-    
-    # df = df.append(df.iloc[1])
-    # df['year'].iat[-1] += 1
-    
-    keys = ['eventID','year', 'month', 'day', 'hour', 'minute', 'second',
-            'longitude', 'latitude', 'magnitude']
-    data = dict()
-    for key in keys:
-        data[key] = df[key].to_numpy()
-    
-    gregion = dict(long = [52., 59., 58., 45., 43.],
-                    lat = [26., 25., 29., 38., 35.])
-    
-    catalog = CatalogueEtas(data,
-                            study_start= datetime.datetime(1991, 1, 1),
-                            study_end = datetime.datetime(2011, 1, 1),
-                            region_poly = gregion, mag_threshold = 4.5)
-
-    param01 = dict(mu=0.5, A=0.2, c=0.05, alpha=2.7, p=1.2,
-                    D=0.02, q=2.3, gamma=0.03)
-
-    # etas_iran = Etas(catalog, param0=param01)
-    # save_pickle(etas_iran, 'test/etas_iran')
+#     from myutils.utils_pickle import load_pickle, save_pickle
 
     
+#     ###########################################
+#     # japan
+#     ###########################################
+    
+#     # df = pd.read_csv('japan_quakes.csv')
+#     # df['eventID'] = df['Unnamed: 0'].apply(lambda x: str(x))
+#     # df['date'] = pd.to_datetime(df['date'])
+#     # df['year'] = df['date'].apply(lambda x: x.year)
+#     # df['month'] = df['date'].apply(lambda x: x.month)
+#     # df['day'] = df['date'].apply(lambda x: x.day)
+#     # df['time'] = pd.to_datetime(df['time'])
+#     # df['hour'] = df['time'].apply(lambda x: x.hour)
+#     # df['minute'] = df['time'].apply(lambda x: x.minute)
+#     # df['second'] = df['time'].apply(lambda x: x.second)
+#     # df['longitude'] = df['long']
+#     # df['latitude'] = df['lat']
+#     # df['magnitude'] = df['mag']
+#     # df['depth'] = -df['depth']
+    
+#     # # df = df.append(df.iloc[1])
+#     # # df['year'].iat[-1] += 1
+    
+#     # keys = ['eventID','year', 'month', 'day', 'hour', 'minute', 'second',
+#     #         'longitude', 'latitude', 'depth', 'magnitude']
+#     # data = dict()
+#     # for key in keys:
+#     #     data[key] = df[key].to_numpy()
+    
+#     # jpoly = dict(long = [134.0, 137.9, 143.1, 144.9, 147.8, 137.8, 137.4, 135.1, 130.6],
+#     #              lat = [31.9, 33.0, 33.2, 35.2, 41.3, 44.2, 40.2, 38.0, 35.4])
+
+#     # catalog = CatalogueEtas(data,
+#     #                         study_start= datetime.datetime(1953, 5, 26),
+#     #                         study_end = datetime.datetime(1990, 1, 8),
+#     #                         region_poly = jpoly, mag_threshold = 4.5)
+
+#     # param0 = dict(mu=0.592844590, A=0.204288231, c=0.022692883,
+#     #               alpha=1.495169224, p=1.109752319, D=0.001175925,
+#     #               q=1.860044210, gamma=1.041549634)
+
+#     # test = Etas(catalog, param0=param0)
 
 
 
 
-    etas_iran = load_pickle('test/etas_iran')
+
+
+
+
+#     ###########################################
+#     # iran
+#     ###########################################
+
+#     df = pd.read_csv('test/iran_quakes.csv')
+#     df['eventID'] = df['Unnamed: 0'].apply(lambda x: str(x))
+#     df['date'] = pd.to_datetime(df['date'])
+#     df['year'] = df['date'].apply(lambda x: x.year)
+#     df['month'] = df['date'].apply(lambda x: x.month)
+#     df['day'] = df['date'].apply(lambda x: x.day)
+#     df['time'] = pd.to_datetime(df['time'])
+#     df['hour'] = df['time'].apply(lambda x: x.hour)
+#     df['minute'] = df['time'].apply(lambda x: x.minute)
+#     df['second'] = df['time'].apply(lambda x: x.second)
+#     df['longitude'] = df['long']
+#     df['latitude'] = df['lat']
+#     df['magnitude'] = df['mag']
+    
+#     # df = df.append(df.iloc[1])
+#     # df['year'].iat[-1] += 1
+    
+#     keys = ['eventID','year', 'month', 'day', 'hour', 'minute', 'second',
+#             'longitude', 'latitude', 'magnitude']
+#     data = dict()
+#     for key in keys:
+#         data[key] = df[key].to_numpy()
+    
+#     gregion = dict(long = [52., 59., 58., 45., 43.],
+#                     lat = [26., 25., 29., 38., 35.])
+    
+#     catalog = CatalogueEtas(data,
+#                             study_start= datetime.datetime(1991, 1, 1),
+#                             study_end = datetime.datetime(2011, 1, 1),
+#                             region_poly = gregion, mag_threshold = 4.5)
+
+#     param01 = dict(mu=0.5, A=0.2, c=0.05, alpha=2.7, p=1.2,
+#                     D=0.02, q=2.3, gamma=0.03)
+
+#     # etas_iran = Etas(catalog, param0=param01)
+#     # save_pickle(etas_iran, 'test/etas_iran')
+
     
 
 
 
 
-
-
-
-    ###########################################
-    # italy
-    ###########################################
-
-    # df = pd.read_csv('italy_quakes.csv')
-    # df['eventID'] = df['Unnamed: 0'].apply(lambda x: str(x))
-    # df['date'] = pd.to_datetime(df['date'])
-    # df['year'] = df['date'].apply(lambda x: x.year)
-    # df['month'] = df['date'].apply(lambda x: x.month)
-    # df['day'] = df['date'].apply(lambda x: x.day)
-    # df['time'] = pd.to_datetime(df['time'])
-    # df['hour'] = df['time'].apply(lambda x: x.hour)
-    # df['minute'] = df['time'].apply(lambda x: x.minute)
-    # df['second'] = df['time'].apply(lambda x: x.second)
-    # df['longitude'] = df['long']
-    # df['latitude'] = df['lat']
-    # df['magnitude'] = df['mag']
+#     etas_iran = load_pickle('test/etas_iran')
     
-    # # df = df.append(df.iloc[1])
-    # # df['year'].iat[-1] += 1
-    
-    # keys = ['eventID','year', 'month', 'day', 'hour', 'minute', 'second',
-    #         'longitude', 'latitude', 'magnitude']
-    # data = dict()
-    # for key in keys:
-    #     data[key] = df[key].to_numpy()
-    
-    # gregion = dict(long = [52., 59., 58., 45., 43.],
-    #                lat = [26., 25., 29., 38., 35.])
-    
-    # catalog = CatalogueEtas(data, dist_unit='km')
 
-    # param01 = dict(mu=0.5, A=0.2, c=0.05, alpha=2.7, p=1.2,
-    #                D=0.02, q=2.3, gamma=0.03)
 
-    # test = Etas(catalog, param0=param01)
+
+
+
+
+
+#     ###########################################
+#     # italy
+#     ###########################################
+
+#     # df = pd.read_csv('italy_quakes.csv')
+#     # df['eventID'] = df['Unnamed: 0'].apply(lambda x: str(x))
+#     # df['date'] = pd.to_datetime(df['date'])
+#     # df['year'] = df['date'].apply(lambda x: x.year)
+#     # df['month'] = df['date'].apply(lambda x: x.month)
+#     # df['day'] = df['date'].apply(lambda x: x.day)
+#     # df['time'] = pd.to_datetime(df['time'])
+#     # df['hour'] = df['time'].apply(lambda x: x.hour)
+#     # df['minute'] = df['time'].apply(lambda x: x.minute)
+#     # df['second'] = df['time'].apply(lambda x: x.second)
+#     # df['longitude'] = df['long']
+#     # df['latitude'] = df['lat']
+#     # df['magnitude'] = df['mag']
+    
+#     # # df = df.append(df.iloc[1])
+#     # # df['year'].iat[-1] += 1
+    
+#     # keys = ['eventID','year', 'month', 'day', 'hour', 'minute', 'second',
+#     #         'longitude', 'latitude', 'magnitude']
+#     # data = dict()
+#     # for key in keys:
+#     #     data[key] = df[key].to_numpy()
+    
+#     # gregion = dict(long = [52., 59., 58., 45., 43.],
+#     #                lat = [26., 25., 29., 38., 35.])
+    
+#     # catalog = CatalogueEtas(data, dist_unit='km')
+
+#     # param01 = dict(mu=0.5, A=0.2, c=0.05, alpha=2.7, p=1.2,
+#     #                D=0.02, q=2.3, gamma=0.03)
+
+#     # test = Etas(catalog, param0=param01)
 

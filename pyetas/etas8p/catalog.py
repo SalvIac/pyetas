@@ -17,13 +17,11 @@
 """
 """
 
-
 import pandas as pd
 import numpy as np
 from scipy.stats import uniform
 from shapely.geometry import Point, Polygon, box, polygon
 from openquake.hmtk.seismicity.catalogue import Catalogue
-
 
 
 

@@ -17,7 +17,6 @@
 """
 """
 
-
 import numpy as np
 import pandas as pd
 from scipy import stats
@@ -29,7 +28,6 @@ from shapely.geometry import Point, Polygon
 
 from pyetas.etas8p.etas import Etas
 from pyetas.etas8p.from_mp import lambdaspatial, lambdatemporal, timetransform
-from myutils.utils_pickle import load_pickle, save_pickle
 
 
 
@@ -240,18 +238,18 @@ def plot_resid(resid):
    
 
 
-
-
 #%%
 
-if __name__ == "__main__":
-
-    etas_iran = load_pickle('test/etas_iran')
-    fit = etas_iran
-
-    import time    
+# if __name__ == "__main__":
     
-    res = resid_etas(etas_iran)
-    plot_resid(res)
-    # out = load_pickle('out')
+#     from myutils.utils_pickle import load_pickle, save_pickle
+
+#     etas_iran = load_pickle('test/etas_iran')
+#     fit = etas_iran
+
+#     import time    
+    
+#     res = resid_etas(etas_iran)
+#     plot_resid(res)
+#     # out = load_pickle('out')
     

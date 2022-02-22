@@ -17,7 +17,6 @@
 """
 """
 
-
 import numpy as np
 from scipy import optimize # minimize, LinearConstraint, NonlinearConstraint, Bounds
 
@@ -216,156 +215,155 @@ def etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
     # cfit_res = cfit(tht, rdata, ihess, int(verbose), model_module, voronoi)
 
     
+
 #%%
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    import time
-    import sys
-    sys.path.append('C:\\Users\\Salvatore\\Dropbox\\SalvIac')
-    from pyetas.etas8p.voronoi import get_voronoi
-    from myutils.utils_pickle import load_pickle, save_pickle
+#     import time
+#     from pyetas.etas8p.voronoi import get_voronoi
+#     from myutils.utils_pickle import load_pickle, save_pickle
     
-    theta = load_pickle('test/param1')
-    rdata = load_pickle('test/rdata')
-    revents = rdata['revents']
-    rpoly = rdata['rpoly']
-    tperiod = rdata['tperiod']
-    integ0 = rdata['integ0']
-    ihess = load_pickle('test/ihess')
-    rverbose = verbose = 1
+#     theta = load_pickle('test/param1')
+#     rdata = load_pickle('test/rdata')
+#     revents = rdata['revents']
+#     rpoly = rdata['rpoly']
+#     tperiod = rdata['tperiod']
+#     integ0 = rdata['integ0']
+#     ihess = load_pickle('test/ihess')
+#     rverbose = verbose = 1
 
-    ndiv = 1000
-    eps=1e-06
-    # cxxcode=False
-    # nthreads=1  
-    m0 = 3.5
-    revents["fault"] = [None]*len(revents["mm"])
-    rdata['mmin'] = m0
-    tht = [np.sqrt(j[1]) for j in theta.items()]
+#     ndiv = 1000
+#     eps=1e-06
+#     # cxxcode=False
+#     # nthreads=1  
+#     m0 = 3.5
+#     revents["fault"] = [None]*len(revents["mm"])
+#     rdata['mmin'] = m0
+#     tht = [np.sqrt(j[1]) for j in theta.items()]
     
-    # # voronoi tassellation
-    # time1 = time.time()
-    # points, areas, _ = get_voronoi(rpoly, min_prec=0.05)
-    # voronoi = {"points": points,
-    #            "areas": areas}
-    # print("create vonoroi", time.time()-time1)
+#     # # voronoi tassellation
+#     # time1 = time.time()
+#     # points, areas, _ = get_voronoi(rpoly, min_prec=0.05)
+#     # voronoi = {"points": points,
+#     #            "areas": areas}
+#     # print("create vonoroi", time.time()-time1)
 
 
 
 
-    # ##########################################################################
-    # print('\netasfit constrained with scipy minimize model 6')
-    # time1 = time.time()
-    # print(theta)
-    # res = etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess,
-    #                     verbose, ndiv, eps, model=6, impbounds={"q":1.5},
-    #                     modified_etas=False, voronoi=None)
-    # print(time.time()-time1)
-    # print(res)
+#     # ##########################################################################
+#     # print('\netasfit constrained with scipy minimize model 6')
+#     # time1 = time.time()
+#     # print(theta)
+#     # res = etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess,
+#     #                     verbose, ndiv, eps, model=6, impbounds={"q":1.5},
+#     #                     modified_etas=False, voronoi=None)
+#     # print(time.time()-time1)
+#     # print(res)
     
     
 
 
-    ##########################################################################
-    print('\netasfit with scipy minimize model 6')
-    time1 = time.time()
-    print(theta)
-    res = etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess,
-                        verbose, ndiv, eps, model=6, modified_etas=False,
-                        voronoi=None)
-    print(time.time()-time1)
-    print(res)
+#     ##########################################################################
+#     print('\netasfit with scipy minimize model 6')
+#     time1 = time.time()
+#     print(theta)
+#     res = etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess,
+#                         verbose, ndiv, eps, model=6, modified_etas=False,
+#                         voronoi=None)
+#     print(time.time()-time1)
+#     print(res)
     
 
 
 
-    ##########################################################################
-    # print('\netasfit with scipy minimize model 5')
-    # time1 = time.time()
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=5)
-    # print(time.time()-time1)
-    # print(res)
-    # results = [0.555266260648366, 0.1864583473888933, 0.047195657755165474,
-                # 2.7050217320762324, 1.1547553549260672, 0.015949991076632867,
-                # 2.317120770715824, 0.023512565102052223]
+#     ##########################################################################
+#     # print('\netasfit with scipy minimize model 5')
+#     # time1 = time.time()
+#     # print(theta)
+#     # res = etasfit(theta, revents, rpoly, tperiod, integ0,
+#     #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=5)
+#     # print(time.time()-time1)
+#     # print(res)
+#     # results = [0.555266260648366, 0.1864583473888933, 0.047195657755165474,
+#                 # 2.7050217320762324, 1.1547553549260672, 0.015949991076632867,
+#                 # 2.317120770715824, 0.023512565102052223]
 
 
 
 
-    ##########################################################################
-    # print('\netasfit with scipy minimize model 4')
-    # time1 = time.time()
-    # del theta['gamma']
-    # ihess = ihess[:7,:7]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=4)
-    # print(res)
-    # print(time.time()-time1)
+#     ##########################################################################
+#     # print('\netasfit with scipy minimize model 4')
+#     # time1 = time.time()
+#     # del theta['gamma']
+#     # ihess = ihess[:7,:7]
+#     # print(theta)
+#     # res = etasfit(theta, revents, rpoly, tperiod, integ0,
+#     #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=4)
+#     # print(res)
+#     # print(time.time()-time1)
 
 
 
 
-    ##########################################################################
-    # print('\netasfit with scipy minimize model 3')
-    # time1 = time.time()
-    # del theta['gamma']
-    # ihess = ihess[:7,:7]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=3)
-    # print(res)
-    # print(time.time()-time1)
+#     ##########################################################################
+#     # print('\netasfit with scipy minimize model 3')
+#     # time1 = time.time()
+#     # del theta['gamma']
+#     # ihess = ihess[:7,:7]
+#     # print(theta)
+#     # res = etasfit(theta, revents, rpoly, tperiod, integ0,
+#     #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=3)
+#     # print(res)
+#     # print(time.time()-time1)
 
 
 
 
-    ##########################################################################
-    # print('\netasfit with scipy minimize model 2')
-    # time1 = time.time()
-    # del theta['gamma']
-    # del theta['q']
-    # ihess = ihess[:6,:6]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=2)
-    # print(res)
-    # print(time.time()-time1)
+#     ##########################################################################
+#     # print('\netasfit with scipy minimize model 2')
+#     # time1 = time.time()
+#     # del theta['gamma']
+#     # del theta['q']
+#     # ihess = ihess[:6,:6]
+#     # print(theta)
+#     # res = etasfit(theta, revents, rpoly, tperiod, integ0,
+#     #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=2)
+#     # print(res)
+#     # print(time.time()-time1)
 
 
 
 
-    ##########################################################################
-    # print('\netasfit with scipy minimize model 1')
-    # time1 = time.time()
-    # del theta['gamma']
-    # del theta['q']
-    # ihess = ihess[:6,:6]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=1)
-    # print(res)
-    # print(time.time()-time1)
+#     ##########################################################################
+#     # print('\netasfit with scipy minimize model 1')
+#     # time1 = time.time()
+#     # del theta['gamma']
+#     # del theta['q']
+#     # ihess = ihess[:6,:6]
+#     # print(theta)
+#     # res = etasfit(theta, revents, rpoly, tperiod, integ0,
+#     #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=1)
+#     # print(res)
+#     # print(time.time()-time1)
 
 
 
 
-    ##########################################################################
-    # print('\netasfit with scipy minimize model 0')
-    # time1 = time.time()
-    # del theta['gamma']
-    # del theta['q']
-    # del theta['D']
-    # ihess = ihess[:5,:5]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=0)
-    # print(res)
-    # print(time.time()-time1)
+#     ##########################################################################
+#     # print('\netasfit with scipy minimize model 0')
+#     # time1 = time.time()
+#     # del theta['gamma']
+#     # del theta['q']
+#     # del theta['D']
+#     # ihess = ihess[:5,:5]
+#     # print(theta)
+#     # res = etasfit(theta, revents, rpoly, tperiod, integ0,
+#     #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=0)
+#     # print(res)
+#     # print(time.time()-time1)
     
 
 

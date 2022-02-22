@@ -31,7 +31,6 @@ from pyetas.etas8p.etasfit import etasfit
 from pyetas.etas8p.etasfit_scipy import etasfit_scipy # q=1.5 alpha=beta
 from pyetas.etas8p.voronoi import get_voronoi
 from pyetas.etas8p.etas import Etas
-from myutils.utils_pickle import load_pickle, save_pickle
 
 
 class EtasMleBkg(Etas):

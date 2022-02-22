@@ -17,7 +17,6 @@
 """
 """
 
-
 import numpy as np
 from openquake.hazardlib.scalerel.wc1994 import WC1994
 
@@ -700,301 +699,302 @@ def etasfit(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose, ndiv,
     return cfit_res
          
 
+
 #%%
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    import time
-    from pyetas.etas8p.voronoi import get_voronoi
-    from myutils.utils_pickle import load_pickle, save_pickle
+#     import time
+#     from pyetas.etas8p.voronoi import get_voronoi
+#     from myutils.utils_pickle import load_pickle, save_pickle
     
-    theta = load_pickle('test/param1')
-    rdata = load_pickle('test/rdata')
-    revents = rdata['revents']
-    rpoly = rdata['rpoly']
-    tperiod = rdata['tperiod']
-    integ0 = rdata['integ0']
-    ihess = load_pickle('test/ihess')
-    rverbose = verbose = 1
+#     theta = load_pickle('test/param1')
+#     rdata = load_pickle('test/rdata')
+#     revents = rdata['revents']
+#     rpoly = rdata['rpoly']
+#     tperiod = rdata['tperiod']
+#     integ0 = rdata['integ0']
+#     ihess = load_pickle('test/ihess')
+#     rverbose = verbose = 1
 
-    ndiv = 1000
-    eps=1e-06
-    # cxxcode=False
-    # nthreads=1  
-    m0 = 4.5
-    revents["fault"] = [None]*len(revents["mm"])
-    rdata['mmin'] = m0
-    tht = [np.sqrt(j[1]) for j in theta.items()]
-    
-    
-
-
-
+#     ndiv = 1000
+#     eps=1e-06
+#     # cxxcode=False
+#     # nthreads=1  
+#     m0 = 4.5
+#     revents["fault"] = [None]*len(revents["mm"])
+#     rdata['mmin'] = m0
+#     tht = [np.sqrt(j[1]) for j in theta.items()]
     
     
-    # # voronoi tassellation
-    # time1 = time.time()
-    # points, areas, _ = get_voronoi(rpoly, min_prec=0.05)
-    # voronoi = {"points": points,
-    #             "areas": areas}
-    # print("create vonoroi", time.time()-time1)
-    
-
-
-
-
-    # print('\ncloglkhd original')
-    # print(cloglkhd(tht, rdata, verbose, m6, voronoi=None))
-    # time1 = time.time()
-    # for i in range(10):
-    #     cloglkhd(tht, rdata, False, m6, voronoi=None)
-    # print(time.time()-time1)  
-
-
-    # print('\ncloglkhd Vonoroi')
-    # print(cloglkhd(tht, rdata, verbose, m6, voronoi))
-    # time1 = time.time()
-    # for i in range(10):
-    #     cloglkhd(tht, rdata, False, m6, voronoi)
-    # print(time.time()-time1)
-
-
-
-
-    # print('\ncloglkhdGr original')
-    # fv = None
-    # dfv = [0.]*8
-    # print(cloglkhdGr(tht, rdata, verbose, fv, dfv, m6, voronoi=None))
-    # time1 = time.time()
-    # for i in range(10):
-    #     cloglkhdGr(tht, rdata, False, fv, dfv, m6, voronoi=None)
-    # print(time.time()-time1)
-
-
-    # print('\ncloglkhdGr Voronoi')
-    # fv = None
-    # dfv = [0.]*8
-    # print(cloglkhdGr(tht, rdata, verbose, fv, dfv, m6, voronoi))
-    # time1 = time.time()
-    # for i in range(10):
-    #     cloglkhdGr(tht, rdata, False, fv, dfv, m6, voronoi)
-    # print(time.time()-time1)
-
-
-
-
-    # print('\nclinesearch original')
-    # fv = 54496.430296197024
-    # ramda = 0.05
-    # s = [0.]*8
-    # print(clinesearch(rdata, tht, s, fv, verbose, ramda, m6, voronoi=None))
-    # time1 = time.time()
-    # for i in range(10):
-    #     clinesearch(rdata, tht, s, fv, False, ramda, m6, voronoi=None)
-    # print(time.time()-time1)  
-
-
-
-    #########################################################################
-    # test corrected relative magnitude (with mag compl)
-
-    # t = np.array(rdata['revents']['tt'])
-    # m = np.array(rdata['revents']['mm'])
-    # events = [rdata['revents'][j] for j in rdata['revents'].keys()]
-    # N = len(events[0])
-    # mmin = rdata['mmin'] # for faults
-    # t[1] = t[0]+0.001 # otherwise it does not produce any difference
-    # m[0] = 7-mmin
-    
-    # mc = list()
-    # for jj in range(0,N):
-    #     mc.append(calc_timedep_mc(jj, t, m, mmin))
-    # mc = np.array(mc)
-
-    # import matplotlib.pyplot as plt
-    # plt.figure()
-    # plt.plot(t,m)
-    # plt.plot(t,mc)
-    # plt.show()
-
-    
-    
-    #########################################################################
-    print('\ncinteg model 6 schoenberg et al. vs ogata 1998')
-
-    t = np.array(rdata['revents']['tt'])
-    x = np.array(rdata['revents']['xx'])
-    y = np.array(rdata['revents']['yy'])
-    m = np.array(rdata['revents']['mm'])
-    flag = rdata['revents']['flag']
-    bk = rdata['revents']['bkgd']
-    events = [rdata['revents'][j] for j in rdata['revents'].keys()]
-    N = len(events[0])
-    fault = np.array(rdata['revents']['fault'])
-    mmin = rdata['mmin'] # for faults
-
-    # extract polygon information
-    px = rdata['rpoly']['px']
-    py = rdata['rpoly']['py']
-    npoly = len(py)
-
-    # extract time period information
-    tstart2 = rdata['tperiod']['study_start']
-    tlength = rdata['tperiod']['study_end']
-
-    # extract integral of spatial intensity over the obsevation window
-    integ0 = rdata['integ0']
-
-    ta = np.array([5*365]*m.shape[0])
-    
-    # classic ogata 1998    
-    fv2 = 0.
-    for j in range(0, N):
-        fv2 += m6f.cintegj(tht, j, t, x, y, m, npoly, px, py, 
-                           tstart2, tlength, ta, fault, mmin)
-
-    # schoenberg et al.
-    fv2s = 0.
-    for j in range(0, N):
-        fv2s += m6fs.cintegj(tht, j, t, x, y, m, npoly, px, py, 
-                             tstart2, tlength, ta, fault, mmin)
-
-
-    stop
-    
-    #########################################################################
-    print('\netasfit minimize model 7')
-    time1 = time.time()
-    print(theta)
-    res = etasfit(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
-                  ndiv, eps, model=7, modified_etas=False, voronoi=None)
-    print(time.time()-time1)
-    print(res)
-
-
-
-
-
-    ##########################################################################
-    # print('\netasfit minimize model 6')
-    # time1 = time.time()
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
-    #               ndiv, eps, model=6, modified_etas=False, voronoi=None) # voronoi=None
-    # print(time.time()-time1)
-    # print(res)
-    # # results for m0=4.5
-    # # results = [0.5550567658536777, 0.15916320085945337, 0.03191834194207985,
-    # #             2.733122131710429, 1.0892490763379579, 0.01613177945248924,
-    # #             2.3170471458051125, 0.03270311617539947]
-
-
-
-    ##########################################################################
-    print('\netasfit minimize model 6 with Schoenberg 2013')
-    from scipy import optimize
-    time1 = time.time()
-    print(theta)
-    x0 = [np.sqrt(j[1]) for j in theta.items()]
-    res = optimize.minimize(cloglkhd, x0, args=(rdata, verbose, m6fs, None),
-                            method='nelder-mead',
-                            options={'xatol': 1e-6, 'disp': True})
-    tht = [t**2 for t in res.x]
-    print(time.time()-time1)
-    print(tht)
-    # results for m0=4.5
-    # results = [0.5550567658536777, 0.15916320085945337, 0.03191834194207985,
-    #             2.733122131710429, 1.0892490763379579, 0.01613177945248924,
-    #             2.3170471458051125, 0.03270311617539947]
 
 
 
     
-
-    ##########################################################################
-    # print('\netasfit minimize model 5')
-    # time1 = time.time()
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=5)
-    # print(time.time()-time1)
-    # print(res)
-    # results = [0.555266260648366, 0.1864583473888933, 0.047195657755165474,
-                # 2.7050217320762324, 1.1547553549260672, 0.015949991076632867,
-                # 2.317120770715824, 0.023512565102052223]
+    
+#     # # voronoi tassellation
+#     # time1 = time.time()
+#     # points, areas, _ = get_voronoi(rpoly, min_prec=0.05)
+#     # voronoi = {"points": points,
+#     #             "areas": areas}
+#     # print("create vonoroi", time.time()-time1)
+    
 
 
 
 
-    ##########################################################################
-    # print('\netasfit minimize model 4')
-    # time1 = time.time()
-    # del theta['gamma']
-    # ihess = ihess[:7,:7]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=4)
-    # print(res)
-    # print(time.time()-time1)
+#     # print('\ncloglkhd original')
+#     # print(cloglkhd(tht, rdata, verbose, m6, voronoi=None))
+#     # time1 = time.time()
+#     # for i in range(10):
+#     #     cloglkhd(tht, rdata, False, m6, voronoi=None)
+#     # print(time.time()-time1)  
+
+
+#     # print('\ncloglkhd Vonoroi')
+#     # print(cloglkhd(tht, rdata, verbose, m6, voronoi))
+#     # time1 = time.time()
+#     # for i in range(10):
+#     #     cloglkhd(tht, rdata, False, m6, voronoi)
+#     # print(time.time()-time1)
 
 
 
 
-    ##########################################################################
-    # print('\netasfit minimize model 3')
-    # time1 = time.time()
-    # del theta['gamma']
-    # ihess = ihess[:7,:7]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=3)
-    # print(res)
-    # print(time.time()-time1)
+#     # print('\ncloglkhdGr original')
+#     # fv = None
+#     # dfv = [0.]*8
+#     # print(cloglkhdGr(tht, rdata, verbose, fv, dfv, m6, voronoi=None))
+#     # time1 = time.time()
+#     # for i in range(10):
+#     #     cloglkhdGr(tht, rdata, False, fv, dfv, m6, voronoi=None)
+#     # print(time.time()-time1)
+
+
+#     # print('\ncloglkhdGr Voronoi')
+#     # fv = None
+#     # dfv = [0.]*8
+#     # print(cloglkhdGr(tht, rdata, verbose, fv, dfv, m6, voronoi))
+#     # time1 = time.time()
+#     # for i in range(10):
+#     #     cloglkhdGr(tht, rdata, False, fv, dfv, m6, voronoi)
+#     # print(time.time()-time1)
 
 
 
 
-    ##########################################################################
-    # print('\netasfit minimize model 2')
-    # time1 = time.time()
-    # del theta['gamma']
-    # del theta['q']
-    # ihess = ihess[:6,:6]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=2)
-    # print(res)
-    # print(time.time()-time1)
+#     # print('\nclinesearch original')
+#     # fv = 54496.430296197024
+#     # ramda = 0.05
+#     # s = [0.]*8
+#     # print(clinesearch(rdata, tht, s, fv, verbose, ramda, m6, voronoi=None))
+#     # time1 = time.time()
+#     # for i in range(10):
+#     #     clinesearch(rdata, tht, s, fv, False, ramda, m6, voronoi=None)
+#     # print(time.time()-time1)  
+
+
+
+#     #########################################################################
+#     # test corrected relative magnitude (with mag compl)
+
+#     # t = np.array(rdata['revents']['tt'])
+#     # m = np.array(rdata['revents']['mm'])
+#     # events = [rdata['revents'][j] for j in rdata['revents'].keys()]
+#     # N = len(events[0])
+#     # mmin = rdata['mmin'] # for faults
+#     # t[1] = t[0]+0.001 # otherwise it does not produce any difference
+#     # m[0] = 7-mmin
+    
+#     # mc = list()
+#     # for jj in range(0,N):
+#     #     mc.append(calc_timedep_mc(jj, t, m, mmin))
+#     # mc = np.array(mc)
+
+#     # import matplotlib.pyplot as plt
+#     # plt.figure()
+#     # plt.plot(t,m)
+#     # plt.plot(t,mc)
+#     # plt.show()
+
+    
+    
+#     #########################################################################
+#     print('\ncinteg model 6 schoenberg et al. vs ogata 1998')
+
+#     t = np.array(rdata['revents']['tt'])
+#     x = np.array(rdata['revents']['xx'])
+#     y = np.array(rdata['revents']['yy'])
+#     m = np.array(rdata['revents']['mm'])
+#     flag = rdata['revents']['flag']
+#     bk = rdata['revents']['bkgd']
+#     events = [rdata['revents'][j] for j in rdata['revents'].keys()]
+#     N = len(events[0])
+#     fault = np.array(rdata['revents']['fault'])
+#     mmin = rdata['mmin'] # for faults
+
+#     # extract polygon information
+#     px = rdata['rpoly']['px']
+#     py = rdata['rpoly']['py']
+#     npoly = len(py)
+
+#     # extract time period information
+#     tstart2 = rdata['tperiod']['study_start']
+#     tlength = rdata['tperiod']['study_end']
+
+#     # extract integral of spatial intensity over the obsevation window
+#     integ0 = rdata['integ0']
+
+#     ta = np.array([5*365]*m.shape[0])
+    
+#     # classic ogata 1998    
+#     fv2 = 0.
+#     for j in range(0, N):
+#         fv2 += m6f.cintegj(tht, j, t, x, y, m, npoly, px, py, 
+#                            tstart2, tlength, ta, fault, mmin)
+
+#     # schoenberg et al.
+#     fv2s = 0.
+#     for j in range(0, N):
+#         fv2s += m6fs.cintegj(tht, j, t, x, y, m, npoly, px, py, 
+#                              tstart2, tlength, ta, fault, mmin)
+
+
+#     stop
+    
+#     #########################################################################
+#     print('\netasfit minimize model 7')
+#     time1 = time.time()
+#     print(theta)
+#     res = etasfit(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
+#                   ndiv, eps, model=7, modified_etas=False, voronoi=None)
+#     print(time.time()-time1)
+#     print(res)
 
 
 
 
-    ##########################################################################
-    # print('\netasfit minimize model 1')
-    # time1 = time.time()
-    # del theta['gamma']
-    # del theta['q']
-    # ihess = ihess[:6,:6]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=1)
-    # print(res)
-    # print(time.time()-time1)
+
+#     ##########################################################################
+#     # print('\netasfit minimize model 6')
+#     # time1 = time.time()
+#     # print(theta)
+#     # res = etasfit(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
+#     #               ndiv, eps, model=6, modified_etas=False, voronoi=None) # voronoi=None
+#     # print(time.time()-time1)
+#     # print(res)
+#     # # results for m0=4.5
+#     # # results = [0.5550567658536777, 0.15916320085945337, 0.03191834194207985,
+#     # #             2.733122131710429, 1.0892490763379579, 0.01613177945248924,
+#     # #             2.3170471458051125, 0.03270311617539947]
+
+
+
+#     ##########################################################################
+#     print('\netasfit minimize model 6 with Schoenberg 2013')
+#     from scipy import optimize
+#     time1 = time.time()
+#     print(theta)
+#     x0 = [np.sqrt(j[1]) for j in theta.items()]
+#     res = optimize.minimize(cloglkhd, x0, args=(rdata, verbose, m6fs, None),
+#                             method='nelder-mead',
+#                             options={'xatol': 1e-6, 'disp': True})
+#     tht = [t**2 for t in res.x]
+#     print(time.time()-time1)
+#     print(tht)
+#     # results for m0=4.5
+#     # results = [0.5550567658536777, 0.15916320085945337, 0.03191834194207985,
+#     #             2.733122131710429, 1.0892490763379579, 0.01613177945248924,
+#     #             2.3170471458051125, 0.03270311617539947]
+
+
+
+    
+
+#     ##########################################################################
+#     # print('\netasfit minimize model 5')
+#     # time1 = time.time()
+#     # print(theta)
+#     # res = etasfit(theta, revents, rpoly, tperiod, integ0,
+#     #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=5)
+#     # print(time.time()-time1)
+#     # print(res)
+#     # results = [0.555266260648366, 0.1864583473888933, 0.047195657755165474,
+#                 # 2.7050217320762324, 1.1547553549260672, 0.015949991076632867,
+#                 # 2.317120770715824, 0.023512565102052223]
 
 
 
 
-    ##########################################################################
-    # print('\netasfit minimize model 0')
-    # time1 = time.time()
-    # del theta['gamma']
-    # del theta['q']
-    # del theta['D']
-    # ihess = ihess[:5,:5]
-    # print(theta)
-    # res = etasfit(theta, revents, rpoly, tperiod, integ0,
-    #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=0)
-    # print(res)
-    # print(time.time()-time1)
+#     ##########################################################################
+#     # print('\netasfit minimize model 4')
+#     # time1 = time.time()
+#     # del theta['gamma']
+#     # ihess = ihess[:7,:7]
+#     # print(theta)
+#     # res = etasfit(theta, revents, rpoly, tperiod, integ0,
+#     #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=4)
+#     # print(res)
+#     # print(time.time()-time1)
+
+
+
+
+#     ##########################################################################
+#     # print('\netasfit minimize model 3')
+#     # time1 = time.time()
+#     # del theta['gamma']
+#     # ihess = ihess[:7,:7]
+#     # print(theta)
+#     # res = etasfit(theta, revents, rpoly, tperiod, integ0,
+#     #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=3)
+#     # print(res)
+#     # print(time.time()-time1)
+
+
+
+
+#     ##########################################################################
+#     # print('\netasfit minimize model 2')
+#     # time1 = time.time()
+#     # del theta['gamma']
+#     # del theta['q']
+#     # ihess = ihess[:6,:6]
+#     # print(theta)
+#     # res = etasfit(theta, revents, rpoly, tperiod, integ0,
+#     #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=2)
+#     # print(res)
+#     # print(time.time()-time1)
+
+
+
+
+#     ##########################################################################
+#     # print('\netasfit minimize model 1')
+#     # time1 = time.time()
+#     # del theta['gamma']
+#     # del theta['q']
+#     # ihess = ihess[:6,:6]
+#     # print(theta)
+#     # res = etasfit(theta, revents, rpoly, tperiod, integ0,
+#     #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=1)
+#     # print(res)
+#     # print(time.time()-time1)
+
+
+
+
+#     ##########################################################################
+#     # print('\netasfit minimize model 0')
+#     # time1 = time.time()
+#     # del theta['gamma']
+#     # del theta['q']
+#     # del theta['D']
+#     # ihess = ihess[:5,:5]
+#     # print(theta)
+#     # res = etasfit(theta, revents, rpoly, tperiod, integ0,
+#     #               ihess, verbose, ndiv, eps, cxxcode, nthreads, model=0)
+#     # print(res)
+#     # print(time.time()-time1)
     

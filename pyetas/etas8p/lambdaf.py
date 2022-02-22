@@ -17,7 +17,6 @@
 """
 """
 
-
 import numpy as np
 
 from pyetas.etas8p.dist import dist2

@@ -17,13 +17,11 @@
 """
 """
 
-
 import numpy as np
 
 from scipy.spatial import Voronoi
 from shapely.geometry import Polygon, Point
 from shapely.errors import TopologicalError
-
 
 
     
@@ -321,57 +319,54 @@ def get_polar_voronoi(rpoly, x0, disc_num=100, shape_factor=2):
 #%%
 
 
-
-if __name__ == "__main__":
+# if __name__ == "__main__":
     
-    import sys
-    sys.path.append('C:\\Users\\Salvatore\\Dropbox\\SalvIac')
-    import matplotlib.pyplot as plt
-    from myutils.utils_pickle import load_pickle, save_pickle
-    from scipy.spatial import voronoi_plot_2d
+#     import matplotlib.pyplot as plt
+#     from myutils.utils_pickle import load_pickle, save_pickle
+#     from scipy.spatial import voronoi_plot_2d
     
     
-    theta = load_pickle('test/param1')
-    rdata = load_pickle('test/rdata')
-    revents = rdata['revents']
-    rpoly = rdata['rpoly']
-    tperiod = rdata['tperiod']
-    integ0 = rdata['integ0']
-    ihess = load_pickle('test/ihess')
-    rverbose = verbose = 1    
+#     theta = load_pickle('test/param1')
+#     rdata = load_pickle('test/rdata')
+#     revents = rdata['revents']
+#     rpoly = rdata['rpoly']
+#     tperiod = rdata['tperiod']
+#     integ0 = rdata['integ0']
+#     ihess = load_pickle('test/ihess')
+#     rverbose = verbose = 1    
     
     
-    # points, areas, regions_vert = get_voronoi(rpoly, min_prec=0.05)
-    # # plot
-    # fig = plt.figure()
-    # for polygon in regions_vert:
-    #     plt.fill(*zip(*polygon), alpha=0.4, color=np.random.random(3))
-    # plt.plot(points[:, 0], points[:, 1], 'ro')
-    # plt.axis('equal')
-    # plt.show()
+#     # points, areas, regions_vert = get_voronoi(rpoly, min_prec=0.05)
+#     # # plot
+#     # fig = plt.figure()
+#     # for polygon in regions_vert:
+#     #     plt.fill(*zip(*polygon), alpha=0.4, color=np.random.random(3))
+#     # plt.plot(points[:, 0], points[:, 1], 'ro')
+#     # plt.axis('equal')
+#     # plt.show()
     
-    # x0 = [-1., 2]
-    # points, areas, regions_vert = get_polar_voronoi(rpoly, x0, disc_num=100)
-    # # plot
-    # fig = plt.figure()
-    # for polygon in regions_vert:
-    #     plt.fill(*zip(*polygon), alpha=0.4, color=np.random.random(3))
-    # plt.plot(points[:, 0], points[:, 1], 'ro')
-    # plt.axis('equal')
-    # plt.show()
+#     # x0 = [-1., 2]
+#     # points, areas, regions_vert = get_polar_voronoi(rpoly, x0, disc_num=100)
+#     # # plot
+#     # fig = plt.figure()
+#     # for polygon in regions_vert:
+#     #     plt.fill(*zip(*polygon), alpha=0.4, color=np.random.random(3))
+#     # plt.plot(points[:, 0], points[:, 1], 'ro')
+#     # plt.axis('equal')
+#     # plt.show()
     
     
         
-    x0 = [-1., 2]
-    points, areas, regions_vert = get_mixed_voronoi(rpoly, x0, min_prec=1,
-                                                    disc_num=20)
-    # plot
-    fig = plt.figure()
-    for polygon in regions_vert:
-        plt.fill(*zip(*polygon), alpha=0.4, color=np.random.random(3))
-    plt.plot(points[:, 0], points[:, 1], 'ro')
-    plt.axis('equal')
-    plt.show()
+#     x0 = [-1., 2]
+#     points, areas, regions_vert = get_mixed_voronoi(rpoly, x0, min_prec=1,
+#                                                     disc_num=20)
+#     # plot
+#     fig = plt.figure()
+#     for polygon in regions_vert:
+#         plt.fill(*zip(*polygon), alpha=0.4, color=np.random.random(3))
+#     plt.plot(points[:, 0], points[:, 1], 'ro')
+#     plt.axis('equal')
+#     plt.show()
     
     
     

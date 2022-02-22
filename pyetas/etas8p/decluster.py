@@ -17,8 +17,6 @@
 """
 """
 
-
-
 import numpy as np
 import math
 # import multiprocessing as mp
@@ -169,55 +167,54 @@ def decluster(theta, rbwd, revents, rpoly, tperiod, mmin, ndiv, model, pb_fix, v
     return cbkg
 
 
+
 #%%
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     
-    import time
-    import sys
-    sys.path.append('C:\\Users\\Salvatore\\Dropbox\\SalvIac')
-    from pyetas.etas8p.voronoi import get_voronoi
-    from myutils.utils_pickle import load_pickle, save_pickle
+#     import time
+#     from pyetas.etas8p.voronoi import get_voronoi
+#     from myutils.utils_pickle import load_pickle, save_pickle
     
-    theta = load_pickle('test/param1')
-    rdata = load_pickle('test/rdata')
-    rbwd = load_pickle('test/rbwd')
-    revents = rdata['revents']
-    revents["fault"] = [None]*len(revents["mm"])
-    rpoly = rdata['rpoly']
-    tperiod = rdata['tperiod']
-    tht = {j[0]: math.sqrt(j[1]) for j in theta.items()}
+#     theta = load_pickle('test/param1')
+#     rdata = load_pickle('test/rdata')
+#     rbwd = load_pickle('test/rbwd')
+#     revents = rdata['revents']
+#     revents["fault"] = [None]*len(revents["mm"])
+#     rpoly = rdata['rpoly']
+#     tperiod = rdata['tperiod']
+#     tht = {j[0]: math.sqrt(j[1]) for j in theta.items()}
 
-    ttt = time.time()
-    cbkg = cdeclust(tht, rbwd, revents, rpoly, tperiod, mmin=3.5,
-                    model=5, pb_fix=False, voronoi=None)
-    print(time.time()-ttt)
+#     ttt = time.time()
+#     cbkg = cdeclust(tht, rbwd, revents, rpoly, tperiod, mmin=3.5,
+#                     model=5, pb_fix=False, voronoi=None)
+#     print(time.time()-ttt)
     
-    # R result 872.8452
-    print(cbkg['integ0'])
-    # R results #TODO
-    print(sum(cbkg['revents']['bkgd']), sum(cbkg['revents']['prob']), sum(cbkg['revents']['lambd']))
+#     # R result 872.8452
+#     print(cbkg['integ0'])
+#     # R results #TODO
+#     print(sum(cbkg['revents']['bkgd']), sum(cbkg['revents']['prob']), sum(cbkg['revents']['lambd']))
     
     
     
-    # integration done with Voronoi's diagrams
-    points, areas, _ = get_voronoi(rpoly, min_prec=0.005)
-    voronoi = {"points": points,
-               "areas": areas}    
-    ttt = time.time()
-    cbkg = cdeclust(tht, rbwd, revents, rpoly, tperiod, mmin=3.5,
-                    model=5, pb_fix=False, voronoi=voronoi)
-    print(time.time()-ttt)
+#     # integration done with Voronoi's diagrams
+#     points, areas, _ = get_voronoi(rpoly, min_prec=0.005)
+#     voronoi = {"points": points,
+#                "areas": areas}    
+#     ttt = time.time()
+#     cbkg = cdeclust(tht, rbwd, revents, rpoly, tperiod, mmin=3.5,
+#                     model=5, pb_fix=False, voronoi=voronoi)
+#     print(time.time()-ttt)
     
-    # R result 872.8452
-    print(cbkg['integ0'])
-    print(sum(cbkg['revents']['bkgd']), sum(cbkg['revents']['prob']), sum(cbkg['revents']['lambd']))
+#     # R result 872.8452
+#     print(cbkg['integ0'])
+#     print(sum(cbkg['revents']['bkgd']), sum(cbkg['revents']['prob']), sum(cbkg['revents']['lambd']))
 
 
     
-    r1 = 2.23606798 
-    w = np.array([0.05])
-    print(pGauss(r1, w)) # test ok with c++
+#     r1 = 2.23606798 
+#     w = np.array([0.05])
+#     print(pGauss(r1, w)) # test ok with c++
     
     
