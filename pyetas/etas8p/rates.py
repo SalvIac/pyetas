@@ -18,14 +18,17 @@
 https://github.com/jalilian/ETAS/tree/master/R
 """
 
+import warnings
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 plt.ioff()
-from mpl_toolkits.basemap import Basemap
 from matplotlib.patches import Polygon
 from matplotlib.collections import PatchCollection
-
+try:
+    from mpl_toolkits.basemap import Basemap
+except:
+    warnings.warn("No Basemap")
 from pyetas.etas8p.etas import Etas
 from pyetas.etas8p.catalog import CatalogueEtas
 from pyetas.etas8p.dist import dist, dist2
