@@ -32,40 +32,6 @@ class CatalogueEtas(Catalogue):
     dataset. An earthquake catalog is a chronologically ordered list of time,
     epicenter and magnitude of all recorded earthquakes in geographical 
     region during a specific time period.
-    
-    data data.frame date, time, latitude, longitude and magnitude of earthquakes
-    time.begin The beginning of time span of the catalog. A character string
-    or an object that can be converted to date-time (calendar dates plus time
-    to the nearest second). The default NULL sets it to the date-time of the
-    first event.
-    study.start The start of the study period. A character string or an object
-    that can be converted to date-time. If not specified (NULL), then time.begin
-    is used
-    study.end The end of the study period. A character string or an object that
-    can be convertedto date-time. The default NULL sets it to the date-time of
-    the last event
-    study.length A single numeric value specifying the length of the study
-    period in decimal days. Incompatible with study.end
-    lat.range The latitude range of a rectangular study region. A numeric
-    vector of size 2 giving (latmin, latmax). By default (NULL) the range of 
-    the latitudes of events is used
-    long.range The longitude range of a rectangular study region. A numeric
-    vector of size 2 giving (longmin, longmax). By default (NULL) the range of
-    the longitudes of events is used
-    region.poly Polygonal boundary of a non-rectangular study region. A list
-    with components lat and long of equal length specifying the coordinates of
-    the vertices of a polygonal study region. The vertices must be listed 
-    in anticlockwise order
-    mag.threshold The magnitude threshold of the catalog. A positive numeric 
-    value. The default (NULL) sets it to the minimum magnitude of all events.
-    flatmapLogical flag indicating whether to transform the spherical 
-    coordinates (long,lat) on the earth surface to flat map (planar) 
-    coordinates (x,y) in order to approximate  the great-circle distance on the
-    sphere by the corresponding Euclideandistance on the flat map.
-    dist.unitA character string specifying the unit of geographical coordinates and spatialdistances between events. Options are"degree"(the default case) and"km".tzA character string specifying the time zone to be used for the date-time conver-sion inas.POSIXlt.  The default"GMT"is the UTC (Universal Time, Coordi-nated).DetailsThedatais required to have at least 5 columns with namesdate,time,lat,longandmagcontain-ing, respectively, the date, time, latitude, longitude and magnitude of each event in the catalog.The geographical study region can be rectangular or polygonal:•rectangular study regioncan be specified bylat.rangeandlong.rangewhich must benumeric vectors of length 2.•polygonal study regioncan be specified byregion.polywhich contains coordinates of thevertices of the polygon. It must be either alistwith componentslatandlongof equal lengthor adata.framewith columnslatandlong. The vertices must be listed inanticlockwiseorderand no vertex should be repeated (i.e. do not repeat the first vertex).The functioninside.owinin thespatstatis used to indicate whether events lie inside the studyregion.  Only events inside the study region and the study period (study.start,study.end) areconsidered astargetevents. Other events are assumed to becomplementaryevents.If the events indataare not chronologically sorted, then a warning will be produced and the eventswill be sorted in ascending order with respect to time of occurrence.Ifflatmap=TRUE, longitude-latitude coordinates convert to flat map coordinates:•  ifdist.unit="degree", then the Equirectangular projectionx= cos(cnt.lat/180π)(long−cnt.long
-    
-    4catalogandy=lat−cnt.latis used to obtain the flat map coordinates(x,y)in degrees, wherecnt.latandcnt.longare, respectively, the latitude and longitude of the centroid of the geographicalregion.•  ifdist.unit="km", then the projectionx= 111.32 cos(lat/180π)longandy= 110.547latis used wherexandyare in (approximate) kilometers.ValueAn object of class"catalog"containing an earthquake catalog dataset.Author(s)Abdollah Jalilian<jalilian@razi.ac.ir>ReferencesZhuang J (2012).   Long-term Earthquake Forecasts Based on the Epidemic-type Aftershock Se-quence (ETAS) Model for Short-term Clustering.Research in Geophysics,2(1), 52–57. doi:10.4081/rg.2012.e8.See Alsoetas.Examplessummary(iran.quakes)# creating a catalog with rectangular study regioniran.cat = catalog(iran.quakes, time.begin="1973/01/01",study.start="1985/01/01", study.end="2016/01/01",lat.range=c(25, 42), long.range=c(42, 63),mag.threshold=4.5)print(iran.cat)## Not run:plot(iran.cat)## End(Not run)# equivalently, specifying the length of the study periodiran.cat2 = catalog(iran.quakes, time.begin="1973/01/01",study.start="1985/01/01", study.length=11322,lat.range=c(25, 42), long.range=c(42, 63),mag.threshold=4.5)print(iran.cat2)# specifying a polygonal geographical region
-    
     '''
     
     def __init__(self, data, time_begin=None, study_start=None, study_end=None,
@@ -368,7 +334,6 @@ class CatalogueEtas(Catalogue):
         else:
             raise Exception("dist.unit argument must be either degree or km.")
         return dict(long=long, lat=lat)
-
 
 
     def __str__(self):

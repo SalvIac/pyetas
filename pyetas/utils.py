@@ -100,6 +100,3 @@ def get_buffer_region(region, dist=0.5):
                                     np.min(region['lat'])-dist, np.min(region['lat'])-dist])}
     return buf_region
 
-
-
-
