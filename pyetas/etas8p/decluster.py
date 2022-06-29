@@ -18,7 +18,6 @@
 """
 
 import numpy as np
-import math
 # import multiprocessing as mp
 
 from pyetas.etas8p.dist import dist

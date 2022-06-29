@@ -18,17 +18,12 @@
 https://github.com/jalilian/ETAS/tree/master/R
 """
 
-import warnings
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 plt.ioff()
 from matplotlib.patches import Polygon
 from matplotlib.collections import PatchCollection
-try:
-    from mpl_toolkits.basemap import Basemap
-except:
-    warnings.warn("No Basemap")
 from pyetas.etas8p.etas import Etas
 from pyetas.etas8p.catalog import CatalogueEtas
 from pyetas.etas8p.dist import dist, dist2
@@ -181,6 +176,12 @@ def plot_rates(rts, fit):
         
         ax = plt.subplot(2,2,i+1)
         
+        try:
+            from mpl_toolkits.basemap import Basemap
+        except:
+            import warnings
+            warnings.warn("No Basemap")
+        
         bm = Basemap(llcrnrlon=extent[0], llcrnrlat=extent[2],
                      urcrnrlon=extent[1], urcrnrlat=extent[3],
                      projection='cyl', resolution='l', fix_aspect=False, ax=ax)
@@ -247,6 +248,12 @@ def plot_map_events(prob, fit):
                 color='r', alpha=0.5, label='Triggered events with 95% confidence')
     ax.scatter(df_background['longitude'], df_background['latitude'], (4+df_background['mm']),
                 color='b', alpha=0.5, label='Background events with 95% confidence')
+
+    try:
+        from mpl_toolkits.basemap import Basemap
+    except:
+        import warnings
+        warnings.warn("No Basemap")
 
     bm = Basemap(llcrnrlon=extent[0], llcrnrlat=extent[2],
                   urcrnrlon=extent[1], urcrnrlat=extent[3],

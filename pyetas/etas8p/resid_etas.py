@@ -18,15 +18,10 @@
 """
 
 import numpy as np
-import pandas as pd
 from scipy import stats
 import matplotlib.pyplot as plt
 plt.ioff()
-from mpl_toolkits.basemap import Basemap
-from matplotlib.collections import PatchCollection
 from shapely.geometry import Point, Polygon
-
-from pyetas.etas8p.etas import Etas
 from pyetas.etas8p.from_mp import lambdaspatial, lambdatemporal, timetransform
 
 
@@ -204,6 +199,7 @@ def plot_resid(resid):
     # extent = [np.min(sres['x']), np.max(sres['x']),
     #           np.min(sres['y']), np.max(sres['y'])]
     
+    # from mpl_toolkits.basemap import Basemap
     # bm = Basemap(llcrnrlon=extent[0], llcrnrlat=extent[2],
     #               urcrnrlon=extent[1], urcrnrlat=extent[3],
     #               projection='cyl', resolution='h', fix_aspect=False, ax=ax)

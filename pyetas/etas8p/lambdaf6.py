@@ -21,7 +21,7 @@ import numpy as np
 
 from pyetas.etas8p.dist import dist, dist2
 from pyetas.etas8p.spatial5 import (fr, dq_fr, dgamma_fr, dD_fr,
-                                         pdf_fr, dq_pdf_fr, dgamma_pdf_fr, dD_pdf_fr)
+                                    pdf_fr, dq_pdf_fr, dgamma_pdf_fr, dD_pdf_fr)
 from pyetas.etas8p.poly import polyinteg
 
 

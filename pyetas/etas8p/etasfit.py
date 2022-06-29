@@ -18,7 +18,6 @@
 """
 
 import numpy as np
-from openquake.hazardlib.scalerel.wc1994 import WC1994
 
 from pyetas.etas8p.dist import norm, dist
 # import pyetas.etas8p.lambdaf0 as m0
