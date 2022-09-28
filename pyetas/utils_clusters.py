@@ -103,7 +103,7 @@ def get_cluster_info(catalogue, vcl, flagvector):
     lats = list()
     lons = list()
     num_aftershocks = list()
-    publicid = list()
+    eventID = list()
     for i in range(0, np.max(vcl)):
         ind = np.logical_and(vcl==i, flagvector==0)
         if np.sum(ind) == 1:
@@ -113,19 +113,22 @@ def get_cluster_info(catalogue, vcl, flagvector):
             lats.append(catalogue.data['latitude'][ind][0])
             num_aftershocks.append(np.sum((vcl==cluster[i]) &
                                           (catalogue.data['datetime'] > datetimes[-1])))
-            publicid.append(catalogue.data['publicid'][ind][0])
+            try:
+                eventID.append(catalogue.data['eventID'][ind][0])
+            except:
+                eventID.append(catalogue.data['publicid'][ind][0])
         else:
             mags.append(np.nan)
             datetimes.append(np.datetime64("1000-01-01"))
             lons.append(np.nan)
             lats.append(np.nan)
             num_aftershocks.append(np.nan)
-            publicid.append(np.nan)
+            eventID.append(np.nan)
     return pd.DataFrame(zip(cluster, num_events, num_aftershocks, mags, lons,
-                            lats, datetimes, publicid),
+                            lats, datetimes, eventID),
                         columns=['cluster', 'num_events', "num_aftershocks",
                                  'magnitude', "longitude", "latitude",
-                                 "datetime", "publicid"])
+                                 "datetime", "eventID"])
 
 
 def get_default_bkg(lonsx, latsy, bin=0.1):
