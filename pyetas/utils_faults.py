@@ -43,6 +43,18 @@ def read_surface_fsp(filename):
 
 
 
+def read_metadata_fsp(filename):
+    with open(filename, 'r') as reader:
+        text = reader.readlines()
+    line = text[2].split('\t')
+    year = float(line[2].split("/")[2])
+    month = float(line[2].split("/")[0])
+    day = float(line[2].split("/")[1])
+    mag = float( text[6].split("Mw = ")[1].split('\t')[0] )
+    return dict(year=year, month=month, day=day, mag=mag)
+
+
+
 def read_surface_fsp_mesh(filename):
     with open(filename, 'r') as reader:
         text = reader.readlines()
@@ -103,9 +115,9 @@ def coords2recmesh(lons, lats, depths):
         lons_2d.append(lons[depths == depth])
         lats_2d.append(lats[depths == depth])
         depths_2d.append(depths[depths == depth])
-    lons_2d = np.array(lons_2d)
-    lats_2d = np.array(lats_2d)
-    depths_2d = np.array(depths_2d)
+    lons_2d = np.array(lons_2d, dtype=object)
+    lats_2d = np.array(lats_2d, dtype=object)
+    depths_2d = np.array(depths_2d, dtype=object)
     
     check = lons.shape[0] != lons_2d.shape[0]*lons_2d.shape[1]
     if check:
