@@ -210,7 +210,7 @@ def cloglkhd(tht, rdata, verbose, model_module, voronoi):
 
     if "lambdaf7" in model_module.__name__:
         # mc here is the corrected relative magnitude (not completeness mag)
-        mc = list()
+        mc = []
         for jj in range(0,N):
             mc.append(calc_timedep_mc(jj, t, m, mmin))
         mc = np.array(mc)
@@ -309,7 +309,7 @@ def cloglkhdGr(tht, rdata, verbose, fv, dfv, model_module, voronoi):
         ta = np.array([5*365]*m.shape[0])
 
     if "lambdaf7" in model_module.__name__:
-        mc = list()
+        mc = []
         for jj in range(0,N):
             mc.append(calc_timedep_mc(jj, t, m, mmin))
         mc = np.array(mc)
@@ -806,7 +806,7 @@ def etasfit(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose, ndiv,
 #     # t[1] = t[0]+0.001 # otherwise it does not produce any difference
 #     # m[0] = 7-mmin
     
-#     # mc = list()
+#     # mc = []
 #     # for jj in range(0,N):
 #     #     mc.append(calc_timedep_mc(jj, t, m, mmin))
 #     # mc = np.array(mc)

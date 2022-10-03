@@ -276,7 +276,7 @@ class BayesianChangePoint():
         timeVect = np.cumsum(dataVect)
         days = np.arange(1, totDays)
         totEvents = len(dataVect) + 1 # 1 is added to account for first event on day 0
-        numEventsVect = list()
+        numEventsVect = []
         for t in days:
             numEventsVect.append(np.sum(timeVect <= t) + 1)
         numEventsVect[-1] = numEventsVect[-1]+1

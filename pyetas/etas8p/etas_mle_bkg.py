@@ -230,14 +230,14 @@ class EtasMleBkg(Etas):
         # print(time.time()-tt)
     
         # tt = time.time()
-        # test3 = list()
+        # test3 = []
         # for lons, lats in zip(fit.catalog.data['longitude'], fit.catalog.data['latitude']):
         #     # if min(lon) <= lons <= max(lon) and min(lat) <= lats <= max(lat):
         #     test3.append(float(intrp.ev(lons, lats)))
         # print(time.time()-tt)
     
         # tt = time.time()
-        # test4 = list()
+        # test4 = []
         # for lons, lats in zip(fit.catalog.data['longitude'], fit.catalog.data['latitude']):
         #     # if min(lon) <= lons <= max(lon) and min(lat) <= lats <= max(lat):
         #     test4.append(float(interpolant(lons, lats)))

@@ -264,8 +264,8 @@ def checks():
     print("integral entire pdf:", np.sum(vals)*np.min(np.diff(delta)))
 
     # check derivative of function in p
-    vals = list()
-    valsdp = list()
+    vals = []
+    valsdp = []
     for ppp in pp:
         vals.append( pdf_time_trunc(deltat, c, ppp, ta) )
         valsdp.append( pdf_time_trunc_p(deltat, c, ppp, ta) )
@@ -276,8 +276,8 @@ def checks():
     plt.show()
 
     # check derivative of function in c
-    vals = list()
-    valsdp = list()
+    vals = []
+    valsdp = []
     for ccc in cc:
         vals.append( pdf_time_trunc(deltat, ccc, p, ta) )
         valsdp.append( pdf_time_trunc_c(deltat, ccc, p, ta) )
@@ -335,8 +335,8 @@ def checks():
     plt.show()
     
     # figure derivative of the integral in p
-    vals = list()
-    valsdp = list()
+    vals = []
+    valsdp = []
     for ppp in pp:
         vals.append( integral_pdf_time_trunc(deltat[0], c, ppp, ta, tstart, tend) )
         valsdp.append( integral_pdf_time_trunc_p(deltat[0], c, ppp, ta, tstart, tend) )
@@ -347,8 +347,8 @@ def checks():
     plt.show()
     
     # figure derivative of the integral in c
-    vals = list()
-    valsdc = list()
+    vals = []
+    valsdc = []
     for ccc in cc:
         vals.append( pdf_time_trunc(deltat, ccc, p, ta) )
         valsdc.append( integral_pdf_time_trunc_c(deltat, ccc, p, ta, tstart, tend) )
@@ -652,7 +652,7 @@ if __name__ == "__main__":
 
 
     # integration done with Voronoi's diagrams
-    voronoi = list()
+    voronoi = []
     for i, (xx, yy) in enumerate(zip(x,y)):
         points, areas, _ = get_mixed_voronoi({"px": px, "py": py}, [xx, yy], 
                                              min_prec=1, disc_num=100)

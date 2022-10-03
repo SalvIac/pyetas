@@ -87,7 +87,7 @@ def cdeclust(theta, rbwd, revents, rpoly, tperiod, mmin, model, pb_fix, voronoi)
     revents['bkgd'] = bk
 
     if model == 7:
-        mc = list()
+        mc = []
         for jj in range(0,N):
             mc.append(calc_timedep_mc(jj, t_arr, m_arr, mmin))
         mc = np.array(mc)

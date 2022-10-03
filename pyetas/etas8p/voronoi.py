@@ -135,9 +135,9 @@ def get_voronoi(rpoly, min_prec=0.05):
         for _ in range(0,2):
             vor = Voronoi(points) # compute Voronoi tesselation
             regions, vertices = voronoi_finite_polygons_2d(vor) # get regions and vertices
-            regions_vert = list()
-            areas = list()
-            points = list()
+            regions_vert = []
+            areas = []
+            points = []
             for region in regions:
                 polygon = vertices[region]
                 # clipping polygon
@@ -216,9 +216,9 @@ def get_mixed_voronoi(rpoly, x0, min_prec=0.05, disc_num=100, shape_factor=2):
         for i in range(0,2):
             vor = Voronoi(points) # compute Voronoi tesselation
             regions, vertices = voronoi_finite_polygons_2d(vor) # get regions and vertices
-            regions_vert = list()
-            areas = list()
-            points = list()
+            regions_vert = []
+            areas = []
+            points = []
             for region in regions:
                 polygon = vertices[region]
                 # clipping polygon
@@ -289,9 +289,9 @@ def get_polar_voronoi(rpoly, x0, disc_num=100, shape_factor=2):
         for i in range(0,2):
             vor = Voronoi(points) # compute Voronoi tesselation
             regions, vertices = voronoi_finite_polygons_2d(vor) # get regions and vertices
-            regions_vert = list()
-            areas = list()
-            points = list()
+            regions_vert = []
+            areas = []
+            points = []
             for region in regions:
                 polygon = vertices[region]
                 # clipping polygon

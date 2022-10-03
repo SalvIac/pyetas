@@ -26,9 +26,9 @@ from openquake.hazardlib.geo.mesh import RectangularMesh, Mesh
 def read_surface_fsp(filename):
     with open(filename, 'r') as reader:
         text = reader.readlines()
-    lons = list()
-    lats = list()
-    depths = list()
+    lons = []
+    lats = []
+    depths = []
     for line in text:
         if line[0] != '%':
             try:
@@ -58,9 +58,9 @@ def read_metadata_fsp(filename):
 def read_surface_fsp_mesh(filename):
     with open(filename, 'r') as reader:
         text = reader.readlines()
-    lons = list()
-    lats = list()
-    depths = list()
+    lons = []
+    lats = []
+    depths = []
     for line in text:
         if line[0] != '%':
             try:
@@ -78,7 +78,7 @@ def read_surface_fsp_mesh(filename):
 def read_surface_dat(filename):
     with open(filename, 'r') as reader:
         text = reader.readlines()
-    index = list()
+    index = []
     for line in text:
         try:
             new_list = list(filter(None, re.split(' |\t', line[:-1]))) # line[:-1].split(' ')
@@ -86,9 +86,9 @@ def read_surface_dat(filename):
             index.append(fl_list[-1])
         except:
             continue
-    lons = list()
-    lats = list()
-    depths = list()
+    lons = []
+    lats = []
+    depths = []
     for line in text:
         try:
             new_list = list(filter(None, re.split(' |\t', line[:-1]))) # line[:-1].split(' ')
@@ -108,9 +108,9 @@ def coords2recmesh(lons, lats, depths):
     lats = np.array(lats)
     depths = np.array(depths)
     
-    lons_2d = list()
-    lats_2d = list()
-    depths_2d = list()
+    lons_2d = []
+    lats_2d = []
+    depths_2d = []
     for depth in np.unique(depths):
         lons_2d.append(lons[depths == depth])
         lats_2d.append(lats[depths == depth])

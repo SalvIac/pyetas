@@ -98,12 +98,12 @@ def get_cluster_info(catalogue, vcl, flagvector):
     num_events = np.array([np.sum(vcl==i) for i in range(0, np.max(vcl))])
     cluster = np.array(range(0, np.max(vcl)))
     # magnitude of mainshock cluster
-    mags = list()
-    datetimes = list()
-    lats = list()
-    lons = list()
-    num_aftershocks = list()
-    eventID = list()
+    mags = []
+    datetimes = []
+    lats = []
+    lons = []
+    num_aftershocks = []
+    eventID = []
     for i in range(0, np.max(vcl)):
         ind = np.logical_and(vcl==i, flagvector==0)
         if np.sum(ind) == 1:
