@@ -145,7 +145,7 @@ def resid_etas(fit, tpe="raw", n_temp=1000, dimyx=None):
     #     _sres = zg/np.sqrt(slam) - np.sqrt(slam) * wg
         
     # distionary for sres
-    sres=dict()
+    sres = {}
     # sres['x'] = np.empty(xg_full.shape)
     # sres['x'][:] = np.NaN
     # sres['y'] = np.empty(xg_full.shape)

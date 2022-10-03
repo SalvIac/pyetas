@@ -199,7 +199,7 @@ def etasfit_scipy(theta, revents, rpoly, tperiod, integ0, m0, ihess, verbose,
     tht = np.array(res.x)
     avcov = (1/4 * np.matmul(np.matmul(np.diag(1/tht), H), np.diag(1/tht))).tolist()
 
-    cfit_res = dict()
+    cfit_res = {}
     cfit_res['estimate'] = [t**2 for t in tht]
     cfit_res['avcov'] = avcov
     cfit_res['loglik'] = -res.fun

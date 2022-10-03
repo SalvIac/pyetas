@@ -79,7 +79,7 @@ def get_projected_region(lon, lat, fit):
 
 def get_oq_catalogue(df):
     # openquake object
-    data = dict()
+    data = {}
     for key in df.columns:
         data[key] = df[key].to_numpy()
     return Catalogue.make_from_dict(data)

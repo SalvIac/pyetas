@@ -343,7 +343,7 @@ class Etas():
     
 #     # keys = ['eventID','year', 'month', 'day', 'hour', 'minute', 'second',
 #     #         'longitude', 'latitude', 'depth', 'magnitude']
-#     # data = dict()
+#     # data = {}
 #     # for key in keys:
 #     #     data[key] = df[key].to_numpy()
     
@@ -391,7 +391,7 @@ class Etas():
     
 #     keys = ['eventID','year', 'month', 'day', 'hour', 'minute', 'second',
 #             'longitude', 'latitude', 'magnitude']
-#     data = dict()
+#     data = {}
 #     for key in keys:
 #         data[key] = df[key].to_numpy()
     
@@ -446,7 +446,7 @@ class Etas():
     
 #     # keys = ['eventID','year', 'month', 'day', 'hour', 'minute', 'second',
 #     #         'longitude', 'latitude', 'magnitude']
-#     # data = dict()
+#     # data = {}
 #     # for key in keys:
 #     #     data[key] = df[key].to_numpy()
     
