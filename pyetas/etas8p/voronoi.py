@@ -157,6 +157,28 @@ def get_voronoi(rpoly, min_prec=0.05):
 
 
 
+def points_poly_2voronoi(points, poly, min_prec=0.05):
+    try:
+        coords = [(x, y) for x,y in zip(poly[:,0], poly[:,1])]
+        outer_region = Polygon(coords)
+        # iterate twice to change the points location to the centroids (more precise)
+        for _ in range(0,2):
+            vor = Voronoi(points) # compute Voronoi tesselation
+            regions, vertices = voronoi_finite_polygons_2d(vor) # get regions and vertices
+            polygons = []
+            for region in regions:
+                polygon = vertices[region]
+                # clipping polygon
+                pol = Polygon(polygon)
+                pol = pol.intersection(outer_region)
+                polygons.append( pol )
+    except TopologicalError:
+        print("min_prec halved!")
+        return get_voronoi(rpoly, min_prec/2)
+    return polygons
+
+
+
 
 def get_mixed_voronoi(rpoly, x0, min_prec=0.05, disc_num=100, shape_factor=2):
     try:
@@ -313,60 +335,52 @@ def get_polar_voronoi(rpoly, x0, disc_num=100, shape_factor=2):
 
 
 
-
-
-
 #%%
 
-
-# if __name__ == "__main__":
+if __name__ == "__main__":
     
-#     import matplotlib.pyplot as plt
-#     from myutils.utils_pickle import load_pickle, save_pickle
-#     from scipy.spatial import voronoi_plot_2d
+    import matplotlib.pyplot as plt
+    from myutils.utils_pickle import load_pickle, save_pickle
+    from scipy.spatial import voronoi_plot_2d
     
+    theta = load_pickle('test/param1')
+    rdata = load_pickle('test/rdata')
+    revents = rdata['revents']
+    rpoly = rdata['rpoly']
+    tperiod = rdata['tperiod']
+    integ0 = rdata['integ0']
+    ihess = load_pickle('test/ihess')
+    rverbose = verbose = 1    
     
-#     theta = load_pickle('test/param1')
-#     rdata = load_pickle('test/rdata')
-#     revents = rdata['revents']
-#     rpoly = rdata['rpoly']
-#     tperiod = rdata['tperiod']
-#     integ0 = rdata['integ0']
-#     ihess = load_pickle('test/ihess')
-#     rverbose = verbose = 1    
+    # get_voronoi
+    points, areas, regions_vert = get_voronoi(rpoly, min_prec=1.)
+    # plot
+    fig = plt.figure()
+    for polygon in regions_vert:
+        plt.fill(*zip(*polygon), alpha=0.4, color=np.random.random(3))
+    plt.plot(points[:, 0], points[:, 1], 'ro')
+    plt.axis('equal')
+    plt.show()
     
+    # # get_polar_voronoi
+    # x0 = [-1., 2]
+    # points, areas, regions_vert = get_polar_voronoi(rpoly, x0, disc_num=10)
+    # # plot
+    # fig = plt.figure()
+    # for polygon in regions_vert:
+    #     plt.fill(*zip(*polygon), alpha=0.4, color=np.random.random(3))
+    # plt.plot(points[:, 0], points[:, 1], 'ro')
+    # plt.axis('equal')
+    # plt.show()
     
-#     # points, areas, regions_vert = get_voronoi(rpoly, min_prec=0.05)
-#     # # plot
-#     # fig = plt.figure()
-#     # for polygon in regions_vert:
-#     #     plt.fill(*zip(*polygon), alpha=0.4, color=np.random.random(3))
-#     # plt.plot(points[:, 0], points[:, 1], 'ro')
-#     # plt.axis('equal')
-#     # plt.show()
-    
-#     # x0 = [-1., 2]
-#     # points, areas, regions_vert = get_polar_voronoi(rpoly, x0, disc_num=100)
-#     # # plot
-#     # fig = plt.figure()
-#     # for polygon in regions_vert:
-#     #     plt.fill(*zip(*polygon), alpha=0.4, color=np.random.random(3))
-#     # plt.plot(points[:, 0], points[:, 1], 'ro')
-#     # plt.axis('equal')
-#     # plt.show()
-    
-    
-        
-#     x0 = [-1., 2]
-#     points, areas, regions_vert = get_mixed_voronoi(rpoly, x0, min_prec=1,
-#                                                     disc_num=20)
-#     # plot
-#     fig = plt.figure()
-#     for polygon in regions_vert:
-#         plt.fill(*zip(*polygon), alpha=0.4, color=np.random.random(3))
-#     plt.plot(points[:, 0], points[:, 1], 'ro')
-#     plt.axis('equal')
-#     plt.show()
-    
-    
-    
+    # # get_mixed_voronoi
+    # x0 = [-1., 2]
+    # points, areas, regions_vert = get_mixed_voronoi(rpoly, x0, min_prec=1,
+    #                                                 disc_num=20)
+    # # plot
+    # fig = plt.figure()
+    # for polygon in regions_vert:
+    #     plt.fill(*zip(*polygon), alpha=0.4, color=np.random.random(3))
+    # plt.plot(points[:, 0], points[:, 1], 'ro')
+    # plt.axis('equal')
+    # plt.show()
