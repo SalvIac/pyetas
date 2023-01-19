@@ -33,9 +33,9 @@ class GardnerKnopoffWindowOrig(BaseDistanceTimeWindow):
     https://watermark.silverchair.com/BSSA0640051363.pdf?token=AQECAHi208BE49Ooan9kkhW_Ercy7Dm3ZL_9Cf3qfKAc485ysgAAAoswggKHBgkqhkiG9w0BBwagggJ4MIICdAIBADCCAm0GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMmu64YM1zl6-4TZluAgEQgIICPp7S20FDHua2N40JGi8AOnBAAC0HTEGmbc1sDqtPkYa6ibAOQ-8SGH9WY_MZ1MZbCMaQ1-DsV1vsJnOY6lc-CNm3J125rb8jTG3iu73QqdHZtUR-YKn8N0zSz-4rpJaY8SEGrOIO6f15adMAQVj-Rc00zvnpdw7VfkbhcRv6mgJiMVuruDJEcrVHsRtBeIYDRuUNFb-MyFS0yYMjpkxhxQKzhSRcL1ujju1JhGS0kADJ2t8NsBN6m0yPm0LAXo3oblO_ayXsB6WVa4GVxOCLQZjqpCnkEOwuLLT0A4EKe6Xm80ACbqhB4Xq9jLlZuwagIvV78uGXCXcxH9DN_UndPpHDMXVnoWnkZ1DJ_H8V25aUFomNrZUF3vKNUWGtpWGF5U3SL7vYT7u8ehwFRg1KUdV2t9-hqOc0rseE9E_y9jVC5SllOIg1dUrQHjCTi0KykuUak1V73VYczWB9nUIVqVjCLy6K7K_nRpC90LR1tesj4LRvPIh_5Hn-NqvQgEUIVObKXNfZiezxJxccBBlWCGkFdM9UNHo6xVTp65bgVTGWuOP5LJmIqCKaF4fRwQ-LBvYIfiwLAqjR-3ZEo0IDcWu1yZYJUDpti-841ybJg1pGdZxFcIIjQTag_EUWRTh3SmSpTBqHFbo3QBllPNspdBSQ0DyLTre-lug2kuh-md5uHR8TEY02-3lR1SkmY1pe37SBNUTtJbHS4vM7d9pxgWm1d9_yKKRM0OU87BfULhmdfCWMwou1LFz5IOSbZ1M
     """
     
-    m = np.arange(1, 9.5, 0.5)
-    l = [19.5, 19.5, 19.5, 19.5, 22.5, 16, 30, 35, 40, 47, 54, 61, 70, 81, 94, 94, 94] # km
-    t = [6, 6, 6, 6, 11.5, 22, 42, 83, 155, 290, 510, 790, 915, 960, 985, 985, 985] # days
+    m = np.arange(1, 10., 0.5)
+    l = [19.5, 19.5, 19.5, 19.5, 22.5, 16, 30, 35, 40, 47, 54, 61, 70, 81, 94, 94, 94, 94] # km
+    t = [6, 6, 6, 6, 11.5, 22, 42, 83, 155, 290, 510, 790, 915, 960, 985, 985, 985, 985] # days
     
     interpolant_time = interpolate.interp1d(m, t, kind="cubic")
     interpolant_space = interpolate.interp1d(m, l, kind="cubic")

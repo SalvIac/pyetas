@@ -102,6 +102,7 @@ def get_cluster_info(catalogue, vcl, flagvector):
     datetimes = []
     lats = []
     lons = []
+    depths = []
     num_aftershocks = []
     eventID = []
     for i in range(0, np.max(vcl)):
@@ -111,6 +112,7 @@ def get_cluster_info(catalogue, vcl, flagvector):
             datetimes.append((catalogue.data['datetime'][ind][0]))
             lons.append(catalogue.data['longitude'][ind][0])
             lats.append(catalogue.data['latitude'][ind][0])
+            depths.append(catalogue.data['depth'][ind][0])
             num_aftershocks.append(np.sum((vcl==cluster[i]) &
                                           (catalogue.data['datetime'] > datetimes[-1])))
             try:
@@ -122,12 +124,13 @@ def get_cluster_info(catalogue, vcl, flagvector):
             datetimes.append(np.datetime64("1000-01-01"))
             lons.append(np.nan)
             lats.append(np.nan)
+            depths.append(np.nan)
             num_aftershocks.append(np.nan)
             eventID.append(np.nan)
     return pd.DataFrame(zip(cluster, num_events, num_aftershocks, mags, lons,
-                            lats, datetimes, eventID),
+                            lats, depths, datetimes, eventID),
                         columns=['cluster', 'num_events', "num_aftershocks",
-                                 'magnitude', "longitude", "latitude",
+                                 'magnitude', "longitude", "latitude", "depth",
                                  "datetime", "eventID"])
 
 
