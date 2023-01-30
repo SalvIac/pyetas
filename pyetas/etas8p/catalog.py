@@ -203,7 +203,10 @@ class CatalogueEtas(Catalogue):
         temp = np.array([None]*revents.shape[0])
         if map_faults is not None:
             for pubid in map_faults:
-                ind = np.where(self.data['publicid'] == str(pubid))[0]
+                try:
+                    ind = np.where(self.data['publicid'] == str(pubid))[0]
+                except:
+                    ind = np.where(self.data['eventID'] == pubid)[0]
                 if ind.shape[0] != 0:
                     proj = self.longlat2xy(long=map_faults[pubid].lons,
                                             lat=map_faults[pubid].lats,
@@ -344,7 +347,7 @@ class CatalogueEtas(Catalogue):
                   "\ngeographical region:\n "+str(self.region_win)+ \
                   "\n polygonal with vertices:\n "+ str(self.region_poly)+ \
                   "\nthreshold magnitude: " +str(self.mag_threshold)+ \
-                  "\nfault geometry: "+str([self.data["publicid"][f] for f, fa in 
+                  "\nfault geometry: "+str([self.data["eventID"][f] for f, fa in 
                                             enumerate(self.revents['fault']) if fa is not None])+ \
                   "\nnumber of events:\n  total events "+ str(self.revents.shape[0]) + \
                   ": "+str((self.revents['flag']==1).sum())+" target events, " + \

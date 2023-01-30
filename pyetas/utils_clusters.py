@@ -116,7 +116,7 @@ def get_cluster_info(catalogue, vcl, flagvector):
             num_aftershocks.append(np.sum((vcl==cluster[i]) &
                                           (catalogue.data['datetime'] > datetimes[-1])))
             try:
-                eventID.append(catalogue.data['eventID'][ind][0])
+                eventID.append(int(catalogue.data['eventID'][ind][0]))
             except:
                 eventID.append(catalogue.data['publicid'][ind][0])
         else:
@@ -126,7 +126,7 @@ def get_cluster_info(catalogue, vcl, flagvector):
             lats.append(np.nan)
             depths.append(np.nan)
             num_aftershocks.append(np.nan)
-            eventID.append(np.nan)
+            eventID.append(None)
     return pd.DataFrame(zip(cluster, num_events, num_aftershocks, mags, lons,
                             lats, depths, datetimes, eventID),
                         columns=['cluster', 'num_events', "num_aftershocks",

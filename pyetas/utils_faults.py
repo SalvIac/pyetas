@@ -50,8 +50,13 @@ def read_metadata_fsp(filename):
     year = float(line[2].split("/")[2])
     month = float(line[2].split("/")[0])
     day = float(line[2].split("/")[1])
+    temp = text[5].replace("\t","").replace("\n","").split("=")
+    lon = float(temp[-2].replace("DEP",""))
+    lat = float(temp[-3].replace("LON",""))
+    dep = float(temp[-1])
     mag = float( text[6].split("Mw = ")[1].split('\t')[0] )
-    return dict(year=year, month=month, day=day, mag=mag)
+    return dict(year=year, month=month, day=day, mag=mag,
+                longitude=lon, latitude=lat, depth=dep)
 
 
 
@@ -71,7 +76,9 @@ def read_surface_fsp_mesh(filename):
                 depths.append(fl_list[4])
             except:
                 continue
-    return Mesh(np.array(lons), np.array(lats), np.array(depths))
+    return Mesh(np.array(lons, dtype=float),
+                np.array(lats, dtype=float),
+                np.array(depths, dtype=float))
 
 
 
@@ -115,9 +122,9 @@ def coords2recmesh(lons, lats, depths):
         lons_2d.append(lons[depths == depth])
         lats_2d.append(lats[depths == depth])
         depths_2d.append(depths[depths == depth])
-    lons_2d = np.array(lons_2d, dtype=object)
-    lats_2d = np.array(lats_2d, dtype=object)
-    depths_2d = np.array(depths_2d, dtype=object)
+    lons_2d = np.array(lons_2d, dtype=float)
+    lats_2d = np.array(lats_2d, dtype=float)
+    depths_2d = np.array(depths_2d, dtype=float)
     
     check = lons.shape[0] != lons_2d.shape[0]*lons_2d.shape[1]
     if check:
