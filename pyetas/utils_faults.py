@@ -47,9 +47,9 @@ def read_metadata_fsp(filename):
     with open(filename, 'r') as reader:
         text = reader.readlines()
     line = text[2].split('\t')
-    year = float(line[2].split("/")[2])
-    month = float(line[2].split("/")[0])
-    day = float(line[2].split("/")[1])
+    year = float(line[-3].split("/")[2])
+    month = float(line[-3].split("/")[0])
+    day = float(line[-3].split("/")[1])
     temp = text[5].replace("\t","").replace("\n","").split("=")
     lon = float(temp[-2].replace("DEP",""))
     lat = float(temp[-3].replace("LON",""))
