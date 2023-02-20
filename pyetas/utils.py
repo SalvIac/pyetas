@@ -86,11 +86,14 @@ def get_oq_catalogue(df):
 
 
 def filter_polygon(df, poly):
+    return df[flag_polygon(df, poly)]
+
+
+def flag_polygon(df, poly):
     region_win = get_region(poly[:,0], poly[:,1])
     flag = np.array([Point(xxx, yyy).within(region_win) for xxx, yyy in 
                      zip(df['longitude'], df['latitude'])])
-    df = df[flag]
-    return df
+    return flag
 
 
 def get_buffer_region(region, dist=0.5):
