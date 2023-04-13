@@ -18,6 +18,7 @@
 """
 
 import re
+import json
 import numpy as np
 from openquake.hazardlib.geo.mesh import RectangularMesh, Mesh
 
@@ -39,7 +40,10 @@ def read_surface_fsp(filename):
                 depths.append(fl_list[4])
             except:
                 continue
-    return coords2recmesh(lons, lats, depths)
+    _, inds = np.unique(np.column_stack([lons,lats]), axis=0, return_index=True)
+    return coords2recmesh(np.array(lons)[inds],
+                          np.array(lats)[inds],
+                          np.array(depths)[inds])
 
 
 
@@ -76,9 +80,10 @@ def read_surface_fsp_mesh(filename):
                 depths.append(fl_list[4])
             except:
                 continue
-    return Mesh(np.array(lons, dtype=float),
-                np.array(lats, dtype=float),
-                np.array(depths, dtype=float))
+    _, inds = np.unique(np.column_stack([lons,lats]), axis=0, return_index=True)
+    return Mesh(np.array(lons, dtype=float)[inds],
+                np.array(lats, dtype=float)[inds],
+                np.array(depths, dtype=float)[inds])
 
 
 
@@ -105,16 +110,13 @@ def read_surface_dat(filename):
             depths.append(fl_list[7])
         except:
             continue
-    return Mesh(np.array(lons), np.array(lats), np.array(depths))
+    _, inds = np.unique(np.column_stack([lons,lats]), axis=0, return_index=True)
+    return Mesh(np.array(lons)[inds], np.array(lats)[inds], np.array(depths)[inds])
 
     
 
 
 def coords2recmesh(lons, lats, depths):
-    lons = np.array(lons)
-    lats = np.array(lats)
-    depths = np.array(depths)
-    
     lons_2d = []
     lats_2d = []
     depths_2d = []
@@ -129,6 +131,23 @@ def coords2recmesh(lons, lats, depths):
     check = lons.shape[0] != lons_2d.shape[0]*lons_2d.shape[1]
     if check:
         raise Exception('error with lat lon depth')
-    
     return RectangularMesh(lons_2d, lats_2d, depths_2d)
+
+
+
+def read_json_usgs(filename):
+    with open(filename, 'r') as f:
+        data = json.load(f)
+    lons = []
+    lats = []
+    depths = []
+    for d in data["features"][0]["geometry"]["coordinates"][0]:
+        for r in d:
+            lons.append(r[0])
+            lats.append(r[1])
+            depths.append(r[2])
+    _, inds = np.unique(np.column_stack([lons,lats]), axis=0, return_index=True)
+    return Mesh(np.array(lons, dtype=float)[inds],
+                np.array(lats, dtype=float)[inds],
+                np.array(depths, dtype=float)[inds])
 
