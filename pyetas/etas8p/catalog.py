@@ -107,17 +107,17 @@ class CatalogueEtas(Catalogue):
         else:
             # study_start = datetime.datetime(study_start, tz=tz) #todo
             if study_start < time_begin:
-             raise Exception("study.start "+str(study_start)+\
-                             " cannot be set before time.begin = "+\
+             raise Exception("study_start "+str(study_start)+\
+                             " cannot be set before time_begin = "+\
                              str(time_begin))
 
         if study_length is not None:
             if study_end is not None:
-                raise Exception("either study.end or study.length needs to be specified, not both")
+                raise Exception("either study_end or study_length needs to be specified, not both")
             else:
                 if (not isinstance(study_length,float)) and \
                    (not isinstance(study_length,int)):
-                    raise Exception("study.length must be single numeric value: in deciaml days")
+                    raise Exception("study_length must be single numeric value: in deciaml days")
             study_end = study_start + study_length * 24 * 60 * 60
           
         if study_end is None:
@@ -125,8 +125,8 @@ class CatalogueEtas(Catalogue):
         else:
             # study_end = datetime.datetime(study_end, tz=tz) #todo
             if study_end < study_start:
-                raise Exception("study.end"+ str(study_end)+\
-                                "can not be set before study.start"+\
+                raise Exception("study_end"+ str(study_end)+\
+                                "can not be set before study_start"+\
                                 str(study_start))
         tt = self.date2day(dt, time_begin, tz=tz)
         
@@ -135,12 +135,12 @@ class CatalogueEtas(Catalogue):
             dif = yy.max() - yy.min()
             lat_range = [yy.min()-0.01*dif, yy.max()+0.01*dif]
         elif len(lat_range) != 2 or lat_range[1] <= lat_range[0]:
-            raise Exception("lat.range must be a vector of length 2 giving (lat.min, lat.max)")
+            raise Exception("lat_range must be a vector of length 2 giving (lat_min, lat_max)")
         if long_range is None:
             dif = xx.max() - xx.min()
             long_range = [xx.min()-0.01*dif, xx.max()+0.01*dif]
         elif len(long_range) != 2 or long_range[1] <= long_range[0]:
-            raise Exception("long.range must be a vector of length 2 giving (long.min, long.max)")
+            raise Exception("long_range must be a vector of length 2 giving (long_min, long_max)")
         
         if region_poly is None:
             lon = [long_range[0],long_range[1],long_range[1],long_range[0]]
@@ -366,13 +366,13 @@ class CatalogueEtas(Catalogue):
 #   lymat = matrix(c(1, 1, 2, 1, 1, 3, 4, 5, 6), 3, 3)
 #   layout(lymat)
 #   par(mar=c(4, 4.25, 1, 1))
-#   plot(x$longlat.coord$long, x$longlat.coord$lat, xlab="long", ylab="lat",
+#   plot(x$longlat_coord$long, x$longlat_coord$lat, xlab="long", ylab="lat",
 #        col=8, cex=2 * (x$revents[, 4] + 0.1)/max(x$revents[, 4]),
 #        asp=True, axes=False)
 #   maps::map('world', add=True, col="grey50")
 #   axis(1); axis(2)
 #   ok = x$revents[, 5] == 1
-#   points(x$longlat.coord$long[ok], x$longlat.coord$lat[ok], col=4,
+#   points(x$longlat_coord$long[ok], x$longlat_coord$lat[ok], col=4,
 #          cex=2 * (x$revents[ok, 4] + 0.1)/max(x$revents[ok, 4]))
 #   polygon(x$region.poly$long, x$region.poly$lat, border=2)
 #   #
@@ -401,9 +401,9 @@ class CatalogueEtas(Catalogue):
 #          cex=2 * (x$revents[ok, 4] + 0.1)/max(x$revents[ok, 4]))
 #   axis(1); axis(2)
 #   #
-#   plot(x$revents[, 1], x$longlat.coord$long, xlab="time", ylab="long",
+#   plot(x$revents[, 1], x$longlat_coord$long, xlab="time", ylab="long",
 #        cex=2 * (x$revents[, 4] + 0.1)/max(x$revents[, 4]), col=8, axes=False)
-#   points(x$revents[ok, 1], x$longlat.coord$long[ok], col=4,
+#   points(x$revents[ok, 1], x$longlat_coord$long[ok], col=4,
 #          cex=2 * (x$revents[ok, 4] + 0.1)/max(x$revents[ok, 4]))
 #   axis(1); axis(2)
 #   #
