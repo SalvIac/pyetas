@@ -34,7 +34,7 @@ class GardnerKnopoffWindowOrig(BaseDistanceTimeWindow):
     """
     
     m = np.arange(1, 10., 0.5)
-    l = [19.5, 19.5, 19.5, 19.5, 22.5, 16, 30, 35, 40, 47, 54, 61, 70, 81, 94, 94, 94, 94] # km
+    l = [19.5, 19.5, 19.5, 19.5, 22.5, 26, 30, 35, 40, 47, 54, 61, 70, 81, 94, 94, 94, 94] # km
     t = [6, 6, 6, 6, 11.5, 22, 42, 83, 155, 290, 510, 790, 915, 960, 985, 985, 985, 985] # days
     
     interpolant_time = interpolate.interp1d(m, t, kind="cubic")
