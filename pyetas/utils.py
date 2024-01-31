@@ -82,6 +82,14 @@ def get_oq_catalogue(df):
     data = {}
     for key in df.columns:
         data[key] = df[key].to_numpy()
+    for key in Catalogue.SORTED_ATTRIBUTE_LIST:
+        if key not in data.keys():
+            if key in Catalogue.FLOAT_ATTRIBUTE_LIST:
+                data[key] = [np.nan]*df.shape[0]
+            if key in Catalogue.INT_ATTRIBUTE_LIST:
+                data[key] = [np.nan]*df.shape[0]
+            if key in Catalogue.STRING_ATTRIBUTE_LIST:
+                data[key] = [""]*df.shape[0]
     return Catalogue.make_from_dict(data)
 
 
@@ -93,6 +101,13 @@ def flag_polygon(df, poly):
     region_win = get_region(poly[:,0], poly[:,1])
     flag = np.array([Point(xxx, yyy).within(region_win) for xxx, yyy in 
                      zip(df['longitude'], df['latitude'])])
+    return flag
+
+
+def flag_polygon2(lons, lats, poly):
+    region_win = get_region(poly[:,0], poly[:,1])
+    flag = np.array([Point(xxx, yyy).within(region_win) for xxx, yyy in 
+                     zip(lons, lats)])
     return flag
 
 
